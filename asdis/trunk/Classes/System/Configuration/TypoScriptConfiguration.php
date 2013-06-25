@@ -71,9 +71,6 @@ class Tx_Asdis_System_Configuration_TypoScriptConfiguration implements t3lib_Sin
 	 */
 	private function initializeTypoScriptConfiguration() {
 		$this->configuration = array();
-		if (TYPO3_MODE !== 'FE') {
-			return;
-		}
 		$this->configuration = $GLOBALS['TSFE']->tmpl->setup['config.']['tx_asdis.'];
 	}
 }
