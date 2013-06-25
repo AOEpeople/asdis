@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * TypoScript configuration provider.
+ *
+ * @package Tx_Asdis
+ * @subpackage System_Configuration
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 class Tx_Asdis_System_Configuration_TypoScriptConfiguration implements t3lib_Singleton {
 
 	/**
@@ -22,11 +29,12 @@ class Tx_Asdis_System_Configuration_TypoScriptConfiguration implements t3lib_Sin
 	/**
 	 * @param string $key The setting key. E.g. "logger.severity"
 	 * @param string $validateType The data type to be validated against (E.g. "string"). Empty string to skip validation.
+	 * @param boolean $hasSubkeys Tells whether the requested key is assumed to has subkeys.
 	 * @return mixed
 	 * @throws Tx_Asdis_System_Configuration_Exception_InvalidTypoScriptSetting
 	 * @throws Tx_Asdis_System_Configuration_Exception_TypoScriptSettingNotExists
 	 */
-	public function getSetting($key, $validateType = '') {
+	public function getSetting($key, $validateType = '', $hasSubkeys = FALSE) {
 		if(isset($this->configurationCache[$key])) {
 			return $this->configurationCache[$key];
 		}
@@ -38,7 +46,7 @@ class Tx_Asdis_System_Configuration_TypoScriptConfiguration implements t3lib_Sin
 		$lastPartIndex = sizeof($parts) - 1;
 		foreach($parts as $index => $part) {
 			$subkey = $part;
-			if($lastPartIndex !== $index) {
+			if($lastPartIndex !== $index || $hasSubkeys) {
 				$subkey .= '.';
 			}
 			if(FALSE === isset($conf[$subkey])) {

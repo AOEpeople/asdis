@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Exception which is thrown when a requested TypoScript setting is invalid.
+ *
+ * @package Tx_Asdis
+ * @subpackage System_Configuration_Exception
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 class Tx_Asdis_System_Configuration_Exception_InvalidTypoScriptSetting extends Exception {
 
 	/**
