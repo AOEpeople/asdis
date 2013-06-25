@@ -68,6 +68,19 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/SwfObject.php'
 );
 
+// Register filters
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
+	'key'   => 'bubblingPath',
+	'class' => 'Tx_Asdis_System_Uri_Filter_BubblingPath',
+	'file'  => PATH_tx_asdis . 'Classes/System/Uri/Filter/BubblingPath.php'
+);
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
+	'key'   => 'containsProtocol',
+	'class' => 'Tx_Asdis_System_Uri_Filter_ContainsProtocol',
+	'file'  => PATH_tx_asdis . 'Classes/System/Uri/Filter/ContainsProtocol.php'
+);
+
+
 t3lib_extMgm::addTypoScriptSetup(
 	file_get_contents(PATH_tx_asdis . 'Configuration/TypoScript/setup.txt')
 );

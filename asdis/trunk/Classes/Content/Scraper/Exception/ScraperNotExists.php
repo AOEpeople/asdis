@@ -10,9 +10,9 @@
 class Tx_Asdis_Content_Scraper_Exception_ScraperNotExists extends Exception {
 
 	/**
-	 * @param string $scraperKey
+	 * @param string $filterKey
 	 */
-	public function __construct($scraperKey) {
-		parent::__construct('Scraper with the key ' . $scraperKey . ' does not exist.', 1371818682112);
+	public function __construct($filterKey) {
+		parent::__construct('Scraper with the key ' . $filterKey . ' does not exist.', 1371818682112);
 	}
 }

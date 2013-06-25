@@ -31,6 +31,8 @@ class Tx_Asdis_System_Configuration_Provider {
 	}
 
 	/**
+	 * Returns the scraper keys for the current page.
+	 *
 	 * @return array
 	 */
 	public function getScraperKeys() {
@@ -44,6 +46,24 @@ class Tx_Asdis_System_Configuration_Provider {
 			$scraperKeys[] = trim($key);
 		}
 		return $scraperKeys;
+	}
+
+	/**
+	 * Returns the filter keys for the current page.
+	 *
+	 * @return array
+	 */
+	public function getFilterKeys() {
+		$keyList = $this->typoScriptConfiguration->getSetting('filters', 'string');
+		$keys    = explode(",", $keyList);
+		if (FALSE === is_array($keys) || sizeof($keys) < 1) {
+			return array();
+		}
+		$filterKeys = array();
+		foreach ($keys as $key) {
+			$filterKeys[] = trim($key);
+		}
+		return $filterKeys;
 	}
 
 	/**

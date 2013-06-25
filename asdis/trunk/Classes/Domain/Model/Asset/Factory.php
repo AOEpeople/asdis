@@ -15,9 +15,14 @@ class Tx_Asdis_Domain_Model_Asset_Factory {
 	private $objectManager;
 
 	/**
-	 * @var Tx_Asdis_Uri_NormalizationService
+	 * @var Tx_Asdis_System_Uri_Normalizer
 	 */
-	private $uriNormalizationService;
+	private $uriNormalizer;
+
+	/**
+	 * @var Tx_Asdis_System_Uri_Filter_Chain
+	 */
+	private $filterChain;
 
 	/**
 	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
@@ -27,17 +32,24 @@ class Tx_Asdis_Domain_Model_Asset_Factory {
 	}
 
 	/**
-	 * @param Tx_Asdis_Uri_NormalizationService $uriNormalizationService
+	 * @param Tx_Asdis_System_Uri_Normalizer $uriNormalizer
 	 */
-	public function injectUriNormalizationService(Tx_Asdis_Uri_NormalizationService $uriNormalizationService) {
-		$this->uriNormalizationService = $uriNormalizationService;
+	public function injectUriNormalizer(Tx_Asdis_System_Uri_Normalizer $uriNormalizer) {
+		$this->uriNormalizer = $uriNormalizer;
+	}
+
+	/**
+	 * @param Tx_Asdis_System_Uri_Filter_ChainFactory $filterChainFactory
+	 */
+	public function injectFilterChainFactory(Tx_Asdis_System_Uri_Filter_ChainFactory $filterChainFactory) {
+		$this->filterChain = $filterChainFactory->buildChain();
 	}
 
 	/**
 	 * @param $path
 	 * @return Tx_Asdis_Domain_Model_Asset
 	 */
-	public function createAssetFromPath($path) {
+	protected function createAssetFromPath($path) {
 		/** @var Tx_Asdis_Domain_Model_Asset $asset */
 		$asset = $this->objectManager->create('Tx_Asdis_Domain_Model_Asset');
 		$asset->setOriginalPath($path);
@@ -46,10 +58,11 @@ class Tx_Asdis_Domain_Model_Asset_Factory {
 	}
 
 	/**
-	 * @param array $paths
+	 * @param array $paths Array of path strings.
 	 * @return Tx_Asdis_Domain_Model_Asset_Collection
 	 */
 	public function createAssetsFromPaths(array $paths) {
+		$paths = $this->filterChain->filter($paths);
 		/** @var Tx_Asdis_Domain_Model_Asset_Collection $assets */
 		$assets = $this->objectManager->create('Tx_Asdis_Domain_Model_Asset_Collection');
 		foreach($paths as $path) {
@@ -59,9 +72,10 @@ class Tx_Asdis_Domain_Model_Asset_Factory {
 	}
 
 	/**
-	 * @param $originalPath
+	 * @param string $originalPath
+	 * @return string
 	 */
 	private function getNormalizedPath($originalPath) {
-		return $this->uriNormalizationService->normalizePath($originalPath);
+		return $this->uriNormalizer->normalizePath($originalPath);
 	}
 }

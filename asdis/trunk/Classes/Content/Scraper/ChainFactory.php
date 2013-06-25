@@ -52,7 +52,8 @@ class Tx_Asdis_Content_Scraper_ChainFactory {
 	 * @return Tx_Asdis_Content_Scraper_Chain
 	 */
 	public function buildChain() {
-		$chain = new Tx_Asdis_Content_Scraper_Chain();
+		/** @var Tx_Asdis_Content_Scraper_Chain $chain */
+		$chain = $this->objectManager->create('Tx_Asdis_Content_Scraper_Chain');
 		foreach($this->configurationProvider->getScraperKeys() as $scraperKey) {
 			$chain->append($this->buildScraper($scraperKey));
 		}
