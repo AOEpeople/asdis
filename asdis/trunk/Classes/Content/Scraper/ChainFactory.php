@@ -9,8 +9,19 @@
  */
 class Tx_Asdis_Content_Scraper_ChainFactory {
 
+	/**
+	 * @var string
+	 */
 	const DECLARATION_KEY_KEY = 'key';
+
+	/**
+	 * @var string
+	 */
 	const DECLARATION_KEY_CLASS = 'class';
+
+	/**
+	 * @var string
+	 */
 	const DECLARATION_KEY_FILE = 'file';
 
 	/**

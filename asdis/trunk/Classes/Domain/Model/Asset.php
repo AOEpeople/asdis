@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Represents an asset.
+ *
+ * @package Tx_Asdis
+ * @subpackage Domain_Model
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 class Tx_Asdis_Domain_Model_Asset {
 
 	/**
