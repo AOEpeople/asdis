@@ -10,9 +10,26 @@
 class Tx_Asdis_Domain_Repository_ServerRepository {
 
 	/**
+	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 */
+	private $objectManager;
+
+	/**
 	 * @var Tx_Asdis_System_Configuration_Provider
 	 */
 	private $configurationProvider;
+
+	/**
+	 * @var Tx_Asdis_Domain_Model_Server_Factory
+	 */
+	private $serverFactory;
+
+	/**
+	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 */
+	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+		$this->objectManager = $objectManager;
+	}
 
 	/**
 	 * @param Tx_Asdis_System_Configuration_Provider $configurationProvider
@@ -22,17 +39,26 @@ class Tx_Asdis_Domain_Repository_ServerRepository {
 	}
 
 	/**
+	 * @param Tx_Asdis_Domain_Model_Server_Factory $serverFactory
+	 */
+	public function injectServerFactory(Tx_Asdis_Domain_Model_Server_Factory $serverFactory) {
+		$this->serverFactory = $serverFactory;
+	}
+
+	/**
 	 * @param Tx_Asdis_Domain_Model_Page $page
 	 * @return Tx_Asdis_Domain_Model_Server_Collection
-	 * @todo implement
 	 */
 	public function findAllByPage(Tx_Asdis_Domain_Model_Page $page) {
-		$servers = new Tx_Asdis_Domain_Model_Server_Collection();
-		$server = new Tx_Asdis_Domain_Model_Server();
-		$server->setDomain('media1.dev-tf.congstar-nico.aoe-works.de');
-		$server->setIdentifier('media1');
-		$server->setProtocol(Tx_Asdis_Domain_Model_Server::PROTOCOL_HTTP);
-		$servers->append($server);
+		/** @var Tx_Asdis_Domain_Model_Server_Collection $servers */
+		$servers = $this->objectManager->create('Tx_Asdis_Domain_Model_Server_Collection');
+		$serverDefinitions = $this->configurationProvider->getServerDefinitions();
+		foreach($serverDefinitions as $serverDefinition) {
+			$servers->append($this->serverFactory->createServer(
+				$serverDefinition['identifier'],
+				$serverDefinition['domain']
+			));
+		}
 		return $servers;
 	}
 

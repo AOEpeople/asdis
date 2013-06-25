@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Provides all configuration settings.
+ *
+ * @package Tx_Asdis
+ * @subpackage System_Configuration
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 class Tx_Asdis_System_Configuration_Provider {
 
 	/**
@@ -40,11 +47,37 @@ class Tx_Asdis_System_Configuration_Provider {
 	}
 
 	/**
+	 * Returns an array like this:
+	 * array(
+	 *     array(
+	 *         'identifier' => 'media1',
+	 *         'domain'     => 'm1.mydomain.com'
+	 *     ),
+	 *     array(
+	 *         'identifier' => 'media2',
+	 *         'domain'     => 'm2.mydomain.com'
+	 *     )
+	 * )
+	 *
 	 * @return array
+	 * @throws Tx_Asdis_System_Configuration_Exception_InvalidStructure
 	 */
 	public function getServerDefinitions() {
-		$serverDefinitions = $this->typoScriptConfiguration->getSetting('servers');
-		return $serverDefinitions;
+		$definitions = array();
+		$serverDefinitions = $this->typoScriptConfiguration->getSetting('servers', 'array', TRUE);
+		foreach($serverDefinitions as $identifier => $serverDefinition) {
+			if(FALSE === is_array($serverDefinition) || FALSE === isset($serverDefinition['domain'])) {
+				throw new Tx_Asdis_System_Configuration_Exception_InvalidStructure(
+					'Configured server definition for "'.((string) $serverDefinition) . '" is invalid.',
+					1372159113552
+				);
+			}
+			$definitions[] = array(
+				'identifier' => $identifier,
+				'domain'     => $serverDefinition['domain']
+			);
+		}
+		return $definitions;
 	}
 
 	/**
