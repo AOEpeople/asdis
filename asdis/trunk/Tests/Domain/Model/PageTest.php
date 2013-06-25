@@ -4,6 +4,7 @@
  * @subpackage Tests
  */
 require_once dirname(__FILE__).'/../../../Classes/Domain/Model/Page.php';
+require_once dirname(__FILE__).'/../../../Classes/System/Configuration/Provider.php';
 require_once dirname(__FILE__).'/../../../Tests/AbstractTestcase.php';
 /**
  * Tx_Asdis_Domain_Model_Page test case.
@@ -35,6 +36,10 @@ class Tx_Asdis_Domain_Model_PageTest extends Tx_Asdis_Tests_AbstractTestcase {
 	 * @test
 	 */
 	public function scrapeAssets() {
+		$config = $this->getMock('Tx_Asdis_System_Configuration_Provider');
+		$config->expects($this->any())->method('isReplacementEnabled')->will($this->returnValue(FALSE));
+		$this->page->injectConfigurationProvider($config);
+		$this->assertNull($this->page->scrapeAssets());
 	}
 }
 
