@@ -40,6 +40,14 @@ class Tx_Asdis_System_Configuration_Provider {
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getServerDefinitions() {
+		$serverDefinitions = $this->typoScriptConfiguration->getSetting('servers');
+		return $serverDefinitions;
+	}
+
+	/**
 	 * @return integer
 	 */
 	public function getLoggerSeverity() {

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * RoundRobin implementation of a distribution algorithm.
+ *
+ * @package Tx_Asdis
+ * @subpackage Domain_Model_DistributionAlgorithm
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 class Tx_Asdis_Domain_Model_DistributionAlgorithm_RoundRobin implements Tx_Asdis_Domain_Model_DistributionAlgorithm_DistributionAlgorithmInterface {
 
 	/**

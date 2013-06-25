@@ -1,6 +1,25 @@
 <?php
 
+/**
+ * Repository for server objects.
+ *
+ * @package Tx_Asdis
+ * @subpackage Domain_Model
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 class Tx_Asdis_Domain_Repository_ServerRepository {
+
+	/**
+	 * @var Tx_Asdis_System_Configuration_Provider
+	 */
+	private $configurationProvider;
+
+	/**
+	 * @param Tx_Asdis_System_Configuration_Provider $configurationProvider
+	 */
+	public function injectConfigurationProvider(Tx_Asdis_System_Configuration_Provider $configurationProvider) {
+		$this->configurationProvider = $configurationProvider;
+	}
 
 	/**
 	 * @param Tx_Asdis_Domain_Model_Page $page
@@ -16,4 +35,6 @@ class Tx_Asdis_Domain_Repository_ServerRepository {
 		$servers->append($server);
 		return $servers;
 	}
+
+
 }
