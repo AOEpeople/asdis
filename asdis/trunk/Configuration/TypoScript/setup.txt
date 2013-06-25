@@ -1,11 +1,11 @@
-config.tx_extbase {
-	objects {
-		Tx_Asdis_System_Log_BackendInterface {
-			className = Tx_Asdis_System_Log_FileBackend
-		}
-	}
-}
-
 config.tx_asdis {
-	scrapers = htmlImage
+	enabled = 0
+	scrapers = htmlCssFile,htmlCssInline,htmlEmbed,htmlFavicon,htmlImage,htmlInputImage,htmlOpenGraphImage,htmlScript
+	servers {
+
+	}
+	logger {
+		severity = 0
+		syslogSeverity = 3
+	}
 }

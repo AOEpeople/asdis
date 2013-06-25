@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Scrapes paths from "url()" in CSS.
+ *
+ * @package Tx_Asdis
+ * @subpackage Content_Scraper_Css
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 class Tx_Asdis_Content_Scraper_Css_Url implements Tx_Asdis_Content_Scraper_ScraperInterface {
 
 	/**

@@ -28,11 +28,13 @@ class Tx_Asdis_Domain_Model_Asset_Collection extends ArrayIterator {
 
 	/**
 	 * @param Tx_Asdis_Domain_Model_Asset_Collection $assetCollection
+	 * @return Tx_Asdis_Domain_Model_Asset_Collection
 	 */
 	public function merge(Tx_Asdis_Domain_Model_Asset_Collection $assetCollection) {
 		foreach($assetCollection as $asset) {
 			$this->append($asset);
 		}
+		return $this;
 	}
 
 	/**

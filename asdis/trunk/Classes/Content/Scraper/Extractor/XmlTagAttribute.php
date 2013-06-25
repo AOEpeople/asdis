@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Service which extracts paths from attributes in HTML tags.
+ *
+ * @package Tx_Asdis
+ * @subpackage Content_Scraper_Extractor
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 class Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute {
 
 	/**

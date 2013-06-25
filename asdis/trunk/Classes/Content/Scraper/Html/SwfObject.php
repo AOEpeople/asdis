@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Scrapes assets from JavaScript code used by the SwfObject library.
+ *
+ * @package Tx_Asdis
+ * @subpackage Content_Scraper_Html
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 class Tx_Asdis_Content_Scraper_Html_SwfObject implements Tx_Asdis_Content_Scraper_ScraperInterface {
 
 	/**

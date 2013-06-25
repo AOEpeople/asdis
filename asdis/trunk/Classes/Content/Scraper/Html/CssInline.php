@@ -1,6 +1,13 @@
 <?php
 
-class Tx_Asdis_Content_Scraper_Html_CssFile implements Tx_Asdis_Content_Scraper_ScraperInterface {
+/**
+ * Scrapes assets from inline CSS.
+ *
+ * @package Tx_Asdis
+ * @subpackage Content_Scraper_Html
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
+class Tx_Asdis_Content_Scraper_Html_CssInline implements Tx_Asdis_Content_Scraper_ScraperInterface {
 
 	/**
 	 * @var Tx_Asdis_Content_Scraper_Css_Url

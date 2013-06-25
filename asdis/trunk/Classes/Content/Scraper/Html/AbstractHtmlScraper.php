@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Abstract scraper which provides general functionality to scrape paths from HTML tag attributes.
+ *
+ * @package Tx_Asdis
+ * @subpackage Content_Scraper_Html
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 abstract class Tx_Asdis_Content_Scraper_Html_AbstractHtmlScraper {
 
 	/**
