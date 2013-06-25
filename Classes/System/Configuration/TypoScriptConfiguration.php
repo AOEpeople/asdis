@@ -3,11 +3,6 @@
 class Tx_Asdis_System_Configuration_TypoScriptConfiguration implements t3lib_Singleton {
 
 	/**
-	 * @var string
-	 */
-	const TYPOSCRIPT_EXTENSION_NAMESPACE = 'tx_asdis.';
-
-	/**
 	 * @var array
 	 */
 	private $configuration;
@@ -71,13 +66,6 @@ class Tx_Asdis_System_Configuration_TypoScriptConfiguration implements t3lib_Sin
 		if (TYPO3_MODE !== 'FE') {
 			return;
 		}
-		/** @var tslib_fe $tsConfig */
-		$tsConfig = $GLOBALS['TSFE']->getPagesTSconfig();
-		if(
-			isset($tsConfig[self::TYPOSCRIPT_EXTENSION_NAMESPACE]) &&
-			is_array($tsConfig[self::TYPOSCRIPT_EXTENSION_NAMESPACE])
-		) {
-			$this->configuration = $tsConfig[self::TYPOSCRIPT_EXTENSION_NAMESPACE];
-		}
+		$this->configuration = $GLOBALS['TSFE']->tmpl->setup['config.']['tx_asdis.'];
 	}
 }

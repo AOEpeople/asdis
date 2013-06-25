@@ -25,11 +25,6 @@ class Tx_Asdis_Domain_Model_Page {
 	private $pageObject;
 
 	/**
-	 * @var Tx_Asdis_System_Configuration_TypoScriptConfiguration
-	 */
-	private $configuration;
-
-	/**
 	 * @var Tx_Asdis_Content_Scraper_ChainFactory
 	 */
 	private $scraperChainFactory;
@@ -43,6 +38,11 @@ class Tx_Asdis_Domain_Model_Page {
 	 * @var Tx_Asdis_Domain_Repository_ServerRepository
 	 */
 	private $serverRepository;
+
+	/**
+	 * @var Tx_Asdis_System_Configuration_Provider
+	 */
+	private $configurationProvider;
 
 	/**
 	 * @param Tx_Asdis_Content_Scraper_ChainFactory $scraperChainFactory
@@ -66,9 +66,19 @@ class Tx_Asdis_Domain_Model_Page {
 	}
 
 	/**
+	 * @param Tx_Asdis_System_Configuration_Provider $configurationProvider
+	 */
+	public function injectConfigurationProvider(Tx_Asdis_System_Configuration_Provider $configurationProvider) {
+		$this->configurationProvider = $configurationProvider;
+	}
+
+	/**
 	 *
 	 */
 	public function scrapeAssets() {
+		if(FALSE === $this->configurationProvider->isReplacementEnabled()) {
+			return;
+		}
 		$this->setAssets($this->scraperChainFactory->buildChain()->scrape($this->getContent()));
 	}
 

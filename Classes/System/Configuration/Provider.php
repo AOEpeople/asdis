@@ -20,16 +20,13 @@ class Tx_Asdis_System_Configuration_Provider {
 	 * @return boolean
 	 */
 	public function isReplacementEnabled() {
-		return (boolean) $this->typoScriptConfiguration->getSetting('enabled');
+		return (boolean) ((integer) $this->typoScriptConfiguration->getSetting('enabled'));
 	}
 
 	/**
 	 * @return array
 	 */
 	public function getScraperKeys() {
-
-		return array('htmlImage');
-
 		$keyList = $this->typoScriptConfiguration->getSetting('scrapers', 'string');
 		$keys    = explode(",", $keyList);
 		if (FALSE === is_array($keys) || sizeof($keys) < 1) {

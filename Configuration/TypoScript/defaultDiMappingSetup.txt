@@ -1,0 +1,10 @@
+config.tx_extbase {
+	objects {
+		Tx_Asdis_System_Log_BackendInterface {
+			className = Tx_Asdis_System_Log_FileBackend
+		}
+		Tx_Asdis_Domain_Model_DistributionAlgorithm_DistributionAlgorithmInterface {
+			className = Tx_Asdis_Domain_Model_DistributionAlgorithm_RoundRobin
+		}
+	}
+}

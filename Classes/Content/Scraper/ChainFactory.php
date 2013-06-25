@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Scraper chain factory.
+ *
+ * @package Tx_Asdis
+ * @subpackage Content_Scraper
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 class Tx_Asdis_Content_Scraper_ChainFactory {
 
 	const DECLARATION_KEY_KEY = 'key';
