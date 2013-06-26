@@ -20,13 +20,6 @@ class Tx_Asdis_System_Configuration_TypoScriptConfiguration implements t3lib_Sin
 	private $configurationCache = array();
 
 	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		$this->initializeTypoScriptConfiguration();
-	}
-
-	/**
 	 * @param string $key The setting key. E.g. "logger.severity"
 	 * @param string $validateType The data type to be validated against (E.g. "string"). Empty string to skip validation.
 	 * @param boolean $hasSubkeys Tells whether the requested key is assumed to has subkeys.
@@ -42,7 +35,7 @@ class Tx_Asdis_System_Configuration_TypoScriptConfiguration implements t3lib_Sin
 		if(FALSE === is_array($parts) || sizeof($parts) < 1) {
 			throw new Tx_Asdis_System_Configuration_Exception_TypoScriptSettingNotExists($key, 1372050700894);
 		}
-		$conf = $this->configuration;
+		$conf = $this->getTypoScriptConfigurationArray();
 		$lastPartIndex = sizeof($parts) - 1;
 		foreach($parts as $index => $part) {
 			$subkey = $part;
@@ -65,12 +58,9 @@ class Tx_Asdis_System_Configuration_TypoScriptConfiguration implements t3lib_Sin
 	}
 
 	/**
-	 * Initializes the TypoScript configuration array.
-	 *
-	 * @return void
+	 * @return array
 	 */
-	private function initializeTypoScriptConfiguration() {
-		$this->configuration = array();
-		$this->configuration = $GLOBALS['TSFE']->tmpl->setup['config.']['tx_asdis.'];
+	protected function getTypoScriptConfigurationArray() {
+		return $GLOBALS['TSFE']->tmpl->setup['config.']['tx_asdis.'];
 	}
 }

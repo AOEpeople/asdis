@@ -113,4 +113,12 @@ class Tx_Asdis_System_Configuration_Provider {
 	public function getSyslogSeverity() {
 		return (integer) $this->typoScriptConfiguration->getSetting('logger.syslogSeverity', 'string');
 	}
+
+	/**
+	 * @param integer $loggerBackend
+	 * @return array
+	 */
+	public function getLoggerBackendConfiguration($loggerBackend) {
+		return $this->typoScriptConfiguration->getSetting('logger.backend.'.$loggerBackend, 'array', TRUE);
+	}
 }

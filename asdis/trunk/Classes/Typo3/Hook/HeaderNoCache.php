@@ -17,8 +17,9 @@ class Tx_Asdis_Typo3_Hook_HeaderNoCache extends Tx_Asdis_Typo3_Hook_AbstractHook
 	 * @return void
 	 */
 	public function process(&$params, tslib_fe &$pObj) {
-		if($this->getCrawler()->isCrawlerProcessingInstructionActive(Tx_Asdis_Typo3_Crawler::PUBLISH_PROCESSING_INSTRUCTION, $pObj)) {
+		//$this->getLogger()->log(get_class($this) . '::' . __METHOD__, 'processing');
+		/*if($this->getCrawler()->isCrawlerProcessingInstructionActive(Tx_Asdis_Typo3_Crawler::PUBLISH_PROCESSING_INSTRUCTION, $pObj)) {
 			$pObj->all = '';
-		}
+		}*/
 	}
 }

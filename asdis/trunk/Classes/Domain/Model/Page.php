@@ -86,7 +86,6 @@ class Tx_Asdis_Domain_Model_Page {
 		$this->injectDistributionAlgorithm(new Tx_Asdis_Domain_Model_DistributionAlgorithm_RoundRobin());
 		$this->distributionAlgorithm->distribute($this->getAssets(), $this->serverRepository->findAllByPage($this));
 		$replacement = $this->getAssets()->getReplacementMap();
-		//var_dump($replacement); die('h');
 		$this->setContent(preg_replace($replacement->getSourcePaths(), $replacement->getTargetPaths(), $this->getContent()));
 	}
 
