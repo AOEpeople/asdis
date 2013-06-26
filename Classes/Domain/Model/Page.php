@@ -93,8 +93,8 @@ class Tx_Asdis_Domain_Model_Page {
 		$this->distributionAlgorithm->distribute($this->getAssets(), $this->serverRepository->findAllByPage($this));
 		$replacement = $this->getAssets()->getReplacementMap();
 		$this->pageObject->content = preg_replace(
-			$replacement->getSourcePaths(),
-			$replacement->getTargetPaths(),
+			$replacement->getSources(),
+			$replacement->getTargets(),
 			$this->pageObject->content
 		);
 	}
