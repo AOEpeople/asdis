@@ -15,11 +15,6 @@ class Tx_Asdis_Domain_Model_Page {
 	private $assets;
 
 	/**
-	 * @var string
-	 */
-	private $serializedAssets;
-
-	/**
 	 * @var tslib_fe
 	 */
 	private $pageObject;
@@ -73,20 +68,35 @@ class Tx_Asdis_Domain_Model_Page {
 	}
 
 	/**
+	 * Scrapes the assets of the page. There is no replacement taking place. You have to call "replaceAssets" to replace
+	 * the paths after calling "scrapeAssets".
 	 *
+	 * @return void
 	 */
 	public function scrapeAssets() {
 		if(FALSE === $this->configurationProvider->isReplacementEnabled()) {
 			return;
 		}
-		$this->setAssets($this->scraperChainFactory->buildChain()->scrape($this->getContent()));
+		$this->setAssets($this->scraperChainFactory->buildChain()->scrape($this->pageObject->content));
 	}
 
+	/**
+	 * Replaces the assets of the page.
+	 * To force any replacement, you have to call "scrapeAssets" before.
+	 *
+	 * @return void
+	 */
 	public function replaceAssets() {
-		$this->injectDistributionAlgorithm(new Tx_Asdis_Domain_Model_DistributionAlgorithm_RoundRobin());
+		if(FALSE === $this->configurationProvider->isReplacementEnabled()) {
+			return;
+		}
 		$this->distributionAlgorithm->distribute($this->getAssets(), $this->serverRepository->findAllByPage($this));
 		$replacement = $this->getAssets()->getReplacementMap();
-		$this->setContent(preg_replace($replacement->getSourcePaths(), $replacement->getTargetPaths(), $this->getContent()));
+		$this->pageObject->content = preg_replace(
+			$replacement->getSourcePaths(),
+			$replacement->getTargetPaths(),
+			$this->pageObject->content
+		);
 	}
 
 	/**
@@ -94,7 +104,6 @@ class Tx_Asdis_Domain_Model_Page {
 	 */
 	public function setAssets(Tx_Asdis_Domain_Model_Asset_Collection $assets) {
 		$this->assets = $assets;
-		$this->setSerializedAssets(serialize($assets));
 	}
 
 	/**
@@ -105,47 +114,16 @@ class Tx_Asdis_Domain_Model_Page {
 	}
 
 	/**
+	 * @return tslib_fe
+	 */
+	public function getPageObject() {
+		return $this->pageObject;
+	}
+
+	/**
 	 * @return Tx_Asdis_Domain_Model_Asset_Collection
 	 */
 	public function getAssets() {
-		if(FALSE === isset($this->assets)) {
-			$this->assets = unserialize($this->serializedAssets);
-		}
 		return $this->assets;
-	}
-
-	/**
-	 * @return integer
-	 */
-	public function getLanguageUid() {
-		return $this->pageObject->sys_language_uid;
-	}
-
-	/**
-	 * @return integer
-	 */
-	public function getUid() {
-		return $this->pageObject->id;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getContent() {
-		return $this->pageObject->content;
-	}
-
-	/**
-	 * @param string $content
-	 */
-	public function setContent($content) {
-		$this->pageObject->content = $content;
-	}
-
-	/**
-	 * @param string $serializedAssets
-	 */
-	public function setSerializedAssets($serializedAssets) {
-		$this->serializedAssets = $serializedAssets;
 	}
 }

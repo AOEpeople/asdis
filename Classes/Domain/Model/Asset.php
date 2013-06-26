@@ -39,10 +39,24 @@ class Tx_Asdis_Domain_Model_Asset {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getOriginalPath() {
+		return $this->originalPath;
+	}
+
+	/**
 	 * @param string $normalizedPath
 	 */
 	public function setNormalizedPath($normalizedPath) {
 		$this->normalizedPath = $normalizedPath;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getNormalizedPath() {
+		return $this->normalizedPath;
 	}
 
 	/**

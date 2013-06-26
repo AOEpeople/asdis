@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 define('PATH_tx_asdis', t3lib_extMgm::extPath($_EXTKEY));
 
 // Register post rendernig hook
-$TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][]    = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcAll.php:&Tx_Asdis_Typo3_Hook_ContentPostProcAll->process';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][]  = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcAll.php:&Tx_Asdis_Typo3_Hook_ContentPostProcAll->process';
 
 // Register scrapers
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'] = array();
