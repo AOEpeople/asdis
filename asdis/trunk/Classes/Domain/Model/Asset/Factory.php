@@ -53,7 +53,7 @@ class Tx_Asdis_Domain_Model_Asset_Factory {
 		/** @var Tx_Asdis_Domain_Model_Asset $asset */
 		$asset = $this->objectManager->create('Tx_Asdis_Domain_Model_Asset');
 		$asset->setOriginalPath($path);
-		$asset->setRelativePath($this->getNormalizedPath($path));
+		$asset->setNormalizedPath($this->getNormalizedPath($path));
 		return $asset;
 	}
 
