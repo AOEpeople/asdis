@@ -5,14 +5,8 @@ if (!defined('TYPO3_MODE')) {
 
 define('PATH_tx_asdis', t3lib_extMgm::extPath($_EXTKEY));
 
-// Register Hooks
-// after render
-//$TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][]    = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcAll.php:&Tx_Asdis_Typo3_Hook_ContentPostProcAll->process';
-// before cache
-//$TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-cached'][] = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcCached.php:&Tx_Asdis_Typo3_Hook_ContentPostProcCached->process';
-
-// Register "Processing Instruction" key and label with "crawler" extension:
-// $TYPO3_CONF_VARS['EXTCONF']['crawler']['procInstructions']['tx_asdis_publish'] = 'Asdis publish';
+// Register post rendernig hook
+$TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][]    = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcAll.php:&Tx_Asdis_Typo3_Hook_ContentPostProcAll->process';
 
 // Register scrapers
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'] = array();
@@ -25,6 +19,11 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'key'   => 'htmlCssFile',
 	'class' => 'Tx_Asdis_Content_Scraper_Html_CssFile',
 	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/CssFile.php'
+);
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
+	'key'   => 'htmlAppleTouchIcon',
+	'class' => 'Tx_Asdis_Content_Scraper_Html_AppleTouchIcon',
+	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/AppleTouchIcon.php'
 );
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'key'   => 'htmlCssInline',
@@ -52,6 +51,11 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/InputImage.php'
 );
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
+	'key'   => 'htmlJQueryRetina',
+	'class' => 'Tx_Asdis_Content_Scraper_Html_JQueryRetina',
+	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/JQueryRetina.php'
+);
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'key'   => 'htmlOpenGraphImage',
 	'class' => 'Tx_Asdis_Content_Scraper_Html_OpenGraphImage',
 	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/OpenGraphImage.php'
@@ -77,6 +81,11 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
 	'key'   => 'containsProtocol',
 	'class' => 'Tx_Asdis_System_Uri_Filter_ContainsProtocol',
 	'file'  => PATH_tx_asdis . 'Classes/System/Uri/Filter/ContainsProtocol.php'
+);
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
+	'key'   => 'wildcardProtocol',
+	'class' => 'Tx_Asdis_System_Uri_Filter_WildcardProtocol',
+	'file'  => PATH_tx_asdis . 'Classes/System/Uri/Filter/WildcardProtocol.php'
 );
 
 

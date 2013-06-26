@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Abstract hook class.
+ *
+ * @package Tx_Asdis
+ * @subpackage Typo3_Hook
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 
 	/**
@@ -8,14 +15,14 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	private $objectManager;
 
 	/**
-	 * @var Tx_Asdis_Typo3_Crawler
-	 */
-	private $crawler;
-
-	/**
 	 * @var Tx_Asdis_System_Log_Logger
 	 */
 	private $logger;
+
+	/**
+	 * @var Tx_Asdis_Domain_Model_Page
+	 */
+	private $page;
 
 	/**
 	 * Constructor.
@@ -40,33 +47,34 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	}
 
 	/**
-	 * @return Tx_Asdis_Typo3_Crawler
+	 *
 	 */
-	protected function getCrawler() {
-		if(FALSE === isset($this->crawler)) {
-			$this->crawler = $this->getObjectManager()->get('Tx_Asdis_Typo3_Crawler');
-		}
-		return $this->crawler;
-	}
-
-	/**
-	 * @param tslib_fe $pObj
-	 */
-	protected function scrapeAssets(tslib_fe $pObj) {
+	protected function scrapeAssets() {
 		$this->getLogger()->log(__METHOD__, 'scrapeAssets');
-		$page = $this->getPage($pObj);
-		$page->scrapeAssets();
-		$page->replaceAssets();
+		$this->page->scrapeAssets();
 	}
 
 	/**
 	 * @param tslib_fe $pObj
 	 */
-	protected function replaceAssets(tslib_fe $pObj) {
-		return;
-		/** @var Tx_Asdis_Content_Processor $processor */
-		$processor = $this->getObjectManager()->get('Tx_Asdis_Content_Processor');
-		$processor->replaceAssets($pObj);
+	protected function replaceAssets() {
+		$this->getLogger()->log(__METHOD__, 'replaceAssets');
+		$this->page->replaceAssets();
+	}
+
+	/**
+	 *
+	 */
+	protected function scrapeAndReplace() {
+		$this->scrapeAssets();
+		$this->replaceAssets();
+	}
+
+	/**
+	 * @param tslib_fe $pObj
+	 */
+	protected function setPageObject(tslib_fe $pObj) {
+		$this->page = $this->getPageRepository()->findOneByPageObject($pObj);
 	}
 
 	/**
@@ -74,7 +82,7 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	 * @return Tx_Asdis_Domain_Model_Page
 	 */
 	private function getPage(tslib_fe $pObj) {
-		return $this->getPageRepository()->findOneByPageObject($pObj);
+		return $this->page;
 	}
 
 	/**

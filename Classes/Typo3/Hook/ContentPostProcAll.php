@@ -23,8 +23,9 @@ class Tx_Asdis_Typo3_Hook_ContentPostProcAll extends Tx_Asdis_Typo3_Hook_Abstrac
 			}
 		}
 		try {
+			$this->setPageObject($pObj);
 			$this->getLogger()->log(__METHOD__, 'processing');
-			$this->scrapeAssets($pObj);
+			$this->scrapeAndReplace();
 		} catch(Exception $e) {
 			$this->getLogger()->logException(__METHOD__, $e);
 		}

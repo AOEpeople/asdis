@@ -24,7 +24,7 @@ class Tx_Asdis_System_Log_FileBackend implements Tx_Asdis_System_Log_BackendInte
 	public function log($context, $message, $severity) {
 		$success = file_put_contents(
 			$this->getLogfile(),
-			strftime("%F %R"). ' ' . $this->severityToString($severity) . ' - '.$context.' : '.$message.PHP_EOL,
+			strftime("%F %T"). ' ' . $this->severityToString($severity) . ' - '.$context.' : '.$message.PHP_EOL,
 			FILE_APPEND
 		);
 		if($success === FALSE) {

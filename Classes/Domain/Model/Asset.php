@@ -12,11 +12,6 @@ class Tx_Asdis_Domain_Model_Asset {
 	/**
 	 * @var string
 	 */
-	private $relativePath;
-
-	/**
-	 * @var string
-	 */
 	private $originalPath;
 
 	/**
@@ -33,35 +28,19 @@ class Tx_Asdis_Domain_Model_Asset {
 	 * @return string
 	 */
 	public function getHash() {
-		return md5($this->originalPath.$this->normalizedPath);
+		return md5($this->originalPath);
 	}
 
-	/**
-	 * @param string $relativePath
-	 */
-	public function setRelativePath($relativePath) {
-		$this->relativePath = $relativePath;
-	}
-	/**
-	 * @return string
-	 */
-	public function getRelativePath() {
-		return $this->relativePath;
-	}
 	/**
 	 * @param string $originalPath
 	 */
 	public function setOriginalPath($originalPath) {
 		$this->originalPath = $originalPath;
-		$this->setNormalizedPath($originalPath);
-	}
-	/**
-	 * @return string
-	 */
-	public function getOriginalPath() {
-		return $this->originalPath;
 	}
 
+	/**
+	 * @param string $normalizedPath
+	 */
 	public function setNormalizedPath($normalizedPath) {
 		$this->normalizedPath = $normalizedPath;
 	}
@@ -70,18 +49,16 @@ class Tx_Asdis_Domain_Model_Asset {
 	 * @return string
 	 */
 	public function getPregQuotedOriginalPath() {
-		return '~/?' . preg_quote($this->getOriginalPath()) . '~is';
+		return '~/?' . preg_quote($this->originalPath) . '~is';
 	}
 
-	function __toString() {
-		return $this->relativePath.':'.$this->originalPath;
-	}
 	/**
 	 * @param Tx_Asdis_Domain_Model_Server $server
 	 */
 	public function setServer(Tx_Asdis_Domain_Model_Server $server) {
 		$this->server = $server;
 	}
+
 	/**
 	 * @return Tx_Asdis_Domain_Model_Server
 	 */
