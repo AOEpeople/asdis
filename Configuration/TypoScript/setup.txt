@@ -8,5 +8,10 @@ config.tx_asdis {
 	logger {
 		severity = 0
 		syslogSeverity = 3
+		backend {
+			file {
+				path = /home/timo.fuchs/log.log
+			}
+		}
 	}
 }
