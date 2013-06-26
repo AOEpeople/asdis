@@ -25,10 +25,16 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	private $page;
 
 	/**
+	 * @var Tx_Asdis_System_Configuration_Provider
+	 */
+	private $configurationProvider;
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
 		$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+		$this->configurationProvider = $this->objectManager->get('Tx_Asdis_System_Configuration_Provider');
 		$this->logger = $this->objectManager->get('Tx_Asdis_System_Log_Logger');
 	}
 
@@ -37,6 +43,13 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	 */
 	protected function getObjectManager() {
 		return $this->objectManager;
+	}
+
+	/**
+	 * @return Tx_Asdis_System_Configuration_Provider
+	 */
+	protected function getConfigurationProvider() {
+		return $this->configurationProvider;
 	}
 
 	/**
@@ -86,9 +99,9 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	}
 
 	/**
-	 * @return Tx_Asdis_Domain_Repository_PageRepository
+	 * @return Tx_Asdis_Domain_Repository_PageRepositoryInterface
 	 */
 	private function getPageRepository() {
-		return $this->getObjectManager()->get('Tx_Asdis_Domain_Repository_PageRepository');
+		return $this->getObjectManager()->get('Tx_Asdis_Domain_Repository_PageRepositoryInterface');
 	}
 }

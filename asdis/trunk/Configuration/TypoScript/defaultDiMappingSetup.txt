@@ -3,6 +3,12 @@ config.tx_extbase {
 		Tx_Asdis_System_Log_BackendInterface {
 			className = Tx_Asdis_System_Log_FileBackend
 		}
+		Tx_Asdis_Domain_Repository_PageRepositoryInterface {
+			className = Tx_Asdis_Domain_Repository_PageRepository
+		}
+		Tx_Asdis_Domain_Repository_ServerRepositoryInterface {
+			className = Tx_Asdis_Domain_Repository_ServerRepository
+		}
 		Tx_Asdis_Domain_Model_DistributionAlgorithm_DistributionAlgorithmInterface {
 			className = Tx_Asdis_Domain_Model_DistributionAlgorithm_RoundRobin
 		}

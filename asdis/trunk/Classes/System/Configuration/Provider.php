@@ -31,6 +31,16 @@ class Tx_Asdis_System_Configuration_Provider {
 	}
 
 	/**
+	 * This disables any processing in hook handlers of the asdis extension.
+	 * You can use this, if you have to implement your own hook processing in another extension.
+	 *
+	 * @return boolean
+	 */
+	public function isDefaultHookHandlingDisabled() {
+		return (boolean)((integer)$this->typoScriptConfiguration->getSetting('disableDefaultHookHandling'));
+	}
+
+	/**
 	 * Returns the scraper keys for the current page.
 	 *
 	 * @return array

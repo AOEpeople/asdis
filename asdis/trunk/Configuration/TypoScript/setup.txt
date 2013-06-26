@@ -1,5 +1,6 @@
 config.tx_asdis {
 	enabled = 0
+	disableDefaultHookHandling = 0
 	scrapers = htmlCssFile,htmlCssInline,htmlEmbed,htmlFavicon,htmlImage,htmlInputImage,htmlOpenGraphImage,htmlScript,htmlJQueryRetina,htmlAppleTouchIcon
 	filters = bubblingPath,containsProtocol,wildcardProtocol
 	servers {
