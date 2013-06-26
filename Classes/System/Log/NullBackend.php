@@ -17,4 +17,9 @@ class Tx_Asdis_System_Log_NullBackend implements Tx_Asdis_System_Log_BackendInte
 	 */
 	public function log($context, $message, $severity) { }
 
+	/**
+	 * @param array $configuration
+	 * @return void
+	 */
+	public function setConfiguration(array $configuration) { }
 }

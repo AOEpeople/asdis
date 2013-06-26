@@ -22,12 +22,11 @@ class Tx_Asdis_Typo3_Hook_ContentPostProcAll extends Tx_Asdis_Typo3_Hook_Abstrac
 				$pObj = $GLOBALS['TSFE'];
 			}
 		}
-
-		if ($this->getCrawler()->isCrawlerProcessingInstructionActive(Tx_Asdis_Typo3_Crawler::PUBLISH_PROCESSING_INSTRUCTION, $pObj)) {
-			//Tx_Cdn_Typo3_HookListener::onTriggeredResynchronize($pObj);
+		try {
+			$this->getLogger()->log(__METHOD__, 'processing');
+			$this->scrapeAssets($pObj);
+		} catch(Exception $e) {
+			$this->getLogger()->logException(__METHOD__, $e);
 		}
-		//die('x');
-		//$this->replaceAssets($pObj);
-		$this->scrapeAssets($pObj);
 	}
 }

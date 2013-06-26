@@ -13,13 +13,30 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	private $crawler;
 
 	/**
+	 * @var Tx_Asdis_System_Log_Logger
+	 */
+	private $logger;
+
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+		$this->logger = $this->objectManager->get('Tx_Asdis_System_Log_Logger');
+	}
+
+	/**
 	 * @return Tx_Extbase_Object_ObjectManagerInterface
 	 */
 	protected function getObjectManager() {
-		if(FALSE === isset($this->objectManager)) {
-			$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
-		}
 		return $this->objectManager;
+	}
+
+	/**
+	 * @return Tx_Asdis_System_Log_Logger
+	 */
+	protected function getLogger() {
+		return $this->logger;
 	}
 
 	/**
@@ -36,6 +53,7 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	 * @param tslib_fe $pObj
 	 */
 	protected function scrapeAssets(tslib_fe $pObj) {
+		$this->getLogger()->log(__METHOD__, 'scrapeAssets');
 		$page = $this->getPage($pObj);
 		$page->scrapeAssets();
 		$page->replaceAssets();

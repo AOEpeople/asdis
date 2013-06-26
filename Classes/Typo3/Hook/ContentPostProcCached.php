@@ -17,9 +17,14 @@ class Tx_Asdis_Typo3_Hook_ContentPostProcCached extends Tx_Asdis_Typo3_Hook_Abst
 	 * @return void
 	 */
 	public function process(array &$params, &$pObj) {
-		$this->scrapeAssets($pObj);
-		if($pObj->isStaticCacheble()) {
-			//$this->replaceAssets($pObj);
+		try {
+			$this->getLogger()->log(__METHOD__, 'processing');
+			//$this->scrapeAssets($pObj);
+			if ($pObj->isStaticCacheble()) {
+				//$this->replaceAssets($pObj);
+			}
+		} catch(Exception $e) {
+			$this->getLogger()->logException(__METHOD__, $e);
 		}
 	}
 }

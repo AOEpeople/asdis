@@ -12,8 +12,16 @@ interface Tx_Asdis_System_Log_BackendInterface {
 	/**
 	 * @param string $context
 	 * @param string $message
-	 * @param string $severity
+	 * @param integer $severity
+	 * @throws Tx_Asdis_System_Log_Exception_LoggingNotPossible
 	 * @return void
 	 */
 	public function log($context, $message, $severity);
+
+	/**
+	 * @param array $configuration
+	 * @throws Tx_Asdis_System_Log_Exception_LoggingNotPossible
+	 * @return void
+	 */
+	public function setConfiguration(array $configuration);
 }
