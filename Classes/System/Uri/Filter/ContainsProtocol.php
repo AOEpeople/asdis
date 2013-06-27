@@ -16,7 +16,7 @@ class Tx_Asdis_System_Uri_Filter_ContainsProtocol implements Tx_Asdis_System_Uri
 	public function filter(array $paths) {
 		$filteredPaths = array();
 		foreach($paths as $path) {
-			if($this->containsProtocol($path)) {
+			if($this->containsProtocol($path) || $this->containsProtocolMarker($path)) {
 				continue;
 			}
 			$filteredPaths[] = $path;
@@ -30,5 +30,13 @@ class Tx_Asdis_System_Uri_Filter_ContainsProtocol implements Tx_Asdis_System_Uri
 	 */
 	private function containsProtocol($path) {
 		return (1 === preg_match('/^(http|https)\:/', $path));
+	}
+
+	/**
+	 * @param string $path
+	 * @return boolean
+	 */
+	private function containsProtocolMarker($path) {
+		return (1 === preg_match('/^(###HTTP###|###HTTP_S###)/', $path));
 	}
 }
