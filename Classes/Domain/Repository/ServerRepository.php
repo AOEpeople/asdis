@@ -56,7 +56,8 @@ class Tx_Asdis_Domain_Repository_ServerRepository implements Tx_Asdis_Domain_Rep
 		foreach($serverDefinitions as $serverDefinition) {
 			$servers->append($this->serverFactory->createServer(
 				$serverDefinition['identifier'],
-				$serverDefinition['domain']
+				$serverDefinition['domain'],
+				$serverDefinition['protocol']
 			));
 		}
 		return $servers;

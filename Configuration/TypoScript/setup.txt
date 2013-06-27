@@ -1,17 +1,20 @@
 config.tx_asdis {
 	enabled = 0
 	disableDefaultHookHandling = 0
-	scrapers = htmlCssFile,htmlCssInline,htmlEmbed,htmlFavicon,htmlImage,htmlInputImage,htmlOpenGraphImage,htmlScript,htmlJQueryRetina,htmlAppleTouchIcon
+	scrapers = htmlCssFile,htmlCssInline,htmlEmbed,htmlFavicon,htmlImage,htmlInputImage,htmlScript
 	filters = bubblingPath,containsProtocol,wildcardProtocol
 	servers {
 
 	}
 	logger {
-		severity = 0
+		severity = 4
 		syslogSeverity = 3
 		backend {
+			null {
+
+			}
 			file {
-				path = /home/timo.fuchs/log.log
+				path = 0
 			}
 		}
 	}

@@ -81,11 +81,13 @@ class Tx_Asdis_System_Configuration_Provider {
 	 * array(
 	 *     array(
 	 *         'identifier' => 'media1',
-	 *         'domain'     => 'm1.mydomain.com'
+	 *         'domain'     => 'm1.mydomain.com',
+	 *         'protocol'   => 'dynamic'
 	 *     ),
 	 *     array(
 	 *         'identifier' => 'media2',
-	 *         'domain'     => 'm2.mydomain.com'
+	 *         'domain'     => 'm2.mydomain.com',
+	 *         'protocol'   => 'http'
 	 *     )
 	 * )
 	 *
@@ -102,9 +104,13 @@ class Tx_Asdis_System_Configuration_Provider {
 					1372159113552
 				);
 			}
+			if(FALSE === isset($serverDefinition['protocol'])) {
+				$serverDefinition['protocol'] = 'dynamic';
+			}
 			$definitions[] = array(
 				'identifier' => $identifier,
-				'domain'     => $serverDefinition['domain']
+				'domain'     => $serverDefinition['domain'],
+				'protocol'   => $serverDefinition['protocol']
 			);
 		}
 		return $definitions;

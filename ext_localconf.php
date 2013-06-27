@@ -9,7 +9,6 @@ define('PATH_tx_asdis', t3lib_extMgm::extPath($_EXTKEY));
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][]  = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcAll.php:&Tx_Asdis_Typo3_Hook_ContentPostProcAll->process';
 
 // Register scrapers
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'] = array();
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'key'   => 'cssUrl',
 	'class' => 'Tx_Asdis_Content_Scraper_Css_Url',
@@ -49,11 +48,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'key'   => 'htmlInputImage',
 	'class' => 'Tx_Asdis_Content_Scraper_Html_InputImage',
 	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/InputImage.php'
-);
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
-	'key'   => 'htmlJQueryRetina',
-	'class' => 'Tx_Asdis_Content_Scraper_Html_JQueryRetina',
-	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/JQueryRetina.php'
 );
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'key'   => 'htmlOpenGraphImage',

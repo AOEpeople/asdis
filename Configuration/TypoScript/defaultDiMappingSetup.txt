@@ -1,7 +1,7 @@
 config.tx_extbase {
 	objects {
 		Tx_Asdis_System_Log_BackendInterface {
-			className = Tx_Asdis_System_Log_FileBackend
+			className = Tx_Asdis_System_Log_NullBackend
 		}
 		Tx_Asdis_Domain_Repository_PageRepositoryInterface {
 			className = Tx_Asdis_Domain_Repository_PageRepository
