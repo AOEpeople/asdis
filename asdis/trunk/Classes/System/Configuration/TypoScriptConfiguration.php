@@ -33,6 +33,7 @@ class Tx_Asdis_System_Configuration_TypoScriptConfiguration implements t3lib_Sin
 		}
 		$parts = explode(".", $key);
 		if(FALSE === is_array($parts) || sizeof($parts) < 1) {
+
 			throw new Tx_Asdis_System_Configuration_Exception_TypoScriptSettingNotExists($key, 1372050700894);
 		}
 		$conf = $this->getTypoScriptConfigurationArray();
