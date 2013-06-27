@@ -43,6 +43,13 @@ class Tx_Asdis_Content_Replacement_MapTest extends Tx_Asdis_Tests_AbstractTestca
 		$sources = $this->map->getSources();
 		$targets = $this->map->getTargets();
 		$this->assertInternalType('array', $sources);
+		$this->assertInternalType('array', $targets);
+		$this->assertEquals(2, sizeof($sources));
+		$this->assertEquals(2, sizeof($targets));
+		$this->assertEquals($source1, $sources[0]);
+		$this->assertEquals($source2, $sources[1]);
+		$this->assertEquals($target1, $targets[0]);
+		$this->assertEquals($target2, $targets[1]);
 	}
 }
 

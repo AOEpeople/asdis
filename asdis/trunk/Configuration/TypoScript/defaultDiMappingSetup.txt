@@ -10,7 +10,7 @@ config.tx_extbase {
 			className = Tx_Asdis_Domain_Repository_ServerRepository
 		}
 		Tx_Asdis_Domain_Model_DistributionAlgorithm_DistributionAlgorithmInterface {
-			className = Tx_Asdis_Domain_Model_DistributionAlgorithm_RoundRobin
+			className = Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups
 		}
 	}
 }
