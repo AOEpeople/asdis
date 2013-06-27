@@ -12,7 +12,7 @@ class Tx_Asdis_Typo3_Hook_ContentPostProcAll extends Tx_Asdis_Typo3_Hook_Abstrac
 	 * @param tslib_fe $pObj
 	 * @return void
 	 */
-	public function process(&$params, tslib_fe &$pObj = NULL) {
+	public function process(&$params, tslib_fe $pObj = NULL) {
 		if($this->getConfigurationProvider()->isDefaultHookHandlingDisabled()) {
 			return;
 		}

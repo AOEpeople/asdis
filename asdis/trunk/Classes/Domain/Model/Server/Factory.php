@@ -22,26 +22,17 @@ class Tx_Asdis_Domain_Model_Server_Factory {
 	}
 
 	/**
-	 * @param $identifier
-	 * @param $domain
+	 * @param string $identifier
+	 * @param string $domain
+	 * @param string $protocol
 	 * @return Tx_Asdis_Domain_Model_Server
 	 */
-	public function createServer($identifier, $domain) {
+	public function createServer($identifier, $domain, $protocol) {
 		/** @var Tx_Asdis_Domain_Model_Server $server */
 		$server = $this->objectManager->create('Tx_Asdis_Domain_Model_Server');
 		$server->setIdentifier($identifier);
 		$server->setDomain($domain);
-		$server->setProtocol($this->getProtocol());
+		$server->setProtocol($protocol);
 		return $server;
-	}
-
-	/**
-	 * @return string
-	 */
-	private function getProtocol() {
-		if(strlen($_SERVER['HTTPS']) > 0 || strtolower($_SERVER['HTTPS']) !== 'off') {
-			return Tx_Asdis_Domain_Model_Server::PROTOCOL_HTTPS;
-		}
-		return Tx_Asdis_Domain_Model_Server::PROTOCOL_HTTP;
 	}
 }

@@ -28,7 +28,7 @@ class Tx_Asdis_Domain_Repository_ServerRepositoryTest extends Tx_Asdis_Tests_Abs
 		$this->serverRepository = null;
 	}
 	/**
-	 * Tests Tx_Asdis_Domain_Repository_ServerRepository->findAllByPage()
+	 * Tests Tx_Asdis_Domain_Repository_ServerRepository->findAll()
 	 * @test
 	 */
 	public function findAllByPage() {
@@ -45,7 +45,7 @@ class Tx_Asdis_Domain_Repository_ServerRepositoryTest extends Tx_Asdis_Tests_Abs
 		$factory = $this->getMock('Tx_Asdis_Domain_Model_Server_Factory');
 		$factory->expects($this->once())->method('createServer')->will($this->returnValue($this->getMock('Tx_Asdis_Domain_Model_Server')));
 		$this->serverRepository->injectServerFactory($factory);
-		$test = $this->serverRepository->findAllByPage($this->getMock('Tx_Asdis_Domain_Model_Page'));
+		$test = $this->serverRepository->findAll();
 		$this->assertTrue($test instanceof Tx_Asdis_Domain_Model_Server_Collection);
 	}
 }

@@ -12,6 +12,11 @@ class Tx_Asdis_Domain_Model_Server {
 	/**
 	 * @var string
 	 */
+	const PROTOCOL_DYNAMIC = 'dynamic';
+
+	/**
+	 * @var string
+	 */
 	const PROTOCOL_HTTP = 'http';
 
 	/**
@@ -66,6 +71,9 @@ class Tx_Asdis_Domain_Model_Server {
 	 * @param string $protocol
 	 */
 	public function setProtocol($protocol) {
+		if(FALSE === in_array($protocol, array(self::PROTOCOL_HTTP, self::PROTOCOL_HTTPS, self::PROTOCOL_DYNAMIC))) {
+			return;
+		}
 		$this->protocol = $protocol;
 	}
 
@@ -80,6 +88,20 @@ class Tx_Asdis_Domain_Model_Server {
 	 * @return string
 	 */
 	public function getUri() {
-		return $this->protocol . '://' . $this->domain . '/';
+		$protocol = $this->protocol;
+		if($protocol === self::PROTOCOL_DYNAMIC) {
+			$protocol = $this->getRequestProtocol();
+		}
+		return $protocol . '://' . $this->domain . '/';
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getRequestProtocol() {
+		if (strlen($_SERVER['HTTPS']) > 0 || strtolower($_SERVER['HTTPS']) !== 'off') {
+			return Tx_Asdis_Domain_Model_Server::PROTOCOL_HTTPS;
+		}
+		return Tx_Asdis_Domain_Model_Server::PROTOCOL_HTTP;
 	}
 }
