@@ -1,21 +1,10 @@
 config.tx_asdis {
 	enabled = 0
 	disableDefaultHookHandling = 0
+	distributionAlgorithm = hashBasedGroups
 	scrapers = htmlCssFile,htmlCssInline,htmlEmbed,htmlFavicon,htmlImage,htmlInputImage,htmlScript
 	filters = bubblingPath,containsProtocol,wildcardProtocol
 	servers {
 
-	}
-	logger {
-		severity = 4
-		syslogSeverity = 3
-		backend {
-			null {
-
-			}
-			file {
-				path = 0
-			}
-		}
 	}
 }

@@ -3,8 +3,8 @@
  * @package    asdis
  * @subpackage Tests
  */
-require_once dirname(__FILE__).'/../../../Classes/System/Configuration/TypoScriptConfiguration.php';
-require_once dirname(__FILE__).'/../../../Tests/AbstractTestcase.php';
+require_once dirname(__FILE__) . '/../../../Classes/System/Configuration/TypoScriptConfiguration.php';
+require_once dirname(__FILE__) . '/../../../Tests/AbstractTestcase.php';
 /**
  * Tx_Asdis_System_Configuration_TypoScriptConfiguration test case.
  */
@@ -26,7 +26,7 @@ class Tx_Asdis_System_Configuration_TypoScriptConfigurationTest extends Tx_Asdis
 	 * @see PHPUnit_Framework_TestCase::tearDown()
 	 */
 	protected function tearDown() {
-		$this->typoScriptConfiguration = null;
+		$this->typoScriptConfiguration = NULL;
 	}
 	/**
 	 * Tests Tx_Asdis_System_Configuration_TypoScriptConfiguration->getSetting()

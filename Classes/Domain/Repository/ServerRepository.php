@@ -7,7 +7,7 @@
  * @subpackage Domain_Model
  * @author Timo Fuchs <timo.fuchs@aoemedia.de>
  */
-class Tx_Asdis_Domain_Repository_ServerRepository implements Tx_Asdis_Domain_Repository_ServerRepositoryInterface {
+class Tx_Asdis_Domain_Repository_ServerRepository {
 
 	/**
 	 * @var Tx_Extbase_Object_ObjectManagerInterface

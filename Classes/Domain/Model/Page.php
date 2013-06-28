@@ -25,9 +25,9 @@ class Tx_Asdis_Domain_Model_Page {
 	private $scraperChainFactory;
 
 	/**
-	 * @var Tx_Asdis_Domain_Model_DistributionAlgorithm_DistributionAlgorithmInterface
+	 * @var Tx_Asdis_Domain_Model_DistributionAlgorithm_Factory
 	 */
-	private $distributionAlgorithm;
+	private $distributionAlgorithmFactory;
 
 	/**
 	 * @var Tx_Asdis_Domain_Repository_ServerRepository
@@ -47,10 +47,10 @@ class Tx_Asdis_Domain_Model_Page {
 	}
 
 	/**
-	 * @param Tx_Asdis_Domain_Model_DistributionAlgorithm_DistributionAlgorithmInterface $distributionAlgorithm
+	 * @param Tx_Asdis_Domain_Model_DistributionAlgorithm_Factory $distributionAlgorithmFactory
 	 */
-	public function injectDistributionAlgorithm(Tx_Asdis_Domain_Model_DistributionAlgorithm_DistributionAlgorithmInterface $distributionAlgorithm) {
-		$this->distributionAlgorithm = $distributionAlgorithm;
+	public function injectDistributionAlgorithmFactory(Tx_Asdis_Domain_Model_DistributionAlgorithm_Factory $distributionAlgorithmFactory) {
+		$this->distributionAlgorithmFactory = $distributionAlgorithmFactory;
 	}
 
 	/**
@@ -90,7 +90,12 @@ class Tx_Asdis_Domain_Model_Page {
 		if(FALSE === $this->configurationProvider->isReplacementEnabled()) {
 			return;
 		}
-		$this->distributionAlgorithm->distribute($this->getAssets(), $this->serverRepository->findAllByPage($this));
+		$distributionAlgorithmKey = '';
+		try {
+			$distributionAlgorithmKey = $this->configurationProvider->getDistributionAlgorithmKey();
+		} catch(Exception $e) {}
+		$distributionAlgorithm = $this->distributionAlgorithmFactory->buildDistributionAlgorithmFromKey($distributionAlgorithmKey);
+		$distributionAlgorithm->distribute($this->getAssets(), $this->serverRepository->findAllByPage($this));
 		$replacement = $this->getAssets()->getReplacementMap();
 		$this->pageObject->content = preg_replace(
 			$replacement->getSources(),

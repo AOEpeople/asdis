@@ -1,7 +1,7 @@
 <?php
 
 /**
- * .
+ * A distribution algorithm which is based on the assets hashed filenames.
  *
  * @package Tx_Asdis
  * @subpackage Domain_Model_DistributionAlgorithm

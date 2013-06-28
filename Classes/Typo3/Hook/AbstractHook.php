@@ -60,10 +60,9 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	}
 
 	/**
-	 *
+	 * @return void
 	 */
 	protected function scrapeAssets() {
-		$this->getLogger()->log(__METHOD__, 'scrapeAssets');
 		$this->page->scrapeAssets();
 	}
 
@@ -71,12 +70,13 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	 * @param tslib_fe $pObj
 	 */
 	protected function replaceAssets() {
-		$this->getLogger()->log(__METHOD__, 'replaceAssets');
 		$this->page->replaceAssets();
 	}
 
 	/**
+	 * Scrapes and replaces the assets of the current page.
 	 *
+	 * @return void
 	 */
 	protected function scrapeAndReplace() {
 		$this->scrapeAssets();
@@ -87,21 +87,10 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	 * @param tslib_fe $pObj
 	 */
 	protected function setPageObject(tslib_fe $pObj) {
-		$this->page = $this->getPageRepository()->findOneByPageObject($pObj);
-	}
-
-	/**
-	 * @param tslib_fe $pObj
-	 * @return Tx_Asdis_Domain_Model_Page
-	 */
-	private function getPage(tslib_fe $pObj) {
-		return $this->page;
-	}
-
-	/**
-	 * @return Tx_Asdis_Domain_Repository_PageRepositoryInterface
-	 */
-	private function getPageRepository() {
-		return $this->getObjectManager()->get('Tx_Asdis_Domain_Repository_PageRepositoryInterface');
+		/** @var Tx_Asdis_Domain_Model_Page $page */
+		$page = $this->getObjectManager()->create('Tx_Asdis_Domain_Model_Page');
+		$page->setAssets($this->getObjectManager()->create('Tx_Asdis_Domain_Model_Asset_Collection'));
+		$page->setPageObject($pObj);
+		$this->page = $page;
 	}
 }
