@@ -82,15 +82,18 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
 	'file'  => PATH_tx_asdis . 'Classes/System/Uri/Filter/WildcardProtocol.php'
 );
 
+// Register distribution algorithms
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['distributionAlgorithms'][] = array(
+	'key'   => 'hashBasedGroups',
+	'class' => 'Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups',
+	'file'  => PATH_tx_asdis . 'Classes/Domain/Model/DistributionAlgorithm/HashBasedGroups.php'
+);
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['distributionAlgorithms'][] = array(
+	'key'   => 'roundRobin',
+	'class' => 'Tx_Asdis_Domain_Model_DistributionAlgorithm_RoundRobin',
+	'file'  => PATH_tx_asdis . 'Classes/Domain/Model/DistributionAlgorithm/RoundRobin.php'
+);
+
 t3lib_extMgm::addTypoScriptSetup(
 	file_get_contents(PATH_tx_asdis . 'Configuration/TypoScript/setup.txt')
 );
-
-// defualt extbase dependency injection class mapping setup
-t3lib_extMgm::addTypoScriptSetup(
-	file_get_contents(PATH_tx_asdis . 'Configuration/TypoScript/defaultDiMappingSetup.txt')
-);
-
-/** @var Tx_Asdis_Bootstrap $bootstrap */
-$bootstrap = t3lib_div::makeInstance('Tx_Asdis_Bootstrap');
-$bootstrap->run();

@@ -41,6 +41,13 @@ class Tx_Asdis_System_Configuration_Provider {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getDistributionAlgorithmKey() {
+		return (string) $this->typoScriptConfiguration->getSetting('distributionAlgorithm');
+	}
+
+	/**
 	 * Returns the scraper keys for the current page.
 	 *
 	 * @return array
@@ -114,27 +121,5 @@ class Tx_Asdis_System_Configuration_Provider {
 			);
 		}
 		return $definitions;
-	}
-
-	/**
-	 * @return integer
-	 */
-	public function getLoggerSeverity() {
-		return (integer) $this->typoScriptConfiguration->getSetting('logger.severity', 'string');
-	}
-
-	/**
-	 * @return integer
-	 */
-	public function getSyslogSeverity() {
-		return (integer) $this->typoScriptConfiguration->getSetting('logger.syslogSeverity', 'string');
-	}
-
-	/**
-	 * @param integer $loggerBackend
-	 * @return array
-	 */
-	public function getLoggerBackendConfiguration($loggerBackend) {
-		return $this->typoScriptConfiguration->getSetting('logger.backend.'.$loggerBackend, 'array', TRUE);
 	}
 }

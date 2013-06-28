@@ -7,45 +7,14 @@
  * @subpackage Content_Scraper
  * @author Timo Fuchs <timo.fuchs@aoemedia.de>
  */
-class Tx_Asdis_Content_Scraper_ChainFactory {
+class Tx_Asdis_Content_Scraper_ChainFactory extends Tx_Asdis_System_Factory_AbstractDeclarationBasedFactory {
 
 	/**
-	 * @var string
+	 * Constructor.
 	 */
-	const DECLARATION_KEY_KEY = 'key';
-
-	/**
-	 * @var string
-	 */
-	const DECLARATION_KEY_CLASS = 'class';
-
-	/**
-	 * @var string
-	 */
-	const DECLARATION_KEY_FILE = 'file';
-
-	/**
-	 * @var Tx_Extbase_Object_ObjectManager
-	 */
-	private $objectManager;
-
-	/**
-	 * @var Tx_Asdis_System_Configuration_Provider
-	 */
-	private $configurationProvider;
-
-	/**
-	 * @param Tx_Extbase_Object_ObjectManager $objectManager
-	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManager $objectManager) {
-		$this->objectManager = $objectManager;
-	}
-
-	/**
-	 * @param Tx_Asdis_System_Configuration_Provider $configurationProvider
-	 */
-	public function injectConfigurationProvider(Tx_Asdis_System_Configuration_Provider $configurationProvider) {
-		$this->configurationProvider = $configurationProvider;
+	public function __construct() {
+		$this->setDeclarations($this->getScraperDecalarations());
+		$this->setClassImplements(array('Tx_Asdis_Content_Scraper_ScraperInterface'));
 	}
 
 	/**
@@ -63,25 +32,18 @@ class Tx_Asdis_Content_Scraper_ChainFactory {
 	/**
 	 * @param string $scraperKey
 	 * @return Tx_Asdis_Content_Scraper_ScraperInterface
-	 * @throws Tx_Asdis_Content_Scraper_Exception_InvalidScraperDefinition
-	 * @throws Tx_Asdis_Content_Scraper_Exception_ScraperNotExists
 	 */
 	private function buildScraper($scraperKey) {
-		foreach($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'] as $scraperDeclaration) {
-			if($scraperKey !== $scraperDeclaration[self::DECLARATION_KEY_KEY]) {
-				continue;
-			}
-			if(FALSE === class_exists($scraperDeclaration[self::DECLARATION_KEY_CLASS])) {
-				require_once($scraperDeclaration[self::DECLARATION_KEY_FILE]);
-			}
-			$scraper = $this->objectManager->create($scraperDeclaration[self::DECLARATION_KEY_CLASS]);
-			if(FALSE === $scraper instanceof Tx_Asdis_Content_Scraper_ScraperInterface) {
-				throw new Tx_Asdis_Content_Scraper_Exception_InvalidScraperDefinition(
-					'Scraper "'.$scraperDeclaration[self::DECLARATION_KEY_CLASS].'" does not implement scraper interface.'
-				);
-			}
-			return $scraper;
+		return $this->buildObjectFromKey($scraperKey);
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getScraperDecalarations() {
+		if(FALSE === isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'])) {
+			return array();
 		}
-		throw new Tx_Asdis_Content_Scraper_Exception_ScraperNotExists($scraperKey);
+		return $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'];
 	}
 }
