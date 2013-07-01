@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Collection which contains asset objects.
+ * Collection which contains server objects.
  *
  * @package Tx_Asdis
  * @subpackage Domain_Model_Asset

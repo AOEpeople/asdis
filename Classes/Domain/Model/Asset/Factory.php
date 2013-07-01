@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Factory which builds asset objects and collections.
+ * Factory which builds server objects and collections.
  *
  * @package Tx_Asdis
  * @subpackage Domain_Model_Asset
@@ -46,29 +46,41 @@ class Tx_Asdis_Domain_Model_Asset_Factory {
 	}
 
 	/**
+	 * @param array $paths Array of path strings.
+	 * @return Tx_Asdis_Domain_Model_Asset_Collection
+	 */
+	public function createAssetsFromPaths(array $paths) {
+		$paths  = $this->filterChain->filter($paths);
+		$assets = $this->createAssetCollection();
+		foreach ($paths as $path) {
+			$assets->append($this->createAssetFromPath($path));
+		}
+		return $assets;
+	}
+
+	/**
 	 * @param $path
 	 * @return Tx_Asdis_Domain_Model_Asset
 	 */
 	protected function createAssetFromPath($path) {
-		/** @var Tx_Asdis_Domain_Model_Asset $asset */
-		$asset = $this->objectManager->create('Tx_Asdis_Domain_Model_Asset');
+		$asset = $this->createAsset();
 		$asset->setOriginalPath($path);
 		$asset->setNormalizedPath($this->getNormalizedPath($path));
 		return $asset;
 	}
 
 	/**
-	 * @param array $paths Array of path strings.
+	 * @return Tx_Asdis_Domain_Model_Asset
+	 */
+	protected function createAsset() {
+		return $this->objectManager->create('Tx_Asdis_Domain_Model_Asset');
+	}
+
+	/**
 	 * @return Tx_Asdis_Domain_Model_Asset_Collection
 	 */
-	public function createAssetsFromPaths(array $paths) {
-		$paths = $this->filterChain->filter($paths);
-		/** @var Tx_Asdis_Domain_Model_Asset_Collection $assets */
-		$assets = $this->objectManager->create('Tx_Asdis_Domain_Model_Asset_Collection');
-		foreach($paths as $path) {
-			$assets->append($this->createAssetFromPath($path));
-		}
-		return $assets;
+	protected function createAssetCollection() {
+		return $this->objectManager->create('Tx_Asdis_Domain_Model_Asset_Collection');
 	}
 
 	/**
