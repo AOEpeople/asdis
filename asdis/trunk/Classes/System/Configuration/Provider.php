@@ -112,7 +112,7 @@ class Tx_Asdis_System_Configuration_Provider {
 				);
 			}
 			if(FALSE === isset($serverDefinition['protocol'])) {
-				$serverDefinition['protocol'] = 'dynamic';
+				$serverDefinition['protocol'] = 'wildcard';
 			}
 			$definitions[] = array(
 				'identifier' => $identifier,
