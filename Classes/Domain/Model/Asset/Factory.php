@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Factory which builds server objects and collections.
+ * Factory which builds asset objects and collections.
  *
  * @package Tx_Asdis
  * @subpackage Domain_Model_Asset
