@@ -12,6 +12,11 @@ class Tx_Asdis_Domain_Model_Server {
 	/**
 	 * @var string
 	 */
+	const PROTOCOL_WILDCARD = 'wildcard';
+
+	/**
+	 * @var string
+	 */
 	const PROTOCOL_DYNAMIC = 'dynamic';
 
 	/**
@@ -71,7 +76,7 @@ class Tx_Asdis_Domain_Model_Server {
 	 * @param string $protocol
 	 */
 	public function setProtocol($protocol) {
-		if(FALSE === in_array($protocol, array(self::PROTOCOL_HTTP, self::PROTOCOL_HTTPS, self::PROTOCOL_DYNAMIC))) {
+		if(FALSE === in_array($protocol, array(self::PROTOCOL_WILDCARD, self::PROTOCOL_HTTP, self::PROTOCOL_HTTPS, self::PROTOCOL_DYNAMIC))) {
 			return;
 		}
 		$this->protocol = $protocol;
@@ -92,7 +97,30 @@ class Tx_Asdis_Domain_Model_Server {
 		if($protocol === self::PROTOCOL_DYNAMIC) {
 			$protocol = $this->getRequestProtocol();
 		}
-		return $protocol . '://' . $this->domain . '/';
+		return $this->getProtocolPrefix() . $this->domain . '/';
+	}
+
+	/**
+	 * @return string
+	 */
+	private function getProtocolPrefix() {
+		$protocolPrefix = '';
+		$protocol = $this->protocol;
+		if($protocol === self::PROTOCOL_DYNAMIC) {
+			$protocol = $this->getRequestProtocol();
+		}
+		switch($protocol) {
+			case self::PROTOCOL_WILDCARD :
+				$protocolPrefix = '//';
+				break;
+			case self::PROTOCOL_HTTP :
+				$protocolPrefix = 'http://';
+				break;
+			case self::PROTOCOL_HTTPS :
+				$protocolPrefix = 'https://';;
+				break;
+		}
+		return $protocolPrefix;
 	}
 
 	/**
