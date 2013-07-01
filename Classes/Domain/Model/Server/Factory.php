@@ -15,10 +15,26 @@ class Tx_Asdis_Domain_Model_Server_Factory {
 	private $objectManager;
 
 	/**
+	 * @var string
+	 */
+	private $protocolMarker;
+
+	/**
 	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
 	 */
 	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
+	}
+
+	/**
+	 * @param Tx_Asdis_System_Configuration_Provider $configurationProvider
+	 */
+	public function injectConfigurationProvider(Tx_Asdis_System_Configuration_Provider $configurationProvider) {
+		try {
+			$this->protocolMarker = $configurationProvider->getServerProtocolMarker();
+		} catch(Exception $e) {
+			$this->protocolMarker = '';
+		}
 	}
 
 	/**
@@ -33,6 +49,7 @@ class Tx_Asdis_Domain_Model_Server_Factory {
 		$server->setIdentifier($identifier);
 		$server->setDomain($domain);
 		$server->setProtocol($protocol);
+		$server->setProtocolMarker($this->protocolMarker);
 		return $server;
 	}
 }

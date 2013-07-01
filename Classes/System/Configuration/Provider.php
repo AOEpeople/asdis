@@ -112,7 +112,7 @@ class Tx_Asdis_System_Configuration_Provider {
 				);
 			}
 			if(FALSE === isset($serverDefinition['protocol'])) {
-				$serverDefinition['protocol'] = 'wildcard';
+				$serverDefinition['protocol'] = 'marker';
 			}
 			$definitions[] = array(
 				'identifier' => $identifier,
@@ -121,5 +121,12 @@ class Tx_Asdis_System_Configuration_Provider {
 			);
 		}
 		return $definitions;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getServerProtocolMarker() {
+		return $this->typoScriptConfiguration->getSetting('serverProtocolMarker', 'string');
 	}
 }
