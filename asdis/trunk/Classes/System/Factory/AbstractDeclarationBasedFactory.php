@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Abstract factory class for factories that create their products from array based declarations.
+ *
+ * @package Tx_Asdis
+ * @subpackage System_Factory
+ * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ */
 abstract class Tx_Asdis_System_Factory_AbstractDeclarationBasedFactory {
 
 	/**
