@@ -48,14 +48,16 @@ class Tx_Asdis_Content_Scraper_Css_UrlTest extends Tx_Asdis_Tests_AbstractTestca
 		$this->url->scrape("background-image: url('uploads/tx_templavoila/example.gif');");
 	}
 	/**
-	 * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
-	 * @test
-	 */
-	public function scrapeWithUnquotedCss() {
+ * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
+ * @test
+ */
+	public function scrapeWithInlineCss() {
 		$factory = $this->getMock('Tx_Asdis_Domain_Model_Asset_Factory');
-		$factory->expects($this->once())->method('createAssetsFromPaths')->with(array('uploads/tx_templavoila/example.gif'));
+		$factory->expects($this->once())->method('createAssetsFromPaths')->with(array('uploads/tx_templavoila/Newsletter_Teaser_Bucket.gif'));
 		$this->url->injectAssetFactory($factory);
-		$this->url->scrape("background-image: url(uploads/tx_templavoila/example.gif));");
+		$this->url->scrape("url(uploads/tx_templavoila/Newsletter_Teaser_Bucket.gif)");
 	}
+
+
 }
 
