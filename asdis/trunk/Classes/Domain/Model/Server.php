@@ -17,6 +17,11 @@ class Tx_Asdis_Domain_Model_Server {
 	/**
 	 * @var string
 	 */
+	const PROTOCOL_MARKER = 'marker';
+
+	/**
+	 * @var string
+	 */
 	const PROTOCOL_DYNAMIC = 'dynamic';
 
 	/**
@@ -43,6 +48,11 @@ class Tx_Asdis_Domain_Model_Server {
 	 * @var string
 	 */
 	private $identifier;
+
+	/**
+	 * @var string
+	 */
+	private $protocolMarker;
 
 	/**
 	 * @param string $domain
@@ -76,7 +86,7 @@ class Tx_Asdis_Domain_Model_Server {
 	 * @param string $protocol
 	 */
 	public function setProtocol($protocol) {
-		if(FALSE === in_array($protocol, array(self::PROTOCOL_WILDCARD, self::PROTOCOL_HTTP, self::PROTOCOL_HTTPS, self::PROTOCOL_DYNAMIC))) {
+		if(FALSE === in_array($protocol, array(self::PROTOCOL_WILDCARD, self::PROTOCOL_MARKER, self::PROTOCOL_HTTP, self::PROTOCOL_HTTPS, self::PROTOCOL_DYNAMIC))) {
 			return;
 		}
 		$this->protocol = $protocol;
@@ -90,13 +100,16 @@ class Tx_Asdis_Domain_Model_Server {
 	}
 
 	/**
+	 * @param string $protocolMarker
+	 */
+	public function setProtocolMarker($protocolMarker) {
+		$this->protocolMarker = $protocolMarker;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getUri() {
-		$protocol = $this->protocol;
-		if($protocol === self::PROTOCOL_DYNAMIC) {
-			$protocol = $this->getRequestProtocol();
-		}
 		return $this->getProtocolPrefix() . $this->domain . '/';
 	}
 
@@ -110,6 +123,9 @@ class Tx_Asdis_Domain_Model_Server {
 			$protocol = $this->getRequestProtocol();
 		}
 		switch($protocol) {
+			case self::PROTOCOL_MARKER :
+				$protocolPrefix = $this->protocolMarker;
+				break;
 			case self::PROTOCOL_WILDCARD :
 				$protocolPrefix = '//';
 				break;

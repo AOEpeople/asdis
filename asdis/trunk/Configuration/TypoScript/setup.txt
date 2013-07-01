@@ -4,6 +4,7 @@ config.tx_asdis {
 	distributionAlgorithm = hashBasedGroups
 	scrapers = htmlCssFile,htmlCssInline,htmlEmbed,htmlFavicon,htmlImage,htmlInputImage,htmlScript
 	filters = bubblingPath,containsProtocol,wildcardProtocol
+	serverProtocolMarker = ###HTTP_S###
 	servers {
 
 	}
