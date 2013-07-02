@@ -40,6 +40,11 @@ class Tx_Asdis_Domain_Model_Page {
 	private $configurationProvider;
 
 	/**
+	 * @var Tx_Asdis_Content_Replacement_Processor
+	 */
+	private $replacementProcessor;
+
+	/**
 	 * @param Tx_Asdis_Content_Scraper_ChainFactory $scraperChainFactory
 	 */
 	public function injectScraperChainFactory(Tx_Asdis_Content_Scraper_ChainFactory $scraperChainFactory) {
@@ -65,6 +70,13 @@ class Tx_Asdis_Domain_Model_Page {
 	 */
 	public function injectConfigurationProvider(Tx_Asdis_System_Configuration_Provider $configurationProvider) {
 		$this->configurationProvider = $configurationProvider;
+	}
+
+	/**
+	 * @param Tx_Asdis_Content_Replacement_Processor $replacementProcessor
+	 */
+	public function injectReplacementProcessor(Tx_Asdis_Content_Replacement_Processor $replacementProcessor) {
+		$this->replacementProcessor = $replacementProcessor;
 	}
 
 	/**
@@ -96,10 +108,8 @@ class Tx_Asdis_Domain_Model_Page {
 		} catch(Exception $e) {}
 		$distributionAlgorithm = $this->distributionAlgorithmFactory->buildDistributionAlgorithmFromKey($distributionAlgorithmKey);
 		$distributionAlgorithm->distribute($this->getAssets(), $this->serverRepository->findAllByPage($this));
-		$replacement = $this->getAssets()->getReplacementMap();
-		$this->pageObject->content = preg_replace(
-			$replacement->getSources(),
-			$replacement->getTargets(),
+		$this->pageObject->content = $this->replacementProcessor->replace(
+			$this->assets->getReplacementMap(),
 			$this->pageObject->content
 		);
 	}

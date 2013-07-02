@@ -25,6 +25,11 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/AppleTouchIcon.php'
 );
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
+	'key'   => 'htmlCssAttribute',
+	'class' => 'Tx_Asdis_Content_Scraper_Html_CssAttribute',
+	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/CssAttribute.php'
+);
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'key'   => 'htmlCssInline',
 	'class' => 'Tx_Asdis_Content_Scraper_Html_CssInline',
 	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/CssInline.php'
@@ -59,16 +64,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'class' => 'Tx_Asdis_Content_Scraper_Html_Script',
 	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/Script.php'
 );
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
-	'key'   => 'htmlSwfObject',
-	'class' => 'Tx_Asdis_Content_Scraper_Html_SwfObject',
-	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/SwfObject.php'
-);
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
-	'key'   => 'htmlCssAttribute',
-	'class' => 'Tx_Asdis_Content_Scraper_Html_CssAttribute',
-	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/CssAttribute.php'
-);
+
 // Register filters
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
 	'key'   => 'bubblingPath',
