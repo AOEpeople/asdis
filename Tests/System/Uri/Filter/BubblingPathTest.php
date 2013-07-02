@@ -36,7 +36,7 @@ class Tx_Asdis_System_Uri_Filter_BubblingPathTest extends Tx_Asdis_Tests_Abstrac
 	/**
 	 * @test
 	 */
-	public function normalizePath() {
+	public function filter() {
 		$paths = array(
 			'typo3temp/pics/foo.gif',
 			'typo3temp/../pics/foo.jpg'
