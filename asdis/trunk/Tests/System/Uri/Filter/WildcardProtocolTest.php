@@ -36,7 +36,7 @@ class Tx_Asdis_System_Uri_Filter_WildcardProtocolTest extends Tx_Asdis_Tests_Abs
 	/**
 	 * @test
 	 */
-	public function normalizePath() {
+	public function filter() {
 		$paths         = array(
 			'//typo3temp/pics/foo.gif',
 			'https://typo3temp/pics/foo.gif'
