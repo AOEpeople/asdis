@@ -28,14 +28,14 @@ class Tx_Asdis_Content_Scraper_ChainTest extends Tx_Asdis_Tests_AbstractTestcase
 	 * @test
 	 */
 	public function scrape() {
-		/*$chain    = new Tx_Asdis_Content_Scraper_Chain();
+		$chain    = new Tx_Asdis_Content_Scraper_Chain();
 		$scraper1 = $this->getMock('Tx_Asdis_Content_Scraper_Html_Image');
 		$scraper2 = $this->getMock('Tx_Asdis_Content_Scraper_Html_Script');
 		$scraper1->expects($this->once())->method('scrape')->will($this->returnValue(new Tx_Asdis_Domain_Model_Asset_Collection()));
 		$scraper2->expects($this->once())->method('scrape')->will($this->returnValue(new Tx_Asdis_Domain_Model_Asset_Collection()));
 		$chain->append($scraper1);
 		$chain->append($scraper2);
-		$chain->scrape('FOO');*/
+		$chain->scrape('FOO');
 	}
 }
 
