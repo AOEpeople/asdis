@@ -16,7 +16,7 @@ class Tx_Asdis_System_Uri_Filter_BubblingPath implements Tx_Asdis_System_Uri_Fil
 	public function filter(array $paths) {
 		$filteredPaths = array();
 		foreach ($paths as $path) {
-			if ($this->containsProtocol($path)) {
+			if ($this->containsBubblingPath($path)) {
 				continue;
 			}
 			$filteredPaths[] = $path;
@@ -28,7 +28,7 @@ class Tx_Asdis_System_Uri_Filter_BubblingPath implements Tx_Asdis_System_Uri_Fil
 	 * @param string $path
 	 * @return boolean
 	 */
-	private function containsProtocol($path) {
-		return (1 === preg_match('/^\.\.\//', $path));
+	private function containsBubblingPath($path) {
+		return (FALSE !== strpos($path, '../'));
 	}
 }
