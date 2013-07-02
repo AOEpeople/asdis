@@ -109,6 +109,7 @@ abstract class Tx_Asdis_System_Factory_AbstractDeclarationBasedFactory {
 	 * @param string $key
 	 * @return object
 	 * @throws Tx_Asdis_System_Factory_Exception_DeclarationNotFound
+	 * @throws Tx_Asdis_System_Factory_Exception_MissingImplementation
 	 */
 	protected function buildObjectFromKey($key) {
 		$declaration = NULL;
@@ -127,7 +128,9 @@ abstract class Tx_Asdis_System_Factory_AbstractDeclarationBasedFactory {
 		$implemented = class_implements($object);
 		foreach($this->classImplements as $classImplement) {
 			if(FALSE === in_array($classImplement, $implemented)) {
-				throw new Exception();
+				throw new Tx_Asdis_System_Factory_Exception_MissingImplementation(
+					$declaration[self::DECLARATION_CLASS], $classImplement, get_class($this), 1372770673456
+				);
 			}
 		}
 		return $object;

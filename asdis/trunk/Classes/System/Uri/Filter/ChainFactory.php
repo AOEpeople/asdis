@@ -10,23 +10,24 @@
 class Tx_Asdis_System_Uri_Filter_ChainFactory extends Tx_Asdis_System_Factory_AbstractDeclarationBasedFactory {
 
 	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		$this->setDeclarations($this->getDeclarations());
-		$this->setClassImplements(array('Tx_Asdis_System_Uri_Filter_FilterInterface'));
-	}
-
-	/**
 	 * @return Tx_Asdis_System_Uri_Filter_Chain
 	 */
 	public function buildChain() {
+		$this->initialize();
 		/** @var Tx_Asdis_System_Uri_Filter_Chain $chain */
 		$chain = $this->objectManager->create('Tx_Asdis_System_Uri_Filter_Chain');
 		foreach ($this->configurationProvider->getFilterKeys() as $filterKey) {
 			$chain->append($this->buildFilter($filterKey));
 		}
 		return $chain;
+	}
+
+	/**
+	 * @return void
+	 */
+	private function initialize() {
+		$this->setDeclarations($this->getDeclarations());
+		$this->setClassImplements(array('Tx_Asdis_System_Uri_Filter_FilterInterface'));
 	}
 
 	/**
