@@ -19,7 +19,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
 	'author_company' => 'AOE GmbH',
-	'version' => '0.0.3',
+	'version' => '0.0.4',
 	'constraints' => array(
 		'depends' => array(
 		),
