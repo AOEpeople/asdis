@@ -77,6 +77,11 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
 	'file'  => PATH_tx_asdis . 'Classes/System/Uri/Filter/ContainsProtocol.php'
 );
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
+	'key'   => 'tooShort',
+	'class' => 'Tx_Asdis_System_Uri_Filter_TooShort',
+	'file'  => PATH_tx_asdis . 'Classes/System/Uri/Filter/TooShort.php'
+);
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
 	'key'   => 'wildcardProtocol',
 	'class' => 'Tx_Asdis_System_Uri_Filter_WildcardProtocol',
 	'file'  => PATH_tx_asdis . 'Classes/System/Uri/Filter/WildcardProtocol.php'
