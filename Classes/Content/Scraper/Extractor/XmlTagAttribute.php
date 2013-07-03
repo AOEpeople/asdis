@@ -28,7 +28,6 @@ class Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute {
 
 		$paths   = array();
 		$matches = array();
-		$count   = 0;
 		$pattern = '';
 
 		$pattern .= '~<';
@@ -39,23 +38,25 @@ class Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute {
 
 		$count = preg_match_all($pattern, $content, $matches, PREG_PATTERN_ORDER);
 
-		if ($count > 0 && is_array($matches[1]) && sizeof($matches[1]) > 0) {
-			if (sizeof($requiredOtherAttributes) > 0) {
-				foreach ($matches[1] as $mkey => $match) {
-					$containsAllRequiredAttributes = TRUE;
-					foreach ($requiredOtherAttributes as $key => $attr) {
-						$attrMatches = array();
-						$attrPattern = '~' . preg_quote($key) . '=["\']' . preg_quote($attr) . '["\']~is';
-						if (preg_match_all($attrPattern, $matches[0][$mkey], $attrMatches, PREG_PATTERN_ORDER) === 0) {
-							$containsAllRequiredAttributes = FALSE;
-						}
-					}
-					if ($containsAllRequiredAttributes) {
-						$paths[] = $match;
-					}
+		if ($count === FALSE || $count === 0 || FALSE === is_array($matches[1]) || sizeof($matches[1]) < 1) {
+			return array();
+		}
+
+		if (sizeof($requiredOtherAttributes) < 1) {
+			return $matches[1];
+		}
+
+		foreach ($matches[1] as $mkey => $match) {
+			$containsAllRequiredAttributes = TRUE;
+			foreach ($requiredOtherAttributes as $key => $attr) {
+				$attrMatches = array();
+				$attrPattern = '~' . preg_quote($key) . '=["\']' . preg_quote($attr) . '["\']~is';
+				if (preg_match_all($attrPattern, $matches[0][$mkey], $attrMatches, PREG_PATTERN_ORDER) === 0) {
+					$containsAllRequiredAttributes = FALSE;
 				}
-			} else {
-				$paths = $matches[1];
+			}
+			if ($containsAllRequiredAttributes) {
+				$paths[] = $match;
 			}
 		}
 
