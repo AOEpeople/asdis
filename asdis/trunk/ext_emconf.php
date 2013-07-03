@@ -2,7 +2,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Asdis - Asset Distribution',
-	'description' => 'Publishes resources from rendered content in content delivery network.',
+	'description' => 'Distributes on page assets onto multiple servers.',
 	'category' => 'fe',
 	'author' => 'AOE',
 	'author_email' => 'dev@aoemedia.de',
@@ -11,7 +11,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'conflicts' => '',
 	'priority' => '',
 	'module' => '',
-	'state' => 'alpha',
+	'state' => 'beta',
 	'internal' => '',
 	'uploadfolder' => 0,
 	'createDirs' => '',
@@ -19,7 +19,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
 	'author_company' => 'AOE GmbH',
-	'version' => '0.0.4',
+	'version' => '0.0.5',
 	'constraints' => array(
 		'depends' => array(
 		),
