@@ -39,9 +39,8 @@ class Tx_Asdis_Content_Scraper_Html_CssInline implements Tx_Asdis_Content_Scrape
 
 		$blocks  = array();
 		$matches = array();
-		$count   = 0;
 
-		$count = preg_match_all(
+		preg_match_all(
 			'~<style[^>]*>(.*?)</style>~is',
 			$content,
 			$matches,
