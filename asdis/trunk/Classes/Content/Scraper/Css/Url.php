@@ -33,7 +33,6 @@ class Tx_Asdis_Content_Scraper_Css_Url implements Tx_Asdis_Content_Scraper_Scrap
 	 * Extracts paths to resources in CSS code.
 	 * This means file references which are included in "url(...)".
 	 *
-	 * @todo cleanup
 	 * @param string $cssContent
 	 * @return array
 	 */
@@ -41,28 +40,23 @@ class Tx_Asdis_Content_Scraper_Css_Url implements Tx_Asdis_Content_Scraper_Scrap
 
 		$paths   = array();
 		$matches = array();
-		$count   = 0;
 
-		$count = preg_match_all(
+		preg_match_all(
 			'~url\(\s*[\'"]?(/?(\.\./)?.*?)[\'"]?;?\s*\)~is',
 			$cssContent,
 			$matches,
 			PREG_PATTERN_ORDER
 		);
 
-		if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[1])) {
-			$paths = $matches[1];
+		if (FALSE === (is_array($matches) && sizeof($matches) > 1 && is_array($matches[1]))) {
+			return $paths;
 		}
 
-		// @todo remove that ugly workaround
-		if (sizeof($paths) > 0) {
-			$allPaths = $paths;
-			$paths    = array();
-			foreach ($allPaths as $path) {
-				if (strpos($path, ",") === FALSE) {
-					$paths[] = $path;
-				}
+		foreach ($matches[1] as $path) {
+			if (strpos($path, ",") !== FALSE) {
+				continue;
 			}
+			$paths[] = $path;
 		}
 
 		return $paths;
