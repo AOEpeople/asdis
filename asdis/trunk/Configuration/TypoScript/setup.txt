@@ -3,7 +3,7 @@ config.tx_asdis {
 	disableDefaultHookHandling = 0
 	distributionAlgorithm = hashBasedGroups
 	scrapers = htmlCssFile,htmlCssInline,htmlEmbed,htmlFavicon,htmlImage,htmlInputImage,htmlScript,htmlCssAttribute
-	filters = bubblingPath,containsProtocol,wildcardProtocol
+	filters = tooShort,bubblingPath,containsProtocol,wildcardProtocol
 	serverProtocolMarker = ###HTTP_S###
 	servers {
 
