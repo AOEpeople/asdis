@@ -72,6 +72,11 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
 	'file'  => PATH_tx_asdis . 'Classes/System/Uri/Filter/BubblingPath.php'
 );
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
+	'key'   => 'containsInlineData',
+	'class' => 'Tx_Asdis_System_Uri_Filter_ContainsInlineData',
+	'file'  => PATH_tx_asdis . 'Classes/System/Uri/Filter/ContainsInlineData.php'
+);
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
 	'key'   => 'containsProtocol',
 	'class' => 'Tx_Asdis_System_Uri_Filter_ContainsProtocol',
 	'file'  => PATH_tx_asdis . 'Classes/System/Uri/Filter/ContainsProtocol.php'
