@@ -1,0 +1,11 @@
+config.tx_asdis {
+	enabled = 0
+	disableDefaultHookHandling = 0
+	distributionAlgorithm = hashBasedGroups
+	scrapers = htmlCssFile,htmlCssInline,htmlEmbed,htmlFavicon,htmlImage,htmlInputImage,htmlScript,htmlCssAttribute
+	filters = tooShort,bubblingPath,containsProtocol,wildcardProtocol,containsInlineData
+	serverProtocolMarker = ###HTTP_S###
+	servers {
+
+	}
+}
