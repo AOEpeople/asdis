@@ -39,6 +39,10 @@ class Tx_Asdis_System_Uri_NormalizerTest extends Tx_Asdis_Tests_AbstractTestcase
 	public function normalizePath() {
 		$this->assertEquals('typo3temp/pics/foo.gif', $this->normalizer->normalizePath('/typo3temp/pics/foo.gif'));
 		$this->assertEquals('typo3temp/pics/bar.gif', $this->normalizer->normalizePath('typo3temp/pics/bar.gif'));
+		$this->assertEquals('typo3temp/pics/foo.png', $this->normalizer->normalizePath('//example.com/typo3temp/pics/foo.png'));
+		$this->assertEquals('typo3temp/pics/bar.jpg', $this->normalizer->normalizePath('//www.example.com/typo3temp/pics/bar.jpg'));
+		$this->assertEquals('typo3temp/pics/foo.png', $this->normalizer->normalizePath('http://example.com/typo3temp/pics/foo.png'));
+		$this->assertEquals('typo3temp/pics/bar.jpg', $this->normalizer->normalizePath('http://www.example.com/typo3temp/pics/bar.jpg'));
 	}
 }
 
