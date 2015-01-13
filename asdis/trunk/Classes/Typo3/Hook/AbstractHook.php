@@ -88,8 +88,8 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	 */
 	protected function setPageObject(tslib_fe $pObj) {
 		/** @var Tx_Asdis_Domain_Model_Page $page */
-		$page = $this->getObjectManager()->create('Tx_Asdis_Domain_Model_Page');
-		$page->setAssets($this->getObjectManager()->create('Tx_Asdis_Domain_Model_Asset_Collection'));
+		$page = $this->getObjectManager()->get('Tx_Asdis_Domain_Model_Page');
+		$page->setAssets($this->getObjectManager()->get('Tx_Asdis_Domain_Model_Asset_Collection'));
 		$page->setPageObject($pObj);
 		$this->page = $page;
 	}
