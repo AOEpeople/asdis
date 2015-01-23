@@ -5,7 +5,7 @@
  *
  * @package Tx_Asdis
  * @subpackage System_Factory
- * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
 abstract class Tx_Asdis_System_Factory_AbstractDeclarationBasedFactory {
 
@@ -25,7 +25,7 @@ abstract class Tx_Asdis_System_Factory_AbstractDeclarationBasedFactory {
 	const DECLARATION_FILE = 'file';
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
@@ -50,9 +50,9 @@ abstract class Tx_Asdis_System_Factory_AbstractDeclarationBasedFactory {
 	private $classImplements = array();
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 

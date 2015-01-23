@@ -15,7 +15,7 @@ class Tx_Asdis_Content_Scraper_ChainFactory extends Tx_Asdis_System_Factory_Abst
 	public function buildChain() {
 		$this->initialize();
 		/** @var Tx_Asdis_Content_Scraper_Chain $chain */
-		$chain = $this->objectManager->create('Tx_Asdis_Content_Scraper_Chain');
+		$chain = $this->objectManager->get('Tx_Asdis_Content_Scraper_Chain');
 		foreach($this->configurationProvider->getScraperKeys() as $scraperKey) {
 			$chain->append($this->buildScraper($scraperKey));
 		}

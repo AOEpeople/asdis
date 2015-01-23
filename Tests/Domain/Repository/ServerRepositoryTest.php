@@ -34,7 +34,7 @@ class Tx_Asdis_Domain_Repository_ServerRepositoryTest extends Tx_Asdis_Tests_Abs
 	 */
 	public function findAllByPage() {
 		$objectManager = $this->getMock('Tx_Extbase_Object_ObjectManagerInterface');
-		$objectManager->expects($this->any())->method('create')->will($this->returnValue($this->getMock('Tx_Asdis_Domain_Model_Server_Collection')));
+		$objectManager->expects($this->any())->method('get')->will($this->returnValue($this->getMock('Tx_Asdis_Domain_Model_Server_Collection')));
 		$this->serverRepository->injectObjectManager($objectManager);
 		$page = new Tx_Asdis_Domain_Model_Page();
 		$server = array();

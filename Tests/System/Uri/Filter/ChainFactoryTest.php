@@ -55,7 +55,7 @@ class Tx_Asdis_System_Uri_Filter_ChainFactoryTest extends Tx_Asdis_Tests_Abstrac
 		$conf = $this->getMock('Tx_Asdis_System_Configuration_Provider', array('getFilterKeys'));
 		$conf->expects($this->once())->method('getFilterKeys')->will($this->returnValue(array('containsProtocol', 'wildcardProtocol')));
 		$factory = $this->getMock('Tx_Asdis_System_Uri_Filter_ChainFactory', array('getDeclarations', 'buildObjectFromKey'));
-		$factory->injectObjectManager(t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager'));
+		$factory->injectObjectManager(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_Extbase_Object_ObjectManager'));
 		$factory->injectConfigurationProvider($conf);
 		$factory->expects($this->once())->method('getDeclarations')->will($this->returnValue($declarations));
 		$factory->expects($this->exactly(2))->method('buildObjectFromKey')->will($this->returnValue(new Tx_Asdis_System_Uri_Filter_ContainsProtocol()));
