@@ -5,7 +5,7 @@
  *
  * @package Tx_Asdis
  * @subpackage Domain_Model
- * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
 class Tx_Asdis_Domain_Model_Page {
 
@@ -15,7 +15,7 @@ class Tx_Asdis_Domain_Model_Page {
 	private $assets;
 
 	/**
-	 * @var tslib_fe
+	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	 */
 	private $pageObject;
 
@@ -122,14 +122,14 @@ class Tx_Asdis_Domain_Model_Page {
 	}
 
 	/**
-	 * @param tslib_fe $pageObject
+	 * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pageObject
 	 */
-	public function setPageObject(tslib_fe $pageObject) {
+	public function setPageObject(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pageObject) {
 		$this->pageObject = $pageObject;
 	}
 
 	/**
-	 * @return tslib_fe
+	 * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	 */
 	public function getPageObject() {
 		return $this->pageObject;

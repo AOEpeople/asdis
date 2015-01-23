@@ -10,7 +10,7 @@
 class Tx_Asdis_Domain_Model_Asset_Factory {
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	private $objectManager;
 
@@ -25,9 +25,9 @@ class Tx_Asdis_Domain_Model_Asset_Factory {
 	private $filterChain;
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
@@ -73,14 +73,14 @@ class Tx_Asdis_Domain_Model_Asset_Factory {
 	 * @return Tx_Asdis_Domain_Model_Asset
 	 */
 	protected function createAsset() {
-		return $this->objectManager->create('Tx_Asdis_Domain_Model_Asset');
+		return $this->objectManager->get('Tx_Asdis_Domain_Model_Asset');
 	}
 
 	/**
 	 * @return Tx_Asdis_Domain_Model_Asset_Collection
 	 */
 	protected function createAssetCollection() {
-		return $this->objectManager->create('Tx_Asdis_Domain_Model_Asset_Collection');
+		return $this->objectManager->get('Tx_Asdis_Domain_Model_Asset_Collection');
 	}
 
 	/**

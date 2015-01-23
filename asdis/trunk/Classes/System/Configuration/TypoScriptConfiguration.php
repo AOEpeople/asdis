@@ -5,9 +5,9 @@
  *
  * @package Tx_Asdis
  * @subpackage System_Configuration
- * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
-class Tx_Asdis_System_Configuration_TypoScriptConfiguration implements t3lib_Singleton {
+class Tx_Asdis_System_Configuration_TypoScriptConfiguration implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * @var array

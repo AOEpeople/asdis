@@ -5,7 +5,7 @@
  *
  * @package Tx_Asdis
  * @subpackage System_Uri_Filter
- * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
 class Tx_Asdis_System_Uri_Filter_ChainFactory extends Tx_Asdis_System_Factory_AbstractDeclarationBasedFactory {
 
@@ -15,7 +15,7 @@ class Tx_Asdis_System_Uri_Filter_ChainFactory extends Tx_Asdis_System_Factory_Ab
 	public function buildChain() {
 		$this->initialize();
 		/** @var Tx_Asdis_System_Uri_Filter_Chain $chain */
-		$chain = $this->objectManager->create('Tx_Asdis_System_Uri_Filter_Chain');
+		$chain = $this->objectManager->get('Tx_Asdis_System_Uri_Filter_Chain');
 		foreach ($this->configurationProvider->getFilterKeys() as $filterKey) {
 			$chain->append($this->buildFilter($filterKey));
 		}

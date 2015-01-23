@@ -5,9 +5,9 @@
  *
  * @package Tx_Asdis
  * @subpackage System_Log
- * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
-class Tx_Asdis_System_Log_Logger implements t3lib_Singleton {
+class Tx_Asdis_System_Log_Logger implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * @param string $context
@@ -29,6 +29,6 @@ class Tx_Asdis_System_Log_Logger implements t3lib_Singleton {
 	 * @param integer $severity
 	 */
 	private function syslog($message, $severity) {
-		t3lib_div::sysLog($message, 'asdis', $severity);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::sysLog($message, 'asdis', $severity);
 	}
 }

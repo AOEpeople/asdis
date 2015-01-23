@@ -10,7 +10,7 @@
 class Tx_Asdis_Domain_Repository_ServerRepository {
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	private $objectManager;
 
@@ -25,9 +25,9 @@ class Tx_Asdis_Domain_Repository_ServerRepository {
 	private $serverFactory;
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
@@ -51,7 +51,7 @@ class Tx_Asdis_Domain_Repository_ServerRepository {
 	 */
 	public function findAllByPage(Tx_Asdis_Domain_Model_Page $page) {
 		/** @var Tx_Asdis_Domain_Model_Server_Collection $servers */
-		$servers = $this->objectManager->create('Tx_Asdis_Domain_Model_Server_Collection');
+		$servers = $this->objectManager->get('Tx_Asdis_Domain_Model_Server_Collection');
 		$serverDefinitions = $this->configurationProvider->getServerDefinitions();
 		foreach($serverDefinitions as $serverDefinition) {
 			$servers->append($this->serverFactory->createServer(

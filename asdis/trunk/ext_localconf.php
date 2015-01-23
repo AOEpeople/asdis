@@ -3,7 +3,7 @@ if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-define('PATH_tx_asdis', t3lib_extMgm::extPath($_EXTKEY));
+define('PATH_tx_asdis', \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY));
 
 // Register post rendernig hook
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][]  = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcAll.php:&Tx_Asdis_Typo3_Hook_ContentPostProcAll->process';
@@ -104,6 +104,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['distributionAlgorithms'][] =
 	'file'  => PATH_tx_asdis . 'Classes/Domain/Model/DistributionAlgorithm/RoundRobin.php'
 );
 
-t3lib_extMgm::addTypoScriptSetup(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(
 	file_get_contents(PATH_tx_asdis . 'Configuration/TypoScript/setup.txt')
 );

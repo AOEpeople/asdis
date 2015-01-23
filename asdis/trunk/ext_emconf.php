@@ -5,7 +5,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Distributes on page assets onto multiple servers.',
 	'category' => 'fe',
 	'author' => 'AOE',
-	'author_email' => 'dev@aoemedia.de',
+	'author_email' => 'dev@aoe.com',
 	'shy' => '',
 	'dependencies' => '',
 	'conflicts' => '',
@@ -19,9 +19,10 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
 	'author_company' => 'AOE GmbH',
-	'version' => '0.0.8',
+	'version' => '0.1.0',
 	'constraints' => array(
 		'depends' => array(
+            'typo3' => '6.2.0-0.0.0',
 		),
 		'conflicts' => array(
 		),

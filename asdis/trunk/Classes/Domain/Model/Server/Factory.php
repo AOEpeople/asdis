@@ -10,7 +10,7 @@
 class Tx_Asdis_Domain_Model_Server_Factory {
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	private $objectManager;
 
@@ -20,9 +20,9 @@ class Tx_Asdis_Domain_Model_Server_Factory {
 	private $protocolMarker;
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
@@ -45,7 +45,7 @@ class Tx_Asdis_Domain_Model_Server_Factory {
 	 */
 	public function createServer($identifier, $domain, $protocol) {
 		/** @var Tx_Asdis_Domain_Model_Server $server */
-		$server = $this->objectManager->create('Tx_Asdis_Domain_Model_Server');
+		$server = $this->objectManager->get('Tx_Asdis_Domain_Model_Server');
 		$server->setIdentifier($identifier);
 		$server->setDomain($domain);
 		$server->setProtocol($protocol);
