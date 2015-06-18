@@ -47,24 +47,27 @@ class Tx_Asdis_Domain_Model_Asset_Factory {
 
 	/**
 	 * @param array $paths Array of path strings.
+	 * @param array $masks Array of mask strings.
 	 * @return Tx_Asdis_Domain_Model_Asset_Collection
 	 */
-	public function createAssetsFromPaths(array $paths) {
+	public function createAssetsFromPaths(array $paths, array $masks) {
 		$paths  = $this->filterChain->filter($paths);
 		$assets = $this->createAssetCollection();
-		foreach ($paths as $path) {
-			$assets->append($this->createAssetFromPath($path));
+		foreach ($paths as $key => $path) {
+			$assets->append($this->createAssetFromPath($path, $masks[$key]));
 		}
 		return $assets;
 	}
 
 	/**
-	 * @param $path
+	 * @param string $path
+	 * @param string $mask
 	 * @return Tx_Asdis_Domain_Model_Asset
 	 */
-	protected function createAssetFromPath($path) {
+	protected function createAssetFromPath($path, $mask) {
 		$asset = $this->createAsset();
 		$asset->setOriginalPath($path);
+		$asset->setMask($mask);
 		$asset->setNormalizedPath($this->getNormalizedPath($path));
 		return $asset;
 	}

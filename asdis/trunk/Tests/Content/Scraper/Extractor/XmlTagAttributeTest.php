@@ -44,9 +44,14 @@ class Tx_Asdis_Content_Scraper_Extractor_XmlTagAttributeTest extends Tx_Asdis_Te
 		</div>';
 		$hits = $this->extractor->getAttributeFromTag('img', 'src', $content);
 		$this->assertInternalType('array', $hits);
-		$this->assertEquals(2, sizeof($hits));
-		$this->assertEquals($path1, $hits[0]);
-		$this->assertEquals($path2, $hits[1]);
+		$this->assertInternalType('array', $hits['paths']);
+		$this->assertInternalType('array', $hits['masks']);
+		$this->assertEquals(2, sizeof($hits['paths']));
+		$this->assertEquals(2, sizeof($hits['masks']));
+		$this->assertEquals($path1, $hits['paths'][0]);
+		$this->assertEquals('"', $hits['masks'][0]);
+		$this->assertEquals($path2, $hits['paths'][1]);
+		$this->assertEquals('"', $hits['masks'][1]);
 	}
 
 	/**
@@ -60,9 +65,13 @@ class Tx_Asdis_Content_Scraper_Extractor_XmlTagAttributeTest extends Tx_Asdis_Te
 			<input src="'.$path2.'" />
 		</div>';
 		$hits = $this->extractor->getAttributeFromTag('input', 'src', $content, array('type' => 'image'));
-		$this->assertInternalType('array', $hits);
-		$this->assertEquals(1, sizeof($hits));
-		$this->assertEquals($path1, $hits[0]);
+        $this->assertInternalType('array', $hits);
+        $this->assertInternalType('array', $hits['paths']);
+        $this->assertInternalType('array', $hits['masks']);
+        $this->assertEquals(1, sizeof($hits['paths']));
+        $this->assertEquals(1, sizeof($hits['masks']));
+		$this->assertEquals($path1, $hits['paths'][0]);
+		$this->assertEquals('"', $hits['masks'][0]);
 	}
 }
 

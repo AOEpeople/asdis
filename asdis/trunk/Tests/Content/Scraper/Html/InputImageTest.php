@@ -38,7 +38,7 @@ class Tx_Asdis_Content_Scraper_Html_InputImageTest extends Tx_Asdis_Tests_Abstra
 		$assetFactory = $this->getMock('Tx_Asdis_Domain_Model_Asset_Factory');
 		$assetFactory->expects($this->once())->method('createAssetsFromPaths')->with(array('uploads/images/foo.gif'));
 		$attributeExtractor = $this->getMock('Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute');
-		$attributeExtractor->expects($this->once())->method('getAttributeFromTag')->with('input', 'src', $content, array('type' => 'image'))->will($this->returnValue(array('uploads/images/foo.gif')));
+		$attributeExtractor->expects($this->once())->method('getAttributeFromTag')->with('input', 'src', $content, array('type' => 'image'))->will($this->returnValue(array('paths' => array('uploads/images/foo.gif'), 'masks' => array('"'))));
 		$this->scraper->injectAssetFactory($assetFactory);
 		$this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
 		$this->scraper->scrape($content);

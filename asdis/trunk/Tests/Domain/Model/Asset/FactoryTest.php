@@ -21,6 +21,7 @@ class Tx_Asdis_Domain_Model_Asset_FactoryTest extends Tx_Asdis_Tests_AbstractTes
 	 */
 	public function createAssetsFromPaths() {
 		$path = 'uploads/images/foo.jpg';
+		$mask = '"';
 		$assetFactory = $this->getMock('Tx_Asdis_Domain_Model_Asset_Factory', array('createAsset', 'createAssetCollection'));
 		$assetFactory->expects($this->once())->method('createAssetCollection')->will($this->returnValue(new Tx_Asdis_Domain_Model_Asset_Collection()));
 		$assetFactory->expects($this->once())->method('createAsset')->will($this->returnValue(new Tx_Asdis_Domain_Model_Asset()));
@@ -28,7 +29,7 @@ class Tx_Asdis_Domain_Model_Asset_FactoryTest extends Tx_Asdis_Tests_AbstractTes
 		$filterChainFactoryMock->expects($this->once())->method('buildChain')->will($this->returnValue(new Tx_Asdis_System_Uri_Filter_Chain()));
 		$assetFactory->injectFilterChainFactory($filterChainFactoryMock);
 		$assetFactory->injectUriNormalizer(new Tx_Asdis_System_Uri_Normalizer());
-		$assets = $assetFactory->createAssetsFromPaths(array($path));
+		$assets = $assetFactory->createAssetsFromPaths(array($path), array($mask));
 		$this->assertEquals(1, $assets->count());
 	}
 }

@@ -15,6 +15,6 @@ class Tx_Asdis_Content_Scraper_Html_AppleTouchIcon extends Tx_Asdis_Content_Scra
 	 */
 	public function scrape($content) {
 		return $this->getAssets('link', 'href', $content, array('rel' => 'apple-touch-icon'))
-            ->merge($this->getAssets('link', 'href', $content, array('rel' => 'apple-touch-icon-precomposed')));
+			->merge($this->getAssets('link', 'href', $content, array('rel' => 'apple-touch-icon-precomposed')));
 	}
 }

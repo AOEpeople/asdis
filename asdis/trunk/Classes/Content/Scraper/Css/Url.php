@@ -26,7 +26,8 @@ class Tx_Asdis_Content_Scraper_Css_Url implements Tx_Asdis_Content_Scraper_Scrap
 	 * @return Tx_Asdis_Domain_Model_Asset_Collection
 	 */
 	public function scrape($content) {
-		return $this->assetFactory->createAssetsFromPaths($this->extractUrlPaths($content));
+		$urls = $this->extractUrlPaths($content);
+		return $this->assetFactory->createAssetsFromPaths($urls['paths'], $urls['masks']);
 	}
 
 	/**
@@ -37,28 +38,35 @@ class Tx_Asdis_Content_Scraper_Css_Url implements Tx_Asdis_Content_Scraper_Scrap
 	 * @return array
 	 */
 	private function extractUrlPaths($cssContent) {
-
 		$paths   = array();
+		$masks   = array();
 		$matches = array();
 
 		preg_match_all(
-			'~url\(\s*[\'"]?(/?(\.\./)?.*?)[\'"]?;?\s*\)~is',
+			'~url\(\s*([\'"]?)(/?(\.\./)?.*?)([\'"]?);?\s*\)~is',
 			$cssContent,
 			$matches,
 			PREG_PATTERN_ORDER
 		);
 
-		if (FALSE === (is_array($matches) && sizeof($matches) > 1 && is_array($matches[1]))) {
-			return $paths;
+		if (FALSE === (is_array($matches) && sizeof($matches) > 1 && is_array($matches[2]))) {
+			return array(
+				'paths' => $paths,
+				'masks' => $masks
+			);
 		}
 
-		foreach ($matches[1] as $path) {
+		foreach ($matches[2] as $mkey => $path) {
 			if (strpos($path, ",") !== FALSE) {
 				continue;
 			}
 			$paths[] = $path;
+			$masks[] = $matches[1][$mkey];
 		}
 
-		return $paths;
+		return array(
+			'paths' => $paths,
+			'masks' => $masks
+		);
 	}
 }
