@@ -6,7 +6,9 @@ if (!defined('TYPO3_MODE')) {
 define('PATH_tx_asdis', \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY));
 
 // Register post rendernig hook
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][]  = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcAll.php:&Tx_Asdis_Typo3_Hook_ContentPostProcAll->process';
+$extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['asdis']);
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php'][$extConf['hook']][]  = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcAll.php:&Tx_Asdis_Typo3_Hook_ContentPostProcAll->process';
+unset($extConf);
 
 // Register scrapers
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
@@ -63,6 +65,11 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'key'   => 'htmlScript',
 	'class' => 'Tx_Asdis_Content_Scraper_Html_Script',
 	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/Script.php'
+);
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
+	'key'   => 'htmlCss3Image',
+	'class' => 'Tx_Asdis_Content_Scraper_Html_Css3Image',
+	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/Css3Image.php'
 );
 
 // Register filters

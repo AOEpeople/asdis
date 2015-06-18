@@ -36,9 +36,9 @@ class Tx_Asdis_Content_Scraper_Html_AppleTouchIconTest extends Tx_Asdis_Tests_Ab
 	public function scrape() {
 		$content      = '<link href="uploads/images/foo.gif" rel="apple-touch-icon-precomposed" /><link href="foo/bar/baz.gif" />';
 		$assetFactory = $this->getMock('Tx_Asdis_Domain_Model_Asset_Factory');
-		$assetFactory->expects($this->once())->method('createAssetsFromPaths')->with(array('uploads/images/foo.gif'));
+		$assetFactory->expects($this->exactly(2))->method('createAssetsFromPaths')->with(array('uploads/images/foo.gif'))->will($this->returnValue(new Tx_Asdis_Domain_Model_Asset_Collection()));;
 		$attributeExtractor = $this->getMock('Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute');
-		$attributeExtractor->expects($this->once())->method('getAttributeFromTag')->with('link', 'href', $content, array('rel' => 'apple-touch-icon-precomposed'))->will($this->returnValue(array('uploads/images/foo.gif')));
+		$attributeExtractor->expects($this->exactly(2))->method('getAttributeFromTag')->will($this->returnValue(array('uploads/images/foo.gif')));
 		$this->scraper->injectAssetFactory($assetFactory);
 		$this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
 		$this->scraper->scrape($content);
