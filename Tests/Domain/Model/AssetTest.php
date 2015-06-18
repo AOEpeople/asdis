@@ -64,11 +64,29 @@ class Tx_Asdis_Domain_Model_AssetTest extends Tx_Asdis_Tests_AbstractTestcase {
 	/**
 	 * @test
 	 */
+	public function getMaskedPregQuotedOriginalPath() {
+		$path = 'uploads/images/baz.jpg';
+		$this->asset->setOriginalPath($path);
+		$this->asset->setMask('"');
+		$this->assertEquals('~/?"uploads/images/baz\.jpg"~is', $this->asset->getMaskedPregQuotedOriginalPath());
+	}
+
+	/**
+	 * @test
+	 */
 	public function setAndGetServer() {
 		$server = new Tx_Asdis_Domain_Model_Server();
 		$server->setIdentifier('media1');
 		$this->asset->setServer($server);
 		$this->assertEquals('media1', $this->asset->getServer()->getIdentifier());
+	}
+
+	/**
+	 * @test
+	 */
+	public function setAndGetMask() {
+		$this->asset->setMask('"');
+		$this->assertEquals('"', $this->asset->getMask());
 	}
 
 	/**
@@ -84,4 +102,3 @@ class Tx_Asdis_Domain_Model_AssetTest extends Tx_Asdis_Tests_AbstractTestcase {
 		$this->assertEquals($baseUri . $path, $this->asset->getUri());
 	}
 }
-

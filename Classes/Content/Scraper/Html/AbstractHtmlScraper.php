@@ -41,10 +41,12 @@ abstract class Tx_Asdis_Content_Scraper_Html_AbstractHtmlScraper {
 	 * @return Tx_Asdis_Domain_Model_Asset_Collection
 	 */
 	protected function getAssets($tagName, $attributeName, $content, array $requiredOtherAttributes = array()) {
+		$attributes = $this->xmlTagAttributeExtractor->getAttributeFromTag(
+			$tagName, $attributeName, $content, $requiredOtherAttributes
+		);
 		return $this->assetFactory->createAssetsFromPaths(
-			$this->xmlTagAttributeExtractor->getAttributeFromTag(
-				$tagName, $attributeName, $content, $requiredOtherAttributes
-			)
+			$attributes['paths'],
+			$attributes['masks']
 		);
 	}
 }

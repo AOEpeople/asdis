@@ -38,7 +38,7 @@ class Tx_Asdis_Content_Scraper_Html_EmbedTest extends Tx_Asdis_Tests_AbstractTes
 		$assetFactory = $this->getMock('Tx_Asdis_Domain_Model_Asset_Factory');
 		$assetFactory->expects($this->once())->method('createAssetsFromPaths')->with(array('typo3temp/flash.swf'));
 		$attributeExtractor = $this->getMock('Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute');
-		$attributeExtractor->expects($this->once())->method('getAttributeFromTag')->with('embed', 'src', $content)->will($this->returnValue(array('typo3temp/flash.swf')));
+		$attributeExtractor->expects($this->once())->method('getAttributeFromTag')->with('embed', 'src', $content)->will($this->returnValue(array('paths' => array('typo3temp/flash.swf'), 'masks' => array('"'))));
 		$this->scraper->injectAssetFactory($assetFactory);
 		$this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
 		$this->scraper->scrape($content);

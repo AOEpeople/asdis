@@ -25,6 +25,12 @@ class Tx_Asdis_Domain_Model_Asset {
 	private $server;
 
 	/**
+	 * The mask character in the content. eg. " or '
+	 * @var string
+	 */
+	private $mask;
+
+	/**
 	 * @return string
 	 */
 	public function getHash() {
@@ -67,6 +73,15 @@ class Tx_Asdis_Domain_Model_Asset {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getMaskedPregQuotedOriginalPath()
+	{
+		$mask = preg_quote($this->getMask());
+		return '~/?' . $mask . preg_quote($this->originalPath) . $mask . '~is';
+	}
+
+	/**
 	 * @param Tx_Asdis_Domain_Model_Server $server
 	 */
 	public function setServer(Tx_Asdis_Domain_Model_Server $server) {
@@ -89,5 +104,19 @@ class Tx_Asdis_Domain_Model_Asset {
 			$domain = $this->server->getUri();
 		}
 		return $domain . $this->normalizedPath;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getMask() {
+		return $this->mask;
+	}
+
+	/**
+	 * @param string $mask
+	 */
+	public function setMask($mask) {
+		$this->mask = $mask;
 	}
 }

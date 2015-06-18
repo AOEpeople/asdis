@@ -52,7 +52,10 @@ class Tx_Asdis_Domain_Model_Asset_Collection extends ArrayIterator {
 		$map = new Tx_Asdis_Content_Replacement_Map();
 		foreach($this as $asset) {
 			/** @var Tx_Asdis_Domain_Model_Asset $asset */
-			$map->addMapping($asset->getPregQuotedOriginalPath(), $asset->getUri());
+			$map->addMapping(
+				$asset->getMaskedPregQuotedOriginalPath(),
+				$asset->getMask() . $asset->getUri() . $asset->getMask()
+			);
 		}
 		return $map;
 	}
