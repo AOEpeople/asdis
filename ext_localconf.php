@@ -71,6 +71,11 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
 	'class' => 'Tx_Asdis_Content_Scraper_Html_Css3Image',
 	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/Css3Image.php'
 );
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = array(
+	'key'   => 'htmlMetaMsApplication',
+	'class' => 'Tx_Asdis_Content_Scraper_Html_MetaMsApplication',
+	'file'  => PATH_tx_asdis . 'Classes/Content/Scraper/Html/MetaMsApplication.php'
+);
 
 // Register filters
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
