@@ -73,5 +73,22 @@ class Tx_Asdis_Content_Scraper_Extractor_XmlTagAttributeTest extends Tx_Asdis_Te
 		$this->assertEquals($path1, $hits['paths'][0]);
 		$this->assertEquals('"', $hits['masks'][0]);
 	}
-}
 
+	/**
+	 * @test
+	 */
+	public function getAttributeFromTagWithSeveralSrcAttributes() {
+		$path1 = 'uploads/pics/foo.jpg';
+		$path2 = 'typo3temp/tx_foo/bar.gif';
+		$content = '<img src="'.$path1.'" data-custom-src="'.$path2.'" style="width: 15px;" />';
+		$hits = $this->extractor->getAttributeFromTag('img', 'src', $content);
+		$this->assertInternalType('array', $hits);
+		$this->assertInternalType('array', $hits['paths']);
+		$this->assertInternalType('array', $hits['masks']);
+		$this->assertEquals(1, sizeof($hits['paths']));
+		$this->assertEquals(1, sizeof($hits['masks']));
+		$this->assertEquals($path1, $hits['paths'][0]);
+		$this->assertEquals('"', $hits['masks'][0]);
+	}
+
+}

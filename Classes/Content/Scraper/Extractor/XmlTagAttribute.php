@@ -34,7 +34,7 @@ class Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute {
 
 		$pattern .= '~<';
 		$pattern .= $tagName;
-		$pattern .= '\b[^>]+\b';
+		$pattern .= '\b[^>]*\040\b';
 		$pattern .= $attributeName;
 		$pattern .= '\s?=\s?([\'"])(.*?)([\'"])[^>]*>~is';
 
