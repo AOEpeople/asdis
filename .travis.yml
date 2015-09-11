@@ -24,7 +24,7 @@ matrix:
 notifications:
   email:
     recipients:
-      - tomas.mikkelsen@aoe.com
+      - support-congstar@aoe.com
     on_success: always
     on_failure: always
 
