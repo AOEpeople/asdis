@@ -30,4 +30,34 @@ class Tx_Asdis_Typo3_Hook_ContentPostProcAll extends Tx_Asdis_Typo3_Hook_Abstrac
 			$this->getLogger()->logException(__METHOD__, $e);
 		}
 	}
+
+	/**
+	 * Call main process hook function only if there are no INTincScripts to include.
+	 * This function is called as contentPostProc-all hook.
+	 *
+	 * @param array $params
+	 * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj
+	 * @return void
+	 */
+	public function processCache(&$params, \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj = NULL) {
+		if ($GLOBALS['TSFE']->isINTincScript()) {
+			return;
+		}
+		$this->process($params, $pObj);
+	}
+
+	/**
+	 * Call main process hook function only if there are INTincScripts to include.
+	 * This function is called as contentPostProc-output hook.
+	 * @param array $params
+	 * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj
+	 * @return void
+	 */
+	public function processNoCache(&$params, \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj = NULL) {
+		if (!$GLOBALS['TSFE']->isINTincScript()) {
+			return;
+		}
+		$this->process($params, $pObj);
+	}
+
 }
