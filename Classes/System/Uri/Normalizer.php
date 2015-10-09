@@ -22,7 +22,14 @@ class Tx_Asdis_System_Uri_Normalizer {
 			$path = 'http:' . $path;
 		}
 
-		$path = parse_url($path, PHP_URL_PATH);
+		$pathInfos = parse_url($path);
+
+		if (isset($pathInfos['path'])) {
+			$path = $pathInfos['path'];
+			if (isset($pathInfos['query'])) {
+				$path .= '?' . $pathInfos['query'];
+			}
+		}
 
 		if (strpos($path, '/') === 0) {
 			$path = substr($path, 1);
