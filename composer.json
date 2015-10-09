@@ -1,0 +1,20 @@
+{
+    "name": "aoe/asdis",
+    "type": "typo3-cms-extension",
+    "description": "Distributes on page assets onto multiple servers.",
+    "authors": [
+        {
+            "name": "AOE GmbH",
+            "email": "dev@aoe.com"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": ">=6.2",
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://composer.typo3.org/"
+        }
+    ]
+}
