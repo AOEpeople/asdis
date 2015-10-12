@@ -24,7 +24,7 @@ matrix:
 notifications:
   email:
     recipients:
-      - EMAIL_RECIPIENTS
+      - secure: YtsxUvpzxJrvpHHqkgp9e1ZMUYZEXZn/5xHswdlWnnZqfNlGwXVZcX5TN+wUDWZKpSLGJEb6BfsyxJgoG6sdCM9u8Ux+a/TSGztKuHOXGa1CVcHbGt8731D8qCmYLCs/Ayyn3EXWlBhyktZ26m2RTJp25c1rhP/uqUaGWRzLZfDl7P926pmhjo7T8yTpHVGCw8wGE1AhelZ37xvLr5amnru/ApKAFmqUba8qPJghsJvjBxrcKyrMyUSSNpemUtsVKJEq7Ib8cQv1v8FqMHr52xEsHMonE3czadixaIgzO76t8wGXn3NpGpnTl52/x5+Bl8DZLgdvyMEX++lhXq9d1LZwO+UexHSTWLDLZ4zM1t4wxfKcdV4LJG3VD35dhaWiaWpGokXNr6cm8hCGsiNTleeWtLVbv1r/3DNnmiqbqidJthHjn0By8MyA22nduWH2We1bcjZuWB6WgUXzotH5NFPLhXaMIRn9E4YI6enTyXgVKQszh5eJJhiZb16+feRILfKg/SgcYaS9KHoWyojJnQ1KEPUxM9ruK/YJwR0ni2s0sl88jRJ0gMlDq4MfeMNqcKqbBa6NNJJoPcLuaIMZ7AX7HO1aeTmu3/NGt1bO00oZ5lQVrHwHe/1wj9xFdDFsxkjwTKRKE92Tx83NLhpX4nnlhkfyB5Kxfd+i32KP+rA=
     on_success: always
     on_failure: always
 
