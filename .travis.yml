@@ -24,7 +24,7 @@ matrix:
 notifications:
   email:
     recipients:
-      - support-congstar@aoe.com
+      - EMAIL_RECIPIENTS
     on_success: always
     on_failure: always
 
