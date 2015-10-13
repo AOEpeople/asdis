@@ -2,6 +2,7 @@
     "name": "aoe/asdis",
     "type": "typo3-cms-extension",
     "description": "Distributes on page assets onto multiple servers.",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "AOE GmbH",
@@ -10,7 +11,6 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "typo3/cms-composer-installers": "1.1.4",
         "typo3/cms-core": ">=6.2.0",
         "typo3/cms-extbase": ">=6.2.0",
         "typo3/cms-sv": ">=6.2.0",
@@ -27,12 +27,19 @@
         "phpmd/phpmd": "2.2.*"
     },
     "repositories": [
-        {
-            "type": "composer",
-            "url": "https://composer.typo3.org/"
+      {
+        "type": "package",
+        "package": {
+          "name": "typo3-ter/phpunit",
+          "version": "1.0",
+          "dist": {
+            "url": "https://github.com/TYPO3-extensions/phpunit/archive/master.zip",
+            "type": "zip"
+          }
         }
+      }
     ],
     "autoload": {
-        "classmap": ["typo3conf/ext/phpunit/", "Classes/"]
+        "classmap": ["Classes/"]
     }
 }
