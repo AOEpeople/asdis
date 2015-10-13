@@ -18,15 +18,13 @@
         "typo3/cms-frontend": ">=6.2.0"
     },
     "require-dev": {
+        "typo3/cms-composer-installers": "*",
         "typo3/cms": "6.2.*",
         "typo3-ter/phpunit": "*",
         "phpunit/phpcov": "2.0.*",
         "squizlabs/php_codesniffer": "2.3.*",
         "sebastian/phpcpd": "2.0.*",
         "phpmd/phpmd": "2.2.*"
-    },
-    "replace": {
-        "typo3/cms-composer-installers":"*"
     },
     "repositories": [
         {
