@@ -33,6 +33,7 @@ before_script:
   - sudo apt-get install parallel
   - composer self-update
   - composer install
+  - mkdir -p typo3conf/ext
   - composer require typo3-ter/phpunit
 
 script:
