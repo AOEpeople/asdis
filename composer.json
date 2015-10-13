@@ -19,26 +19,18 @@
     },
     "require-dev": {
         "typo3/cms": "6.2.*",
-        "typo3-ter/phpunit": "*",
         "phpunit/phpcov": "2.0.*",
         "squizlabs/php_codesniffer": "2.3.*",
         "sebastian/phpcpd": "2.0.*",
         "phpmd/phpmd": "2.2.*"
     },
     "repositories": [
-      {
-        "type": "package",
-        "package": {
-          "name": "typo3-ter/phpunit",
-          "version": "4.4.0",
-          "dist": {
-            "url": "https://github.com/TYPO3-extensions/phpunit/archive/master.zip",
-            "type": "zip"
-          }
+        {
+            "type": "composer",
+            "url": "https://composer.typo3.org/"
         }
-      }
     ],
     "autoload": {
-        "classmap": ["vendor/typo3-ter/phpunit/", "Classes/"]
+        "classmap": ["typo3conf/ext/phpunit/", "Classes/"]
     }
 }
