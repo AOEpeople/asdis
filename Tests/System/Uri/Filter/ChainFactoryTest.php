@@ -25,6 +25,7 @@ class Tx_Asdis_System_Uri_Filter_ChainFactoryTest extends Tx_Asdis_Tests_Abstrac
 	 */
 	protected function setUp() {
 		$this->factory = new Tx_Asdis_System_Uri_Filter_ChainFactory();
+        parent::setUp();
 	}
 
 	/**
@@ -55,7 +56,18 @@ class Tx_Asdis_System_Uri_Filter_ChainFactoryTest extends Tx_Asdis_Tests_Abstrac
 		$conf = $this->getMock('Tx_Asdis_System_Configuration_Provider', array('getFilterKeys'));
 		$conf->expects($this->once())->method('getFilterKeys')->will($this->returnValue(array('containsProtocol', 'wildcardProtocol')));
 		$factory = $this->getMock('Tx_Asdis_System_Uri_Filter_ChainFactory', array('getDeclarations', 'buildObjectFromKey'));
-		$factory->injectObjectManager(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_Extbase_Object_ObjectManager'));
+
+        $map = array(
+            array('Tx_Asdis_System_Uri_Filter_Chain', new Tx_Asdis_System_Uri_Filter_Chain()),
+            array('Tx_Asdis_System_Uri_Filter_WildcardProtocol', new Tx_Asdis_System_Uri_Filter_WildcardProtocol()),
+            array('Tx_Asdis_System_Uri_Filter_WildcardProtocol', new Tx_Asdis_System_Uri_Filter_WildcardProtocol()),
+        );
+
+        $this->objectManagerMock->expects($this->any())
+            ->method('get')
+            ->will($this->returnValueMap($map));
+
+		$factory->injectObjectManager($this->objectManagerMock);
 		$factory->injectConfigurationProvider($conf);
 		$factory->expects($this->once())->method('getDeclarations')->will($this->returnValue($declarations));
 		$factory->expects($this->exactly(2))->method('buildObjectFromKey')->will($this->returnValue(new Tx_Asdis_System_Uri_Filter_ContainsProtocol()));

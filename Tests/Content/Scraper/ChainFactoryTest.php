@@ -23,8 +23,12 @@ class Tx_Asdis_Content_Scraper_ChainFactoryTest extends Tx_Asdis_Tests_AbstractT
 		$chainFactory = $this->getMock('Tx_Asdis_Content_Scraper_ChainFactory', array('getScraperDeclarations'));
 		$chainFactory->expects($this->once())->method('getScraperDeclarations')->will($this->returnValue(array()));
 		$chainFactory->injectConfigurationProvider($configurationProvider);
-		$chainFactory->injectObjectManager(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_Extbase_Object_ObjectManager'));
+
+        $this->objectManagerMock->method('get')
+            ->with('Tx_Asdis_Content_Scraper_Chain')
+            ->willReturn(new Tx_Asdis_Content_Scraper_Chain());
+
+        $chainFactory->injectObjectManager($this->objectManagerMock);
 		$chainFactory->buildChain();
 	}
 }
-

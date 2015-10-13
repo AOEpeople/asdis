@@ -30,7 +30,13 @@ class Tx_Asdis_Domain_Model_DistributionAlgorithm_FactoryTest extends Tx_Asdis_T
 		);
 		$factory = $this->getMock('Tx_Asdis_Domain_Model_DistributionAlgorithm_Factory', array('getDeclarations'), array(), '', TRUE);
 		$factory->expects($this->once())->method('getDeclarations')->will($this->returnValue($declarations));
-		$factory->injectObjectManager(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_Extbase_Object_ObjectManager'));
+
+		$this->objectManagerMock->method('get')
+			->with('Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups')
+			->willReturn(new Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups());
+
+		$factory->injectObjectManager($this->objectManagerMock);
+
 		$algorithm = $factory->buildDistributionAlgorithmFromKey('hashBasedGroups');
 		$this->assertEquals('Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups', get_class($algorithm));
 	}
