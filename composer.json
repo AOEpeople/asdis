@@ -25,6 +25,9 @@
         "sebastian/phpcpd": "2.0.*",
         "phpmd/phpmd": "2.2.*"
     },
+    "replace": {
+        "typo3/cms-composer-installers":"*"
+    },
     "repositories": [
         {
             "type": "composer",
