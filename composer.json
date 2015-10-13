@@ -2,7 +2,6 @@
     "name": "aoe/asdis",
     "type": "typo3-cms-extension",
     "description": "Distributes on page assets onto multiple servers.",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "AOE GmbH",
@@ -31,7 +30,7 @@
         "type": "package",
         "package": {
           "name": "typo3-ter/phpunit",
-          "version": "1.0",
+          "version": "4.4.0",
           "dist": {
             "url": "https://github.com/TYPO3-extensions/phpunit/archive/master.zip",
             "type": "zip"
@@ -40,6 +39,6 @@
       }
     ],
     "autoload": {
-        "classmap": ["Classes/"]
+        "classmap": ["vendor/typo3-ter/phpunit", "Classes/"]
     }
 }
