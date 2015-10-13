@@ -32,11 +32,6 @@ notifications:
 before_script:
   - sudo apt-get install parallel
   - composer self-update
-  - cd ..
-  - git clone --single-branch --branch $TYPO3_BRANCH --depth 1 https://github.com/TYPO3/TYPO3.CMS.git typo3_core
-  - mv typo3_core/* .
-  - mkdir -p typo3conf/ext
-  - mv asdis typo3conf/ext/
   - composer install
 
 script:
@@ -44,13 +39,13 @@ script:
     if [[ "$COVERAGE" == "0" ]]; then
       echo;
       echo "Running unit tests";
-      ./bin/phpunit --colors -c typo3/sysext/core/Build/UnitTests.xml typo3conf/ext/asdis/Tests
+      ./bin/phpunit --colors -c typo3_src/typo3/sysext/core/Build/UnitTests.xml --bootstrap typo3_src/typo3/sysext/core/Build/UnitTestsBootstrap.php Tests/
     fi
   - >
     if [[ "$COVERAGE" == "1" ]]; then
       echo;
       echo "Running unit tests";
-      ./bin/phpunit --coverage-clover=unittest-coverage.clover --colors -c typo3/sysext/core/Build/UnitTests.xml typo3conf/ext/asdis/Tests/
+      ./bin/phpunit --coverage-clover=unittest-coverage.clover --colors -c typo3_src/typo3/sysext/core/Build/UnitTests.xml --bootstrap typo3_src/typo3/sysext/core/Build/UnitTestsBootstrap.php Tests/
     fi
   - >
     if [[ "$COVERAGE" == "1" ]]; then
