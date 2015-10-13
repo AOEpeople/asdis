@@ -39,6 +39,6 @@
       }
     ],
     "autoload": {
-        "classmap": ["vendor/typo3-ter/phpunit", "Classes/"]
+        "classmap": ["vendor/typo3-ter/phpunit/", "Classes/"]
     }
 }
