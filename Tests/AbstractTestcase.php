@@ -13,7 +13,7 @@
  * @package    asdis
  * @subpackage Tests
  */
-abstract class Tx_Asdis_Tests_AbstractTestcase extends Tx_Phpunit_Testcase {
+abstract class Tx_Asdis_Tests_AbstractTestcase extends Tx_Phpunit_TestCase {
     protected $objectManagerMock;
 
     /**

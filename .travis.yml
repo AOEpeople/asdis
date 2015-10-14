@@ -31,23 +31,20 @@ notifications:
 
 before_script:
   - sudo apt-get install parallel
-  - composer self-update
   - composer install
-  - mkdir -p typo3conf/ext
-  - composer require typo3-ter/phpunit
 
 script:
   - >
     if [[ "$COVERAGE" == "0" ]]; then
       echo;
       echo "Running unit tests";
-      php vendor/bin/phpunit --colors -c typo3_src/typo3/sysext/core/Build/UnitTests.xml --bootstrap typo3_src/typo3/sysext/core/Build/UnitTestsBootstrap.php Tests/
+      php vendor/bin/phpunit --colors -c typo3_src/typo3/sysext/core/Build/UnitTests.xml Tests/
     fi
   - >
     if [[ "$COVERAGE" == "1" ]]; then
       echo;
       echo "Running unit tests";
-      php vendor/bin/phpunit --coverage-clover=unittest-coverage.clover --colors -c typo3_src/typo3/sysext/core/Build/UnitTests.xml --bootstrap typo3_src/typo3/sysext/core/Build/UnitTestsBootstrap.php Tests/
+      php vendor/bin/phpunit --coverage-clover=unittest-coverage.clover --colors -c typo3_src/typo3/sysext/core/Build/UnitTests.xml Tests/
     fi
   - >
     if [[ "$COVERAGE" == "1" ]]; then
