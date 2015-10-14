@@ -1,5 +1,5 @@
 # Asdis
-Asset Distribution - A TYPO3 Extension which enables you to rewrite urls of resources to help you integrate CDNs
+Asset Distribution - A TYPO3 Extension which enables you to rewrite urls of resources to help you integrate CDNs.
 
 Futher Links and Documentation cooming soon...
 
