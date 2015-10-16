@@ -13,16 +13,13 @@ Links
 -----
 
 :TER:
-	https://typo3.org/extensions/repository/view/<extkey>
+	http://typo3.org/extensions/repository/view/asdis
 
 :Bug Tracker:
-	https://github.com/AOEpeople/sphinx_ext_template/issues
+	https://github.com/AOEpeople/asdis/issues
 
 :Git Repository:
-	https://github.com/AOEpeople/sphinx_ext_template.git
-
-:Translation:
-	Here link to translation server should be added.
+	https://github.com/AOEpeople/asdis.git
 
 :Contact:
-	`dev@aoe.com`__
+	`dev@aoe.com <dev@aoe.com>`_

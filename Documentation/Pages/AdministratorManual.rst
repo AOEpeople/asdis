@@ -11,23 +11,35 @@
 Administrator Manual
 ====================
 
-Describes how to manage the extension from an administrator’s point of
-view. That relates to Page/User TSconfig, permissions, configuration
-etc., which administrator level users have access to.
+The first thing you have to decide, when installing asdis, is the exact moment you want to replace the URLs to your CDN.
 
-Language should be non/semi-technical, explaining, using small
-examples.
+Your options are:
 
-Target group: **Administrators**
+- Before Storing in cache (contentPostProc-all) (recommended)
 
+- Before outputting the content to the browser (contentPostProc-output)
 
-Installation
-------------
+- Non INTincScripts before storing in cache (contentPostProc-all) + INTincScripts before outputting the content to the browser (contentPostProc-output)
 
-Here Description
+The description in your backend explains your options very well:
 
+.. image:: /Images/AdministratorManual/AsdisConfig1.png
 
-FAQ
-^^^
+----------
+Activation
+----------
 
-Possible subsection: FAQ
+To enable Asdis add some TypoScript to your Page Template:
+.. parsd-literal::
+
+ config.tx_asdis {
+   enabled = 1
+   servers {
+     media1 {
+       domain = media1{$const.cdn.domain}
+     }
+     media2 {
+       domain = media2{$const.cdn.domain}
+     }
+   }
+ }

@@ -9,13 +9,13 @@
 .. _start:
 
 =============================================================
-Extensionname
+Asdis
 =============================================================
 
 .. only:: html
 
 	:Classification:
-		extension_key
+		asdis
 
 	:Version:
 		|release|
@@ -24,10 +24,10 @@ Extensionname
 		en
 
 	:Description:
-		enter description.
+		Asset Distribution - A TYPO3 Extension which enables you to rewrite urls of resources to help you integrate CDNs.
 
 	:Keywords:
-		comma,separated,list,keywords
+		CDN, assets, url rewrite
 
 	:Copyright:
 		2015
