@@ -51,7 +51,10 @@ class Tx_Asdis_Domain_Model_Asset_Factory {
 	 * @return Tx_Asdis_Domain_Model_Asset_Collection
 	 */
 	public function createAssetsFromPaths(array $paths, array $masks) {
-		$paths  = $this->filterChain->filter($paths);
+		$filteredPaths  = $this->filterChain->filter($paths);
+		$paths = array_intersect($paths, $filteredPaths);
+		$masks = array_intersect_key($masks, $paths);
+
 		$assets = $this->createAssetCollection();
 		foreach ($paths as $key => $path) {
 			$assets->append($this->createAssetFromPath($path, $masks[$key]));
