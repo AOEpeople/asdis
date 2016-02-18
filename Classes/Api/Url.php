@@ -122,5 +122,6 @@ class Tx_Asdis_Api_Url
             /** @var Tx_Asdis_Domain_Model_Server $server */
             $server->setProtocol(Tx_Asdis_Domain_Model_Server::PROTOCOL_HTTPS);
         }
+        $servers->rewind();
     }
 }
