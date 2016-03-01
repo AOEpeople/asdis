@@ -78,7 +78,7 @@ class Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups implements Tx_
 	 * @return string
 	 */
 	private function getGroupCharacter(Tx_Asdis_Domain_Model_Asset $asset) {
-		$hash = md5(sha1($asset->getOriginalPath()));
+		$hash = md5(sha1($asset->getNormalizedPath()));
 		$character = $hash{strlen($hash) - 3};
 		if(FALSE === strpos($this->characters, $character)) {
 			return self::UNKNOWN_GROUP_KEY;
