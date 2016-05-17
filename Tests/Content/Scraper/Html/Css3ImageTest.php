@@ -1,8 +1,4 @@
 <?php
-/**
- * @package    asdis
- * @subpackage Tests
- */
 
 /**
  * Tx_Asdis_Content_Scraper_Html_CssAttribute test case.

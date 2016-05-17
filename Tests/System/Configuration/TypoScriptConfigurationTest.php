@@ -1,10 +1,5 @@
 <?php
-/**
- * @package    asdis
- * @subpackage Tests
- */
-require_once dirname(__FILE__) . '/../../../Classes/System/Configuration/TypoScriptConfiguration.php';
-require_once dirname(__FILE__) . '/../../../Tests/AbstractTestcase.php';
+
 /**
  * Tx_Asdis_System_Configuration_TypoScriptConfiguration test case.
  */

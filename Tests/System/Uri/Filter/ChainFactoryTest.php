@@ -1,14 +1,5 @@
 <?php
-/**
- * @package    asdis
- * @subpackage Tests
- */
-$asdisBaseDir = dirname(__FILE__) . '/../../../../';
-require_once $asdisBaseDir . 'Tests/AbstractTestcase.php';
-require_once $asdisBaseDir . 'Classes/System/Uri/Filter/Chain.php';
-require_once $asdisBaseDir . 'Classes/System/Uri/Filter/ChainFactory.php';
-require_once $asdisBaseDir . 'Classes/System/Uri/Filter/ContainsProtocol.php';
-require_once $asdisBaseDir . 'Classes/System/Uri/Filter/WildcardProtocol.php';
+
 /**
  * Tx_Asdis_System_Uri_Filter_ChainFactory test case.
  */

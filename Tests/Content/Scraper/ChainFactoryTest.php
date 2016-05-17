@@ -1,13 +1,5 @@
 <?php
 
-$asdisBaseDir = dirname(__FILE__) . '/../../../';
-require_once $asdisBaseDir . 'Tests/AbstractTestcase.php';
-require_once $asdisBaseDir . 'Classes/Content/Scraper/Chain.php';
-require_once $asdisBaseDir . 'Classes/Content/Scraper/ChainFactory.php';
-require_once $asdisBaseDir . 'Classes/Content/Scraper/Html/Image.php';
-require_once $asdisBaseDir . 'Classes/Content/Scraper/Html/InputImage.php';
-require_once $asdisBaseDir . 'Classes/System/Configuration/Provider.php';
-
 /**
  * Tests class Tx_Asdis_Content_Scraper_ChainFactory.
  */

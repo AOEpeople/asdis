@@ -1,8 +1,5 @@
 <?php
 
-$asdisBaseDir = dirname(__FILE__) . '/../../../';
-require_once $asdisBaseDir . 'Tests/AbstractTestcase.php';
-
 /**
  * Tests class Tx_Asdis_Content_Replacement_Map.
  */

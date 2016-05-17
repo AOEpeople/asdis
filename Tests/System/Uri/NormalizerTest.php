@@ -1,11 +1,5 @@
 <?php
-/**
- * @package    asdis
- * @subpackage Tests
- */
-$asdisBaseDir = dirname(__FILE__) . '/../../../';
-require_once $asdisBaseDir . 'Tests/AbstractTestcase.php';
-require_once $asdisBaseDir . 'Classes/System/Uri/Normalizer.php';
+
 /**
  * Tx_Asdis_System_Uri_Normalizer test case.
  */

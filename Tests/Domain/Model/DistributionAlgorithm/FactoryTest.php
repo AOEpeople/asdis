@@ -1,11 +1,5 @@
 <?php
-/**
- * @package    asdis
- * @subpackage Tests
- */
-$asdisBaseDir = dirname(__FILE__) . '/../../../../';
-require_once $asdisBaseDir . 'Tests/AbstractTestcase.php';
-require_once $asdisBaseDir . 'Classes/Domain/Model/DistributionAlgorithm/Factory.php';
+
 /**
  * Tx_Asdis_Domain_Model_DistributionAlgorithm_Factory test case.
  */

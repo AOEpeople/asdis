@@ -1,10 +1,5 @@
 <?php
-/**
- * @package    asdis
- * @subpackage Tests
- */
-require_once dirname(__FILE__).'/../../../../Classes/Content/Scraper/Css/Url.php';
-require_once dirname(__FILE__).'/../../../../Tests/AbstractTestcase.php';
+
 /**
  * Tx_Asdis_Content_Scraper_Css_Url test case.
  */
