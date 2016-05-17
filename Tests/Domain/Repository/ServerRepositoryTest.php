@@ -1,11 +1,5 @@
 <?php
-/**
- * @package    asdis
- * @subpackage Tests
- */
-require_once dirname(__FILE__).'/../../../Classes/Domain/Repository/ServerRepository.php';
-require_once dirname(__FILE__).'/../../../Classes/Domain/Model/Page.php';
-require_once dirname(__FILE__).'/../../../Tests/AbstractTestcase.php';
+
 /**
  * Tx_Asdis_Domain_Repository_ServerRepository test case.
  */
@@ -33,7 +27,7 @@ class Tx_Asdis_Domain_Repository_ServerRepositoryTest extends Tx_Asdis_Tests_Abs
 	 * @test
 	 */
 	public function findAllByPage() {
-		$objectManager = $this->getMock('Tx_Extbase_Object_ObjectManagerInterface');
+		$objectManager = $this->getMock('\\TYPO3\\CMS\\Extbase\\Object\\ObjectManagerInterface');
 		$objectManager->expects($this->any())->method('get')->will($this->returnValue($this->getMock('Tx_Asdis_Domain_Model_Server_Collection')));
 		$this->serverRepository->injectObjectManager($objectManager);
 		$page = new Tx_Asdis_Domain_Model_Page();

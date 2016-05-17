@@ -10,7 +10,7 @@
 abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	private $objectManager;
 
@@ -33,13 +33,13 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_Extbase_Object_ObjectManager');
+		$this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 		$this->configurationProvider = $this->objectManager->get('Tx_Asdis_System_Configuration_Provider');
 		$this->logger = $this->objectManager->get('Tx_Asdis_System_Log_Logger');
 	}
 
 	/**
-	 * @return Tx_Extbase_Object_ObjectManagerInterface
+	 * @return \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected function getObjectManager() {
 		return $this->objectManager;
