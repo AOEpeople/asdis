@@ -5,7 +5,7 @@
  *
  * @package Tx_Asdis
  * @subpackage System_Factory_Exception
- * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
 class Tx_Asdis_System_Factory_Exception_MissingImplementation extends Exception {
 

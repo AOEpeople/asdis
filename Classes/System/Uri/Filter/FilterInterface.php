@@ -5,7 +5,7 @@
  *
  * @package Tx_Asdis
  * @subpackage System_Uri_Filter
- * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
 interface Tx_Asdis_System_Uri_Filter_FilterInterface {
 

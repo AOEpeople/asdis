@@ -5,7 +5,7 @@
  *
  * @package Tx_Asdis
  * @subpackage Domain_Model_DistributionAlgorithm
- * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
 class Tx_Asdis_Domain_Model_DistributionAlgorithm_Factory extends Tx_Asdis_System_Factory_AbstractDeclarationBasedFactory {
 

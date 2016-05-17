@@ -5,7 +5,7 @@
  *
  * @package Tx_Asdis
  * @subpackage Content_Scraper_Extractor
- * @author Timo Fuchs <timo.fuchs@aoemedia.de>
+ * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
 class Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute {
 
