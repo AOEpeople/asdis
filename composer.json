@@ -47,6 +47,6 @@
     }
   ],
   "autoload": {
-    "classmap": ["Classes/"]
+    "classmap": ["Classes/", "Tests"]
   }
 }
