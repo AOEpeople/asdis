@@ -67,7 +67,7 @@ abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
 	}
 
 	/**
-	 * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj
+	 * @return void
 	 */
 	protected function replaceAssets() {
 		$this->page->replaceAssets();
