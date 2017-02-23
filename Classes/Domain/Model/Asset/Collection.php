@@ -25,7 +25,7 @@ class Tx_Asdis_Domain_Model_Asset_Collection extends ArrayIterator {
 	/**
 	 * @param Tx_Asdis_Domain_Model_Asset $asset
 	 */
-	public function append(Tx_Asdis_Domain_Model_Asset $asset) {
+	public function append($asset) {
 		$elementHash = $asset->getHash();
 		if(in_array($elementHash, $this->elementHashes)) {
 			return;

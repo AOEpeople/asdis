@@ -20,7 +20,7 @@ class Tx_Asdis_Domain_Model_Server_Collection extends ArrayIterator {
 	/**
 	 * @param Tx_Asdis_Domain_Model_Server $server
 	 */
-	public function append(Tx_Asdis_Domain_Model_Server $server) {
+	public function append($server) {
 		parent::append($server);
 	}
 }
