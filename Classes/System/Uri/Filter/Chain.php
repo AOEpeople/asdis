@@ -20,7 +20,7 @@ class Tx_Asdis_System_Uri_Filter_Chain extends ArrayIterator implements Tx_Asdis
 	/**
 	 * @param Tx_Asdis_System_Uri_Filter_FilterInterface $filter
 	 */
-	public function append(Tx_Asdis_System_Uri_Filter_FilterInterface $filter) {
+	public function append($filter) {
 		parent::append($filter);
 	}
 

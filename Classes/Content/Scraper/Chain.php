@@ -20,7 +20,7 @@ class Tx_Asdis_Content_Scraper_Chain extends ArrayIterator implements Tx_Asdis_C
 	/**
 	 * @param Tx_Asdis_Content_Scraper_ScraperInterface $scraper
 	 */
-	public function append(Tx_Asdis_Content_Scraper_ScraperInterface $scraper) {
+	public function append($scraper) {
 		parent::append($scraper);
 	}
 
