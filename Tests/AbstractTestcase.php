@@ -2,18 +2,20 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 AOE GmbH <dev@aoe.com>
+ *  (c) 2018 AOE GmbH <dev@aoe.com>
  *  All rights reserved
  *
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Nimut\TestingFramework\TestCase\UnitTestCase;
+
 /**
  * @package    asdis
  * @subpackage Tests
  */
-abstract class Tx_Asdis_Tests_AbstractTestcase extends Tx_Phpunit_TestCase {
+abstract class Tx_Asdis_Tests_AbstractTestcase extends UnitTestCase {
     protected $objectManagerMock;
 
     /**
