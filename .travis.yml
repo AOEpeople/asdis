@@ -34,14 +34,10 @@ matrix:
     - env: TYPO3_VERSION=dev-master COVERAGE=0 FUNCTIONAL=0
     - php: 7.2
 
-branches:
-  only:
-    - feature-travisci
-
 notifications:
   email:
-     # recipients:
-     # - stefan.masztalerz@aoe.com
+    recipients:
+      - stefan.masztalerz@aoe.com
     on_success: always
     on_failure: always
 
@@ -76,7 +72,7 @@ script:
       php .Build/bin/phpunit --colors -c $UNIT_XML Tests/
     else
       echo "Running unit tests";
-      php .Build/bin/phpunit --whitlist Classes/ --coverage-clover=unittest-coverage.clover --colors -c $UNIT_XML Tests/
+      php .Build/bin/phpunit --whitelist Classes/ --coverage-clover=unittest-coverage.clover --colors -c $UNIT_XML Tests/
 
       echo "Uploading code coverage results";
       wget https://scrutinizer-ci.com/ocular.phar
