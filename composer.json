@@ -3,11 +3,16 @@
   "description": "Distributes on page assets onto multiple servers.",
   "type": "typo3-cms-extension",
   "authors": [
-      {
-          "name": "AOE GmbH",
-          "email": "dev@aoe.com"
-      }
+    {
+      "name": "AOE GmbH",
+      "email": "dev@aoe.com"
+    }
   ],
+  "support": {
+    "email": "dev@aoe.com",
+    "issues": "https://github.com/AOEpeople/asdis/issues",
+    "source": "https://github.com/AOEpeople/asdis"
+  },
   "require": {
     "php": ">=5.5.0",
     "typo3/cms-core": ">=6.2.0",
@@ -18,13 +23,22 @@
     "typo3/cms-frontend": ">=6.2.0"
   },
   "require-dev": {
-    "typo3/cms": "6.2.*",
-    "phpunit/phpunit": "4.8.*",
-    "typo3-ter/phpunit": "4.8.*",
+    "typo3/cms": "^7.6",
+    "nimut/testing-framework": "^2.0.0",
     "phpunit/phpcov": "2.0.*",
     "squizlabs/php_codesniffer": "2.3.*",
     "sebastian/phpcpd": "2.0.*",
     "phpmd/phpmd": "2.2.*"
+  },
+  "config": {
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin"
+  },
+  "extra": {
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".Build/Web"
+    }
   },
   "repositories": [
     {
@@ -33,6 +47,15 @@
     }
   ],
   "autoload": {
-    "classmap": ["Classes/", "Tests"]
+    "classmap": ["Classes"]
+  },
+  "autoload-dev": {
+    "classmap": ["Tests"]
+  },
+  "scripts": {
+    "test:unit": [
+      "[ -e '.Build/bin/phpunit' ] || composer update",
+      "TYPO3_PATH_ROOT=$(pwd)/.Build/Web .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests"
+    ]
   }
 }
