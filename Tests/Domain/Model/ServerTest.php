@@ -17,19 +17,10 @@ class Tx_Asdis_Domain_Model_ServerTest extends Tx_Asdis_Tests_AbstractTestcase {
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->server = new Tx_Asdis_Domain_Model_Server();
 
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->server = NULL;
 	}
 
 	/**

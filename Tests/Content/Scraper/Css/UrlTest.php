@@ -10,18 +10,11 @@ class Tx_Asdis_Content_Scraper_Css_UrlTest extends Tx_Asdis_Tests_AbstractTestca
 	private $url;
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->url = new Tx_Asdis_Content_Scraper_Css_Url();
 	}
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->url = NULL;
-	}
+
 	/**
 	 * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
 	 * @test

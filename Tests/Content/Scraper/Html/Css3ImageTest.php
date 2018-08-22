@@ -12,18 +12,9 @@ class Tx_Asdis_Content_Scraper_Html_Css3ImageTest extends Tx_Asdis_Tests_Abstrac
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->css3Image = new Tx_Asdis_Content_Scraper_Html_Css3Image();
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->css3Image = NULL;
 	}
 
 	/**

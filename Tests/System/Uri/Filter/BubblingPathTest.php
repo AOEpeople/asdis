@@ -12,19 +12,10 @@ class Tx_Asdis_System_Uri_Filter_BubblingPathTest extends Tx_Asdis_Tests_Abstrac
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->filter = new Tx_Asdis_System_Uri_Filter_BubblingPath();
 
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->filter = NULL;
 	}
 
 	/**

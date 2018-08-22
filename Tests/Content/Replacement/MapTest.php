@@ -12,18 +12,9 @@ class Tx_Asdis_Content_Replacement_MapTest extends Tx_Asdis_Tests_AbstractTestca
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->map = new Tx_Asdis_Content_Replacement_Map();
-
-	}
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->page = NULL;
 
 	}
 

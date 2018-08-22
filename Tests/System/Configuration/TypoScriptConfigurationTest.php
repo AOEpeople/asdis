@@ -10,18 +10,10 @@ class Tx_Asdis_System_Configuration_TypoScriptConfigurationTest extends Tx_Asdis
 	private $typoScriptConfiguration;
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->typoScriptConfiguration = $this->getMock('Tx_Asdis_System_Configuration_TypoScriptConfiguration',array('getTypoScriptConfigurationArray'));
 
-	}
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->typoScriptConfiguration = NULL;
 	}
 	/**
 	 * Tests Tx_Asdis_System_Configuration_TypoScriptConfiguration->getSetting()

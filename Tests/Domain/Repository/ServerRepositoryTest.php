@@ -10,17 +10,9 @@ class Tx_Asdis_Domain_Repository_ServerRepositoryTest extends Tx_Asdis_Tests_Abs
 	private $serverRepository;
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->serverRepository = new Tx_Asdis_Domain_Repository_ServerRepository();
-	}
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->serverRepository = NULL;
 	}
 	/**
 	 * Tests Tx_Asdis_Domain_Repository_ServerRepository->findAll()

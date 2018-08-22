@@ -12,19 +12,10 @@ class Tx_Asdis_System_Uri_Filter_WildcardProtocolTest extends Tx_Asdis_Tests_Abs
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->filter = new Tx_Asdis_System_Uri_Filter_WildcardProtocol();
 
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->filter = NULL;
 	}
 
 	/**

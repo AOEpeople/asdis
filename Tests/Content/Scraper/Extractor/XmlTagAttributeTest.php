@@ -12,18 +12,9 @@ class Tx_Asdis_Content_Scraper_Extractor_XmlTagAttributeTest extends Tx_Asdis_Te
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->extractor = new Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute();
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->extractor = NULL;
 	}
 
 	/**

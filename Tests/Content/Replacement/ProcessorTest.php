@@ -12,18 +12,10 @@ class Tx_Asdis_Content_Replacement_ProcessorTest extends Tx_Asdis_Tests_Abstract
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->processor = new Tx_Asdis_Content_Replacement_Processor();
 
-	}
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->processor = NULL;
 	}
 
 	/**

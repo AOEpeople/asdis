@@ -12,18 +12,9 @@ class Tx_Asdis_Domain_Model_DistributionAlgorithm_RoundRobinTest extends Tx_Asdi
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->algorithm = new Tx_Asdis_Domain_Model_DistributionAlgorithm_RoundRobin();
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->algorithm = NULL;
 	}
 
 	/**

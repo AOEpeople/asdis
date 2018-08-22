@@ -12,19 +12,10 @@ class Tx_Asdis_System_Uri_Filter_ChainFactoryTest extends Tx_Asdis_Tests_Abstrac
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->factory = new Tx_Asdis_System_Uri_Filter_ChainFactory();
         parent::setUp();
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->factory = NULL;
 	}
 
 	/**

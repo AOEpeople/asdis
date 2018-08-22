@@ -10,17 +10,9 @@ class Tx_Asdis_Content_Scraper_Html_CssAttributeTest extends Tx_Asdis_Tests_Abst
 	private $cssAttribute;
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->cssAttribute = new Tx_Asdis_Content_Scraper_Html_CssAttribute();
-	}
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->cssAttribute = NULL;
 	}
 	/**
 	 * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()

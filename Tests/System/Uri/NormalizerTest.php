@@ -12,19 +12,10 @@ class Tx_Asdis_System_Uri_NormalizerTest extends Tx_Asdis_Tests_AbstractTestcase
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->normalizer = new Tx_Asdis_System_Uri_Normalizer();
 
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->normalizer = NULL;
 	}
 
 	/**

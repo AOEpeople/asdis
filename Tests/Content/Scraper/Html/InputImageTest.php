@@ -12,18 +12,9 @@ class Tx_Asdis_Content_Scraper_Html_InputImageTest extends Tx_Asdis_Tests_Abstra
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->scraper = new Tx_Asdis_Content_Scraper_Html_InputImage();
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->scraper = NULL;
 	}
 
 	/**

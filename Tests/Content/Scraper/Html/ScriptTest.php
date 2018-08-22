@@ -12,18 +12,9 @@ class Tx_Asdis_Content_Scraper_Html_ScriptTest extends Tx_Asdis_Tests_AbstractTe
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->scraper = new Tx_Asdis_Content_Scraper_Html_Script();
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->scraper = NULL;
 	}
 
 	/**

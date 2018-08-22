@@ -12,19 +12,10 @@ class Tx_Asdis_Domain_Model_AssetTest extends Tx_Asdis_Tests_AbstractTestcase {
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->asset = new Tx_Asdis_Domain_Model_Asset();
 
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->asset = NULL;
 	}
 
 	/**

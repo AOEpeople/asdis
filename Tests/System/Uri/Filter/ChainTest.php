@@ -12,18 +12,9 @@ class Tx_Asdis_System_Uri_Filter_ChainTest extends Tx_Asdis_Tests_AbstractTestca
 
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->chain = new Tx_Asdis_System_Uri_Filter_Chain();
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->chain = NULL;
 	}
 
 	/**

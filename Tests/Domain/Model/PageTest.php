@@ -11,18 +11,9 @@ class Tx_Asdis_Domain_Model_PageTest extends Tx_Asdis_Tests_AbstractTestcase {
 	private $page;
 	/**
 	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp() {
 		$this->page = new Tx_Asdis_Domain_Model_Page();
-
-	}
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	protected function tearDown() {
-		$this->page = null;
 
 	}
 	/**
