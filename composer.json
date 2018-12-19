@@ -15,12 +15,12 @@
   },
   "require": {
     "php": "^7.0",
-    "typo3/cms-core": ">=6.2.0",
-    "typo3/cms-extbase": ">=6.2.0",
-    "typo3/cms-sv": ">=6.2.0",
-    "typo3/cms-backend": ">=6.2.0",
-    "typo3/cms-reports": ">=6.2.0",
-    "typo3/cms-frontend": ">=6.2.0"
+    "typo3/cms-core": ">=7.6.23",
+    "typo3/cms-extbase": ">=7.6.23",
+    "typo3/cms-sv": ">=7.6.23",
+    "typo3/cms-backend": ">=7.6.23",
+    "typo3/cms-reports": ">=7.6.23",
+    "typo3/cms-frontend": ">=7.6.23"
   },
   "require-dev": {
     "typo3/cms": "^7.6",
