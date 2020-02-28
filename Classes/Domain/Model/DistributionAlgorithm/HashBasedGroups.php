@@ -68,7 +68,7 @@ class Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups implements Tx_
 		$serverCount = $this->servers->count();
 		$charCount   = strlen($this->characters);
 		for($i = 0; $i < $charCount; $i++) {
-			$this->groups[$this->characters{$i}] = $this->getNextServer();
+			$this->groups[$this->characters[$i]] = $this->getNextServer();
 		}
 		$this->groups[self::UNKNOWN_GROUP_KEY] = $this->getNextServer();
 	}
@@ -79,7 +79,7 @@ class Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups implements Tx_
 	 */
 	private function getGroupCharacter(Tx_Asdis_Domain_Model_Asset $asset) {
 		$hash = md5(sha1($asset->getNormalizedPath()));
-		$character = $hash{strlen($hash) - 3};
+		$character = $hash[strlen($hash) - 3];
 		if(FALSE === strpos($this->characters, $character)) {
 			return self::UNKNOWN_GROUP_KEY;
 		}
