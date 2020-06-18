@@ -1,39 +1,42 @@
 <?php
+namespace Aoe\Asdis\Content\Scraper;
+
+use Aoe\Asdis\Content\Scraper\ScraperInterface;
+use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
 
 /**
  * Scraper which chains other scrapers.
- *
- * @package Tx_Asdis
- * @subpackage Content_Scraper
- * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
-class Tx_Asdis_Content_Scraper_Chain extends ArrayIterator implements Tx_Asdis_Content_Scraper_ScraperInterface {
+class Chain extends \ArrayIterator implements ScraperInterface
+{
+    /**
+     * Needs to be called due to an extbase bug.
+     * Hides optional parameters of parent constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	/**
-	 * Needs to be called due to an extbase bug.
-	 * Hides optional parameters of parent constructor.
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
+    /**
+     * @param \Aoe\Asdis\Content\Scraper\ScraperInterface $scraper
+     */
+    public function append($scraper)
+    {
+        parent::append($scraper);
+    }
 
-	/**
-	 * @param Tx_Asdis_Content_Scraper_ScraperInterface $scraper
-	 */
-	public function append($scraper) {
-		parent::append($scraper);
-	}
-
-	/**
-	 * @param $content
-	 * @return Tx_Asdis_Domain_Model_Asset_Collection
-	 */
-	public function scrape($content) {
-		$assetCollection = new Tx_Asdis_Domain_Model_Asset_Collection();
-		foreach($this as $scraper) {
-			/** @var Tx_Asdis_Content_Scraper_ScraperInterface $scraper */
-			$assetCollection->merge($scraper->scrape($content));
-		}
-		return $assetCollection;
-	}
+    /**
+     * @param $content
+     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     */
+    public function scrape($content)
+    {
+        $assetCollection = new AssetCollection();
+        foreach($this as $scraper) {
+            /** @var \Aoe\Asdis\Content\Scraper\ScraperInterface $scraper */
+            $assetCollection->merge($scraper->scrape($content));
+        }
+        return $assetCollection;
+    }
 }

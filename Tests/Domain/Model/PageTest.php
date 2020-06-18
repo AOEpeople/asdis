@@ -1,30 +1,38 @@
 <?php
+namespace Aoe\Asdis\Tests\Domain\Model;
 
-/**
- * Tx_Asdis_Domain_Model_Page test case.
- */
-class Tx_Asdis_Domain_Model_PageTest extends Tx_Asdis_Tests_AbstractTestcase {
+use Aoe\Asdis\Domain\Model\Page;
+use Aoe\Asdis\System\Configuration\Provider;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 
-	/**
-	 * @var Tx_Asdis_Domain_Model_Page
-	 */
-	private $page;
-	/**
-	 * (non-PHPdoc)
-	 */
-	protected function setUp() {
-		$this->page = new Tx_Asdis_Domain_Model_Page();
+class PageTest extends UnitTestCase
+{
+    /**
+     * @var Page
+     */
+    private $page;
 
-	}
-	/**
-	 * Tests Tx_Asdis_Domain_Model_Page->scrapeAssets()
-	 * @test
-	 */
-	public function scrapeAssets() {
-		$config = $this->getMock('Tx_Asdis_System_Configuration_Provider');
-		$config->expects($this->any())->method('isReplacementEnabled')->will($this->returnValue(FALSE));
-		$this->page->injectConfigurationProvider($config);
-		$this->assertNull($this->page->scrapeAssets());
-	}
+    /**
+     * (non-PHPdoc)
+     */
+    protected function setUp()
+    {
+        $this->page = new Page();
+
+    }
+
+    /**
+     * Tests Page->scrapeAssets()
+     * @test
+     */
+    public function scrapeAssets()
+    {
+        $config = $this->getMockBuilder(Provider::class)->getMock();
+        $config->expects($this->any())->method('isReplacementEnabled')->will($this->returnValue(false));
+
+        $this->page->injectConfigurationProvider($config);
+
+        $this->assertNull($this->page->scrapeAssets());
+    }
 }
 

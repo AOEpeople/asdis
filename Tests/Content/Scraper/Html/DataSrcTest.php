@@ -1,34 +1,54 @@
 <?php
+namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
-/**
- * Tx_Asdis_Content_Scraper_Html_Image tests.
- */
-class Tx_Asdis_Content_Scraper_Html_DataSrcTest extends Tx_Asdis_Tests_AbstractTestcase {
+use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
+use Aoe\Asdis\Content\Scraper\Html\DataSrc;
+use Aoe\Asdis\Domain\Model\Asset\Factory;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 
-	/**
-	 * @var Tx_Asdis_Content_Scraper_Html_Image
-	 */
-	private $imageScraper;
+class DataSrcTest extends UnitTestCase
+{
+    /**
+     * @var DataSrc
+     */
+    private $imageScraper;
 
-	/**
-	 * (non-PHPdoc)
-	 */
-	protected function setUp() {
-		$this->imageScraper = new Tx_Asdis_Content_Scraper_Html_DataSrc();
-	}
+    /**
+     * (non-PHPdoc)
+     */
+    protected function setUp()
+    {
+        $this->imageScraper = new DataSrc();
+    }
 
-	/**
-	 * @test
-	 */
-	public function scrape() {
-		$content = '<div data-src="uploads/images/foo.gif" />';
-		$assetFactory = $this->getMock('Tx_Asdis_Domain_Model_Asset_Factory');
-		$assetFactory->expects($this->once())->method('createAssetsFromPaths')->with(array('uploads/tx_templavoila/example.gif'));
-		$attributeExtractor = $this->getMock('Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute');
-		$attributeExtractor->expects($this->once())->method('getAttributeFromTag')->with('[A-z]?', 'data-src', $content)->will($this->returnValue(array('paths' => array('uploads/tx_templavoila/example.gif'), 'masks' => array('"'))));
-		$this->imageScraper->injectAssetFactory($assetFactory);
-		$this->imageScraper->injectXmlTagAttributeExtractor($attributeExtractor);
-		$this->imageScraper->scrape($content);
-	}
+    /**
+     * @test
+     */
+    public function scrape()
+    {
+        $content = '<div data-src="uploads/images/foo.gif" />';
+        
+        $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
+        $assetFactory
+            ->expects($this->once())
+            ->method('createAssetsFromPaths')
+            ->with(['uploads/tx_templavoila/example.gif']);
+        
+        $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
+        $attributeExtractor
+            ->expects($this->once())
+            ->method('getAttributeFromTag')
+            ->with('[A-z]?', 'data-src', $content)
+            ->will($this->returnValue(
+                [
+                    'paths' => ['uploads/tx_templavoila/example.gif'],
+                    'masks' => ['"']
+                ]
+            ));
+        
+        $this->imageScraper->injectAssetFactory($assetFactory);
+        $this->imageScraper->injectXmlTagAttributeExtractor($attributeExtractor);
+        $this->imageScraper->scrape($content);
+    }
 }
 

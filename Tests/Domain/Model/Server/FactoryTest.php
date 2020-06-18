@@ -1,30 +1,46 @@
 <?php
+namespace Aoe\Asdis\Tests\Domain\Model\Server;
 
-/**
- * Tx_Asdis_Domain_Model_Server_Factory test case.
- */
-class Tx_Asdis_Domain_Model_Server_FactoryTest extends Tx_Asdis_Tests_AbstractTestcase {
+use Aoe\Asdis\Domain\Model\Server;
+use Aoe\Asdis\Domain\Model\Server\Factory;
+use Aoe\Asdis\System\Configuration\Provider;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
-	/**
-	 * @test
-	 */
-	public function createServer() {
-		$factory = new Tx_Asdis_Domain_Model_Server_Factory();
-		$protocolMarker = '###HTTP_S###';
-		$identifier = 'media1';
-		$domain = 'media1.foo.com';
-		$protocol = Tx_Asdis_Domain_Model_Server::PROTOCOL_MARKER;
-		$blankServer = new Tx_Asdis_Domain_Model_Server();
-		$objectManagerMock = $this->getMock('TYPO3\\CMS\\Extbase\\Object\\ObjectManager', array('get'));
-		$objectManagerMock->expects($this->once())->method('get')->will($this->returnValue($blankServer));
-		$configurationProviderMock = $this->getMock('Tx_Asdis_System_Configuration_Provider', array('getServerProtocolMarker'));
-		$configurationProviderMock->expects($this->once())->method('getServerProtocolMarker')->will($this->returnValue($protocolMarker));
-		$factory->injectObjectManager($objectManagerMock);
-		$factory->injectConfigurationProvider($configurationProviderMock);
-		$server = $factory->createServer($identifier, $domain, $protocol);
-		$this->assertEquals($identifier, $server->getIdentifier());
-		$this->assertEquals($domain, $server->getDomain());
-		$this->assertEquals($protocol, $server->getProtocol());
-	}
+class FactoryTest extends UnitTestCase
+{
+    /**
+     * @test
+     */
+    public function createServer()
+    {
+        $factory = new Factory();
+        $protocolMarker = '###HTTP_S###';
+        $identifier = 'media1';
+        $domain = 'media1.foo.com';
+        $protocol = Server::PROTOCOL_MARKER;
+        $blankServer = new Server();
+
+        $objectManagerMock = $this->getMockBuilder(ObjectManager::class)->setMethods(['get'])->getMock();
+        $objectManagerMock->expects($this->once())->method('get')->will($this->returnValue($blankServer));
+
+        $configurationProvider = $this->getMockBuilder(Provider::class)
+            ->setMethods(['getServerProtocolMarker'])
+            ->getMock();
+            
+        $configurationProvider
+            ->expects($this->once())
+            ->method('getServerProtocolMarker')
+            ->will($this->returnValue($protocolMarker));
+
+        $factory->injectObjectManager($objectManagerMock);
+        $factory->injectConfigurationProvider($configurationProvider);
+
+        $server = $factory->createServer($identifier, $domain, $protocol);
+        
+        $this->assertEquals($identifier, $server->getIdentifier());
+        $this->assertEquals($domain, $server->getDomain());
+        $this->assertEquals($protocol, $server->getProtocol());
+    }
 }
 

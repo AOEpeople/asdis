@@ -1,9 +1,10 @@
 <?php
+namespace Aoe\Asdis\Backend\Utility;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2017 AOE GmbH <dev@aoe.com>
+ *  (c) 2020 AOE GmbH <dev@aoe.com>
  *
  *  All rights reserved
  *
@@ -24,30 +25,28 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class Tx_Asdis_Backend_Utility_HookUtility
- */
-class Tx_Asdis_Backend_Utility_HookUtility {
-
-	/**
-	 * Register hooks
-	 *
-	 * @return void
-	 */
-	public static function registerHooks() {
-		$extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['asdis']);
-		switch ($extConf['hook']) {
-			case 'contentPostProc-all':
-				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcAll.php:&Tx_Asdis_Typo3_Hook_ContentPostProcAll->process';
-				break;
-			case 'contentPostProc-output':
-				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcAll.php:&Tx_Asdis_Typo3_Hook_ContentPostProcAll->process';
-				break;
-			case 'contentPostProc-all_and_output':
-				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcAll.php:&Tx_Asdis_Typo3_Hook_ContentPostProcAll->processCache';
-				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = 'EXT:asdis/Classes/Typo3/Hook/ContentPostProcAll.php:&Tx_Asdis_Typo3_Hook_ContentPostProcAll->processNoCache';
-				break;
-		}
-		unset($extConf);
-	}
+class HookUtility
+{
+    /**
+     * Register hooks
+     *
+     * @return void
+     */
+    public static function registerHooks()
+    {
+        $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['asdis']);
+        switch ($extConf['hook']) {
+            case 'contentPostProc-all':
+                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = \Aoe\Asdis\Typo3\Hook\ContentPostProcAll::class . '->process';
+                break;
+            case 'contentPostProc-output':
+                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = \Aoe\Asdis\Typo3\Hook\ContentPostProcAll::class .'->process';
+                break;
+            case 'contentPostProc-all_and_output':
+                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = \Aoe\Asdis\Typo3\Hook\ContentPostProcAll::class .'->processCache';
+                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = \Aoe\Asdis\Typo3\Hook\ContentPostProcAll::class .'->processNoCache';
+                break;
+        }
+        unset($extConf);
+    }
 }

@@ -1,44 +1,46 @@
 <?php
+namespace Aoe\Asdis\Content\Scraper\Html;
+
+use Aoe\Asdis\Content\Scraper\Html\AbstractHtmlScraper;
+use Aoe\Asdis\Content\Scraper\ScraperInterface;
+use Aoe\Asdis\Domain\Model\Asset\Factory;
 
 /**
  * Scrapes assets from all tags by using data-src attributes.
- *
- * @package Tx_Asdis
- * @subpackage Content_Scraper_Html
- * @author Kevin Schu <kevin.schu@aoe.com>
  */
-class Tx_Asdis_Content_Scraper_Html_Css3Image extends Tx_Asdis_Content_Scraper_Html_AbstractHtmlScraper
-	implements Tx_Asdis_Content_Scraper_ScraperInterface {
+class Css3Image extends AbstractHtmlScraper implements ScraperInterface
+{
+    /**
+     * @var \Aoe\Asdis\Domain\Model\Asset\Factory
+     */
+    private $assetFactory;
 
-	/**
-	 * @var Tx_Asdis_Domain_Model_Asset_Factory
-	 */
-	private $assetFactory;
+    /**
+     * @param \Aoe\Asdis\Domain\Model\Asset\Factory $assetFactory
+     */
+    public function injectAssetFactory(Factory $assetFactory)
+    {
+        $this->assetFactory = $assetFactory;
+    }
 
-	/**
-	 * @param Tx_Asdis_Domain_Model_Asset_Factory $assetFactory
-	 */
-	public function injectAssetFactory(Tx_Asdis_Domain_Model_Asset_Factory $assetFactory) {
-		$this->assetFactory = $assetFactory;
-	}
-
-	/**
-	 * @param string $content
-	 * @return Tx_Asdis_Domain_Model_Asset_Collection
-	 */
-	public function scrape($content) {
-		$paths = array();
-		$masks = array();
-		$matches = array();
-		preg_match_all(
-			'/data-src-[^=]*\s?=\s?([\'"])(.*?)([\'"])/i',
-			$content,
-			$matches
-		);
-		if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[2])) {
-			$paths = $matches[2];
-			$masks = $matches[1];
-		}
-		return $this->assetFactory->createAssetsFromPaths($paths, $masks);
-	}
+    /**
+     * @param string $content
+     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     */
+    public function scrape($content)
+    {
+        $paths = [];
+        $masks = [];
+        $matches = [];
+        preg_match_all(
+            '/data-src-[^=]*\s?=\s?([\'"])(.*?)([\'"])/i',
+            $content,
+            $matches
+        );
+        if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[2])) {
+            $paths = $matches[2];
+            $masks = $matches[1];
+        }
+        return $this->assetFactory->createAssetsFromPaths($paths, $masks);
+    }
 }

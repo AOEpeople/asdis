@@ -1,34 +1,51 @@
 <?php
+namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
-/**
- * Tx_Asdis_Content_Scraper_Html_OpenGraphImage tests.
- */
-class Tx_Asdis_Content_Scraper_Html_OpenGraphImageTest extends Tx_Asdis_Tests_AbstractTestcase {
+use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
+use Aoe\Asdis\Content\Scraper\Html\OpenGraphImage;
+use Aoe\Asdis\Domain\Model\Asset\Factory;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 
-	/**
-	 * @var Tx_Asdis_Content_Scraper_Html_OpenGraphImage
-	 */
-	private $scraper;
+class OpenGraphImageTest extends UnitTestCase
+{
+    /**
+     * @var OpenGraphImage
+     */
+    private $scraper;
 
-	/**
-	 * (non-PHPdoc)
-	 */
-	protected function setUp() {
-		$this->scraper = new Tx_Asdis_Content_Scraper_Html_OpenGraphImage();
-	}
+    /**
+     * (non-PHPdoc)
+     */
+    protected function setUp()
+    {
+        $this->scraper = new OpenGraphImage();
+    }
 
-	/**
-	 * @test
-	 */
-	public function scrape() {
-		$content      = '<meta property="og:image" content="uploads/images/foo.gif" />';
-		$assetFactory = $this->getMock('Tx_Asdis_Domain_Model_Asset_Factory');
-		$assetFactory->expects($this->once())->method('createAssetsFromPaths')->with(array('uploads/images/foo.gif'));
-		$attributeExtractor = $this->getMock('Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute');
-		$attributeExtractor->expects($this->once())->method('getAttributeFromTag')->with('meta', 'content', $content, array('property' => 'og:image'))->will($this->returnValue(array('paths' => array('uploads/images/foo.gif'), 'masks' => array('"'))));
-		$this->scraper->injectAssetFactory($assetFactory);
-		$this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
-		$this->scraper->scrape($content);
-	}
+    /**
+     * @test
+     */
+    public function scrape()
+    {
+        $content = '<meta property="og:image" content="uploads/images/foo.gif" />';
+        
+        $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
+        $assetFactory->expects($this->once())->method('createAssetsFromPaths')->with(['uploads/images/foo.gif']);
+        
+        $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
+        $attributeExtractor
+            ->expects($this->once())
+            ->method('getAttributeFromTag')
+            ->with('meta', 'content', $content, ['property' => 'og:image'])
+            ->will($this->returnValue(
+                [
+                    'paths' => ['uploads/images/foo.gif'],
+                    'masks' => ['"'],
+                ]
+            ));
+        
+        $this->scraper->injectAssetFactory($assetFactory);
+        $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
+        $this->scraper->scrape($content);
+    }
 }
 

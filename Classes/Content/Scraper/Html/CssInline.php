@@ -1,56 +1,58 @@
 <?php
+namespace Aoe\Asdis\Content\Scraper\Html;
+
+use Aoe\Asdis\Content\Scraper\Css\Url;
+use Aoe\Asdis\Content\Scraper\ScraperInterface;
 
 /**
  * Scrapes assets from inline CSS.
- *
- * @package Tx_Asdis
- * @subpackage Content_Scraper_Html
- * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
-class Tx_Asdis_Content_Scraper_Html_CssInline implements Tx_Asdis_Content_Scraper_ScraperInterface {
+class CssInline implements ScraperInterface
+{
+    /**
+     * @var \Aoe\Asdis\Content\Scraper\Css\Url
+     */
+    private $cssUrlScraper;
 
-	/**
-	 * @var Tx_Asdis_Content_Scraper_Css_Url
-	 */
-	private $cssUrlScraper;
+    /**
+     * @param \Aoe\Asdis\Content\Scraper\Css\Url $cssUrlScraper
+     */
+    public function injectCssUrlScraper(Url $cssUrlScraper)
+    {
+        $this->cssUrlScraper = $cssUrlScraper;
+    }
 
-	/**
-	 * @param Tx_Asdis_Content_Scraper_Css_Url $cssUrlScraper
-	 */
-	public function injectCssUrlScraper(Tx_Asdis_Content_Scraper_Css_Url $cssUrlScraper) {
-		$this->cssUrlScraper = $cssUrlScraper;
-	}
+    /**
+     * @param $content
+     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     */
+    public function scrape($content)
+    {
+        return $this->cssUrlScraper->scrape(implode(PHP_EOL, $this->getStyleBlocksFromMarkup($content)));
+    }
 
-	/**
-	 * @param $content
-	 * @return Tx_Asdis_Domain_Model_Asset_Collection
-	 */
-	public function scrape($content) {
-		return $this->cssUrlScraper->scrape(implode(PHP_EOL, $this->getStyleBlocksFromMarkup($content)));
-	}
+    /**
+     * Returns the inner content of all <style></style> blocks of the given markup as an array.
+     *
+     * @param string $content
+     * @return array
+     */
+    private function getStyleBlocksFromMarkup($content)
+    {
+        $blocks  = [];
+        $matches = [];
 
-	/**
-	 * Returns the inner content of all <style></style> blocks of the given markup as an array.
-	 *
-	 * @param string $content
-	 * @return array
-	 */
-	private function getStyleBlocksFromMarkup($content) {
+        preg_match_all(
+            '~<style[^>]*>(.*?)</style>~is',
+            $content,
+            $matches,
+            PREG_PATTERN_ORDER
+        );
 
-		$blocks  = array();
-		$matches = array();
+        if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[1])) {
+            $blocks = $matches[1];
+        }
 
-		preg_match_all(
-			'~<style[^>]*>(.*?)</style>~is',
-			$content,
-			$matches,
-			PREG_PATTERN_ORDER
-		);
-
-		if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[1])) {
-			$blocks = $matches[1];
-		}
-
-		return $blocks;
-	}
+        return $blocks;
+    }
 }

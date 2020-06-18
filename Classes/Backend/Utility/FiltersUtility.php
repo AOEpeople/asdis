@@ -1,9 +1,10 @@
 <?php
+namespace Aoe\Asdis\Backend\Utility;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2017 AOE GmbH <dev@aoe.com>
+ *  (c) 2020 AOE GmbH <dev@aoe.com>
  *
  *  All rights reserved
  *
@@ -24,56 +25,54 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class Tx_Asdis_Backend_Utility_FiltersUtility
- */
-class Tx_Asdis_Backend_Utility_FiltersUtility {
+class FiltersUtility
+{
+    /**
+     * Registers filters
+     *
+     * @param $extensionPath string
+     *
+     * @return void
+     */
+    public static function registerFilters($extensionPath)
+    {
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = [
+            'key'   => 'bubblingPath',
+            'class' => '\Aoe\Asdis\System\Uri\Filter\BubblingPath',
+            'file'  => $extensionPath . 'Classes/System/Uri/Filter/BubblingPath.php'
+        ];
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = [
+            'key'   => 'containsInlineData',
+            'class' => '\Aoe\Asdis\System\Uri\Filter\ContainsInlineData',
+            'file'  => $extensionPath . 'Classes/System/Uri/Filter/ContainsInlineData.php'
+        ];
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = [
+            'key'   => 'containsProtocol',
+            'class' => '\Aoe\Asdis\System\Uri\Filter\ContainsProtocol',
+            'file'  => $extensionPath . 'Classes/System/Uri/Filter/ContainsProtocol.php'
+        ];
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = [
+            'key'   => 'tooShort',
+            'class' => '\Aoe\Asdis\System\Uri\Filter\TooShort',
+            'file'  => $extensionPath . 'Classes/System/Uri/Filter/TooShort.php'
+        ];
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = [
+            'key'   => 'wildcardProtocol',
+            'class' => '\Aoe\Asdis\System\Uri\Filter\WildcardProtocol',
+            'file'  => $extensionPath . 'Classes/System/Uri/Filter/WildcardProtocol.php'
+        ];
 
-	/**
-	 * Registers filters
-	 *
-	 * @param $extensionPath string
-	 *
-	 * @return void
-	 */
-	public static function registerFilters($extensionPath) {
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
-			'key'   => 'bubblingPath',
-			'class' => 'Tx_Asdis_System_Uri_Filter_BubblingPath',
-			'file'  => $extensionPath . 'Classes/System/Uri/Filter/BubblingPath.php'
-		);
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
-			'key'   => 'containsInlineData',
-			'class' => 'Tx_Asdis_System_Uri_Filter_ContainsInlineData',
-			'file'  => $extensionPath . 'Classes/System/Uri/Filter/ContainsInlineData.php'
-		);
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
-			'key'   => 'containsProtocol',
-			'class' => 'Tx_Asdis_System_Uri_Filter_ContainsProtocol',
-			'file'  => $extensionPath . 'Classes/System/Uri/Filter/ContainsProtocol.php'
-		);
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
-			'key'   => 'tooShort',
-			'class' => 'Tx_Asdis_System_Uri_Filter_TooShort',
-			'file'  => $extensionPath . 'Classes/System/Uri/Filter/TooShort.php'
-		);
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = array(
-			'key'   => 'wildcardProtocol',
-			'class' => 'Tx_Asdis_System_Uri_Filter_WildcardProtocol',
-			'file'  => $extensionPath . 'Classes/System/Uri/Filter/WildcardProtocol.php'
-		);
+        // Register distribution algorithms
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['distributionAlgorithms'][] = [
+            'key'   => 'hashBasedGroups',
+            'class' => '\Aoe\Asdis\Domain\Model\DistributionAlgorithm_HashBasedGroups',
+            'file'  => $extensionPath . 'Classes/Domain/Model/DistributionAlgorithm/HashBasedGroups.php'
+        ];
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['distributionAlgorithms'][] = [
+            'key'   => 'roundRobin',
+            'class' => '\Aoe\Asdis\Domain\Model\DistributionAlgorithm_RoundRobin',
+            'file'  => $extensionPath . 'Classes/Domain/Model/DistributionAlgorithm/RoundRobin.php'
+        ];
 
-		// Register distribution algorithms
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['distributionAlgorithms'][] = array(
-			'key'   => 'hashBasedGroups',
-			'class' => 'Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups',
-			'file'  => $extensionPath . 'Classes/Domain/Model/DistributionAlgorithm/HashBasedGroups.php'
-		);
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['distributionAlgorithms'][] = array(
-			'key'   => 'roundRobin',
-			'class' => 'Tx_Asdis_Domain_Model_DistributionAlgorithm_RoundRobin',
-			'file'  => $extensionPath . 'Classes/Domain/Model/DistributionAlgorithm/RoundRobin.php'
-		);
-
-	}
+    }
 }

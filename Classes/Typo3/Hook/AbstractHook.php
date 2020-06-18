@@ -1,96 +1,96 @@
 <?php
+namespace Aoe\Asdis\Typo3\Hooks;
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Abstract hook class.
- *
- * @package Tx_Asdis
- * @subpackage Typo3_Hook
- * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
-abstract class Tx_Asdis_Typo3_Hook_AbstractHook {
+abstract class AbstractHook
+{
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     */
+    private $objectManager;
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-	 */
-	private $objectManager;
+    /**
+     * @var \Aoe\Asdis\System\Log\Logger
+     */
+    private $logger;
 
-	/**
-	 * @var Tx_Asdis_System_Log_Logger
-	 */
-	private $logger;
+    /**
+     * @var \Aoe\Asdis\Domain\Model\Page
+     */
+    private $page;
 
-	/**
-	 * @var Tx_Asdis_Domain_Model_Page
-	 */
-	private $page;
+    /**
+     * @var \Aoe\Asdis\System\Configuration\Provider
+     */
+    private $configurationProvider;
 
-	/**
-	 * @var Tx_Asdis_System_Configuration_Provider
-	 */
-	private $configurationProvider;
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $this->configurationProvider = $this->objectManager->get(\Aoe\Asdis\System\Configuration\Provider::class);
+        $this->logger = $this->objectManager->get(\Aoe\Asdis\System\Log\Logger::class);
+    }
 
-	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		$this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-		$this->configurationProvider = $this->objectManager->get('Tx_Asdis_System_Configuration_Provider');
-		$this->logger = $this->objectManager->get('Tx_Asdis_System_Log_Logger');
-	}
+    /**
+     * @return \Aoe\Asdis\System\Configuration\Provider
+     */
+    protected function getConfigurationProvider()
+    {
+        return $this->configurationProvider;
+    }
 
-	/**
-	 * @return \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-	 */
-	protected function getObjectManager() {
-		return $this->objectManager;
-	}
+    /**
+     * @return \Aoe\Asdis\System\Log\Logger
+     */
+    protected function getLogger()
+    {
+        return $this->logger;
+    }
 
-	/**
-	 * @return Tx_Asdis_System_Configuration_Provider
-	 */
-	protected function getConfigurationProvider() {
-		return $this->configurationProvider;
-	}
+    /**
+     * @return void
+     */
+    protected function scrapeAssets()
+    {
+        $this->page->scrapeAssets();
+    }
 
-	/**
-	 * @return Tx_Asdis_System_Log_Logger
-	 */
-	protected function getLogger() {
-		return $this->logger;
-	}
+    /**
+     * @return void
+     */
+    protected function replaceAssets()
+    {
+        $this->page->replaceAssets();
+    }
 
-	/**
-	 * @return void
-	 */
-	protected function scrapeAssets() {
-		$this->page->scrapeAssets();
-	}
+    /**
+     * Scrapes and replaces the assets of the current page.
+     *
+     * @return void
+     */
+    protected function scrapeAndReplace()
+    {
+        $this->scrapeAssets();
+        $this->replaceAssets();
+    }
 
-	/**
-	 * @return void
-	 */
-	protected function replaceAssets() {
-		$this->page->replaceAssets();
-	}
-
-	/**
-	 * Scrapes and replaces the assets of the current page.
-	 *
-	 * @return void
-	 */
-	protected function scrapeAndReplace() {
-		$this->scrapeAssets();
-		$this->replaceAssets();
-	}
-
-	/**
-	 * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj
-	 */
-	protected function setPageObject(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj) {
-		/** @var Tx_Asdis_Domain_Model_Page $page */
-		$page = $this->getObjectManager()->get('Tx_Asdis_Domain_Model_Page');
-		$page->setAssets($this->getObjectManager()->get('Tx_Asdis_Domain_Model_Asset_Collection'));
-		$page->setPageObject($pObj);
-		$this->page = $page;
-	}
+    /**
+     * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj
+     */
+    protected function setPageObject(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj)
+    {
+        /** @var Tx_Asdis_Domain_Model_Page $page */
+        $page = $this->getObjectManager()->get(\Aoe\Asdis\Domain\Model\Page::class);
+        $page->setAssets($this->getObjectManager()->get(\Aoe\Asdis\Domain\Model\Asset\Collection::class));
+        $page->setPageObject($pObj);
+        $this->page = $page;
+    }
 }

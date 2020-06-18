@@ -1,21 +1,22 @@
 <?php
+namespace Aoe\Asdis\Content\Scraper\Html;
+
+use Aoe\Asdis\Content\Scraper\Html\AbstractHtmlScraper;
+use Aoe\Asdis\Content\Scraper\ScraperInterface;
 
 /**
- * Scrapes CSS assets from "<link>" tags..
- *
- * @package Tx_Asdis
- * @subpackage Content_Scraper_Html
- * @author Timo Fuchs <timo.fuchs@aoe.com>
+ * Scrapes CSS assets from "<link>" tags.
  */
-class Tx_Asdis_Content_Scraper_Html_CssFile extends Tx_Asdis_Content_Scraper_Html_AbstractHtmlScraper implements Tx_Asdis_Content_Scraper_ScraperInterface {
-
-	/**
-	 * @param $content
-	 * @return Tx_Asdis_Domain_Model_Asset_Collection
-	 */
-	public function scrape($content) {
-		return
-			$this->getAssets('link', 'href', $content, array('rel' => 'stylesheet'))
-				->merge($this->getAssets('link', 'href', $content, array('type' => 'text/css')));
-	}
+class CssFile extends AbstractHtmlScraper implements ScraperInterface
+{
+    /**
+     * @param $content
+     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     */
+    public function scrape($content)
+    {
+        return
+            $this->getAssets('link', 'href', $content, ['rel' => 'stylesheet'])
+                ->merge($this->getAssets('link', 'href', $content, ['type' => 'text/css']));
+    }
 }
