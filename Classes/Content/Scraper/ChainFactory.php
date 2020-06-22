@@ -30,7 +30,7 @@ class ChainFactory extends AbstractDeclarationBasedFactory
     private function initialize()
     {
         $this->setDeclarations($this->getScraperDeclarations());
-        $this->setClassImplements(['\Aoe\Asdis\Content\Scraper\ScraperInterface']);
+        $this->setClassImplements(['Aoe\Asdis\Content\Scraper\ScraperInterface']);
     }
 
     /**
