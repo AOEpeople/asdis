@@ -10,7 +10,7 @@ class ContentPostProcAll extends AbstractHook
      * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj
      * @return void
      */
-    public function process(&$params, \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj = NULL)
+    public function process(&$params, \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj = null)
     {
         if($this->getConfigurationProvider()->isDefaultHookHandlingDisabled()) {
             return;
