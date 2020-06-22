@@ -16,7 +16,7 @@ class ContainsProtocol implements FilterInterface
     {
         $filteredPaths = [];
         foreach($paths as $path) {
-            if($this->containsProtocol($path) || $this->containsProtocolMarker($path)) {
+            if ($this->containsProtocol($path) || $this->containsProtocolMarker($path)) {
                 continue;
             }
             $filteredPaths[] = $path;

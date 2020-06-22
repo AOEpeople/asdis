@@ -100,10 +100,10 @@ abstract class AbstractDeclarationBasedFactory
      */
     private function addDeclaration(array $declaration)
     {
-        if(
-            FALSE === array_key_exists(self::DECLARATION_KEY, $declaration)   ||
-            FALSE === array_key_exists(self::DECLARATION_CLASS, $declaration) ||
-            FALSE === array_key_exists(self::DECLARATION_FILE, $declaration)
+        if (
+            false === array_key_exists(self::DECLARATION_KEY, $declaration)   ||
+            false === array_key_exists(self::DECLARATION_CLASS, $declaration) ||
+            false === array_key_exists(self::DECLARATION_FILE, $declaration)
         ) {
             throw new InvalidDeclaration(
                 'Missing declaration element.', 1372422185108
@@ -129,9 +129,11 @@ abstract class AbstractDeclarationBasedFactory
             }
             $declaration = $this->getDeclarationByKey($this->fallbackKey);
         }
+
         if (false === class_exists($declaration[self::DECLARATION_CLASS])) {
             require_once $declaration[self::DECLARATION_FILE];
         }
+
         $object = $this->objectManager->get($declaration[self::DECLARATION_CLASS]);
         $implemented = class_implements($object);
         foreach($this->classImplements as $classImplement) {
@@ -152,7 +154,7 @@ abstract class AbstractDeclarationBasedFactory
     private function getDeclarationByKey($key)
     {
         foreach($this->declarations as $declaration) {
-            if(strcmp($declaration[self::DECLARATION_KEY], $key) === 0) {
+            if (strcmp($declaration[self::DECLARATION_KEY], $key) === 0) {
                 return $declaration;
             }
         }

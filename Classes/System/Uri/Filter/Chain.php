@@ -31,7 +31,7 @@ class Chain extends \ArrayIterator implements FilterInterface
      */
     public function filter(array $paths)
     {
-        if($this->count() < 1) {
+        if ($this->count() < 1) {
             return $paths;
         }
         foreach($this as $filter) {

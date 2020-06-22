@@ -12,9 +12,10 @@ class ContentPostProcAll extends AbstractHook
      */
     public function process(&$params, \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj = null)
     {
-        if($this->getConfigurationProvider()->isDefaultHookHandlingDisabled()) {
+        if ($this->getConfigurationProvider()->isDefaultHookHandlingDisabled()) {
             return;
         }
+        
         if (null === $pObj) {
             if (isset($params['pObj']) && ($params['pObj'] instanceof \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController)) {
                 $pObj = $params['pObj'];
@@ -22,6 +23,7 @@ class ContentPostProcAll extends AbstractHook
                 $pObj = $GLOBALS['TSFE'];
             }
         }
+
         try {
             $this->setPageObject($pObj);
             $this->scrapeAndReplace();

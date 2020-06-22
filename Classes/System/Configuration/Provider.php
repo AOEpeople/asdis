@@ -113,13 +113,13 @@ class Provider
         $definitions = array();
         $serverDefinitions = $this->typoScriptConfiguration->getSetting('servers', 'array', true);
         foreach($serverDefinitions as $identifier => $serverDefinition) {
-            if(false === is_array($serverDefinition) || false === isset($serverDefinition['domain'])) {
+            if (false === is_array($serverDefinition) || false === isset($serverDefinition['domain'])) {
                 throw new InvalidStructure(
                     'Configured server definition for "'.((string) $serverDefinition) . '" is invalid.',
                     1372159113552
                 );
             }
-            if(FALSE === isset($serverDefinition['protocol'])) {
+            if (false === isset($serverDefinition['protocol'])) {
                 $serverDefinition['protocol'] = 'marker';
             }
             $definitions[] = [

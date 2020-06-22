@@ -30,7 +30,7 @@ class Collection extends \ArrayIterator
     public function append($asset)
     {
         $elementHash = $asset->getHash();
-        if(in_array($elementHash, $this->elementHashes)) {
+        if (in_array($elementHash, $this->elementHashes)) {
             return;
         }
         $this->elementHashes[] = $elementHash;
