@@ -1,36 +1,39 @@
 <?php
+namespace Aoe\Asdis\Domain\Model\DistributionAlgorithm;
+
+use Aoe\Asdis\Domain\Model\DistributionAlgorithm\DistributionAlgorithmInterface;
+use Aoe\Asdis\System\Factory\AbstractDeclarationBasedFactory;
 
 /**
  * Factory for distribution algorithms.
- *
- * @package Tx_Asdis
- * @subpackage Domain_Model_DistributionAlgorithm
- * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
-class Tx_Asdis_Domain_Model_DistributionAlgorithm_Factory extends Tx_Asdis_System_Factory_AbstractDeclarationBasedFactory {
+class Factory extends AbstractDeclarationBasedFactory
+{
+    /**
+     * @param string $key
+     * @return \Aoe\Asdis\Domain\Model\DistributionAlgorithm\DistributionAlgorithmInterface
+     */
+    public function buildDistributionAlgorithmFromKey($key)
+    {
+        $this->initialize();
+        return $this->buildObjectFromKey($key);
+    }
 
-	/**
-	 * @param string $key
-	 * @return Tx_Asdis_Domain_Model_DistributionAlgorithm_DistributionAlgorithmInterface
-	 */
-	public function buildDistributionAlgorithmFromKey($key) {
-		$this->initialize();
-		return $this->buildObjectFromKey($key);
-	}
+    /**
+     * @return void
+     */
+    private function initialize()
+    {
+        $this->setDeclarations($this->getDeclarations());
+        $this->setFallbackKey('hashBasedGroups');
+        $this->setClassImplements(['Aoe\Asdis\Domain\Model\DistributionAlgorithm\DistributionAlgorithmInterface']);
+    }
 
-	/**
-	 * @return void
-	 */
-	private function initialize() {
-		$this->setDeclarations($this->getDeclarations());
-		$this->setFallbackKey('hashBasedGroups');
-		$this->setClassImplements(array('Tx_Asdis_Domain_Model_DistributionAlgorithm_DistributionAlgorithmInterface'));
-	}
-
-	/**
-	 * @return array
-	 */
-	protected function getDeclarations() {
-		return $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['distributionAlgorithms'];
-	}
+    /**
+     * @return array
+     */
+    protected function getDeclarations()
+    {
+        return $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['distributionAlgorithms'];
+    }
 }

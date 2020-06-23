@@ -1,55 +1,59 @@
 <?php
+namespace Aoe\Asdis\Domain\Model\Server;
+
+use Aoe\Asdis\Domain\Model\Server;
+use Aoe\Asdis\System\Configuration\Provider;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 /**
  * Factory for server objects.
- *
- * @package Tx_Asdis
- * @subpackage Domain_Model
- * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
-class Tx_Asdis_Domain_Model_Server_Factory {
+class Factory
+{
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     */
+    private $objectManager;
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-	 */
-	private $objectManager;
+    /**
+     * @var string
+     */
+    private $protocolMarker;
 
-	/**
-	 * @var string
-	 */
-	private $protocolMarker;
+    /**
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
+     */
+    public function injectObjectManager(ObjectManagerInterface $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
 
-	/**
-	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
-	 */
-	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
-		$this->objectManager = $objectManager;
-	}
+    /**
+     * @param \Aoe\Asdis\System\Configuration\Provider $configurationProvider
+     */
+    public function injectConfigurationProvider(Provider $configurationProvider)
+    {
+        try {
+            $this->protocolMarker = $configurationProvider->getServerProtocolMarker();
+        } catch(Exception $e) {
+            $this->protocolMarker = '';
+        }
+    }
 
-	/**
-	 * @param Tx_Asdis_System_Configuration_Provider $configurationProvider
-	 */
-	public function injectConfigurationProvider(Tx_Asdis_System_Configuration_Provider $configurationProvider) {
-		try {
-			$this->protocolMarker = $configurationProvider->getServerProtocolMarker();
-		} catch(Exception $e) {
-			$this->protocolMarker = '';
-		}
-	}
-
-	/**
-	 * @param string $identifier
-	 * @param string $domain
-	 * @param string $protocol
-	 * @return Tx_Asdis_Domain_Model_Server
-	 */
-	public function createServer($identifier, $domain, $protocol) {
-		/** @var Tx_Asdis_Domain_Model_Server $server */
-		$server = $this->objectManager->get('Tx_Asdis_Domain_Model_Server');
-		$server->setIdentifier($identifier);
-		$server->setDomain($domain);
-		$server->setProtocol($protocol);
-		$server->setProtocolMarker($this->protocolMarker);
-		return $server;
-	}
+    /**
+     * @param string $identifier
+     * @param string $domain
+     * @param string $protocol
+     * @return \Aoe\Asdis\Domain\Model\Server
+     */
+    public function createServer($identifier, $domain, $protocol)
+    {
+        /** @var \Aoe\Asdis\Domain\Model\Server $server */
+        $server = $this->objectManager->get(Server::class);
+        $server->setIdentifier($identifier);
+        $server->setDomain($domain);
+        $server->setProtocol($protocol);
+        $server->setProtocolMarker($this->protocolMarker);
+        return $server;
+    }
 }

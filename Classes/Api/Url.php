@@ -1,57 +1,66 @@
 <?php
+namespace Aoe\Asdis\Api;
 
-/**
- * @package Tx_Asdis
- * @subpackage Api
- * @author Kevin Schu <kevin.schu@aoe.com>
- */
-class Tx_Asdis_Api_Url
+use Aoe\Asdis\Api\Exception\NotEnabledException;
+use Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory as AlgorithmFactory;
+use Aoe\Asdis\Domain\Model\Asset;
+use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
+use Aoe\Asdis\Domain\Model\Page;
+use Aoe\Asdis\Domain\Model\Server;
+use Aoe\Asdis\Domain\Model\Server\Collection as ServerCollection;
+use Aoe\Asdis\Domain\Model\Server\Factory as ServerFactory;
+use Aoe\Asdis\Domain\Repository\ServerRepository;
+use Aoe\Asdis\System\Configuration\Exception\TypoScriptSettingNotExists;
+use Aoe\Asdis\System\Configuration\Provider;
+use Aoe\Asdis\System\Uri\Normalizer;
+
+class Url
 {
     /**
-     * @var Tx_Asdis_Domain_Model_DistributionAlgorithm_Factory
+     * @var \Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory
      */
     private $distributionAlgorithmFactory;
 
     /**
-     * @var Tx_Asdis_Domain_Repository_ServerRepository
+     * @var \Aoe\Asdis\Domain\Repository\ServerRepository
      */
     private $serverRepository;
 
     /**
-     * @var Tx_Asdis_System_Configuration_Provider
+     * @var \Aoe\Asdis\System\Configuration\Provider
      */
     private $configurationProvider;
 
     /**
-     * @var Tx_Asdis_System_Uri_Normalizer
+     * @var \Aoe\Asdis\System\Uri\Normalizer
      */
     private $uriNormalizer;
 
     /**
-     * @var Tx_Asdis_Domain_Model_Page
+     * @var \Aoe\Asdis\Domain\Model\Page
      */
     private $page;
 
     /**
-     * @var Tx_Asdis_Domain_Model_Server_Factory
+     * @var \Aoe\Asdis\Domain\Model\Server\Factory
      */
     private $serverFactory;
 
     /**
-     * @param Tx_Asdis_Domain_Model_DistributionAlgorithm_Factory $distributionAlgorithmFactory
-     * @param Tx_Asdis_Domain_Repository_ServerRepository $serverRepository
-     * @param Tx_Asdis_System_Configuration_Provider $configurationProvider
-     * @param Tx_Asdis_System_Uri_Normalizer $uriNormalizer
-     * @param Tx_Asdis_Domain_Model_Page $page
-     * @param Tx_Asdis_Domain_Model_Server_Factory $serverFactory
+     * @param \Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory $distributionAlgorithmFactory
+     * @param \Aoe\Asdis\Domain\Repository\ServerRepository $serverRepository
+     * @param \Aoe\Asdis\System\Configuration\Provider $configurationProvider
+     * @param \Aoe\Asdis\System\Uri\Normalizer $uriNormalizer
+     * @param \Aoe\Asdis\Domain\Model\Page $page
+     * @param \Aoe\Asdis\Domain\Model\Server\Factory $serverFactory
      */
     public function __construct(
-        Tx_Asdis_Domain_Model_DistributionAlgorithm_Factory $distributionAlgorithmFactory,
-        Tx_Asdis_Domain_Repository_ServerRepository $serverRepository,
-        Tx_Asdis_System_Configuration_Provider $configurationProvider,
-        Tx_Asdis_System_Uri_Normalizer $uriNormalizer,
-        Tx_Asdis_Domain_Model_Page $page,
-        Tx_Asdis_Domain_Model_Server_Factory $serverFactory
+        AlgorithmFactory $distributionAlgorithmFactory,
+        ServerRepository $serverRepository,
+        Provider $configurationProvider,
+        Normalizer $uriNormalizer,
+        Page $page,
+        ServerFactory $serverFactory
     ) {
         $this->distributionAlgorithmFactory = $distributionAlgorithmFactory;
         $this->serverRepository = $serverRepository;
@@ -72,7 +81,7 @@ class Tx_Asdis_Api_Url
             return null;
         }
 
-        $asset = new Tx_Asdis_Domain_Model_Asset();
+        $asset = new Asset();
         $asset->setOriginalPath($path);
         $asset->setNormalizedPath($this->uriNormalizer->normalizePath($path));
 
@@ -82,28 +91,28 @@ class Tx_Asdis_Api_Url
     }
 
     /**
-     * @param Tx_Asdis_Domain_Model_Asset $asset
-     * @throws Tx_Asdis_Api_Exception_NotEnabledException
+     * @param \Aoe\Asdis\Domain\Model\Asset $asset
+     * @throws \Aoe\Asdis\Api\Exception\NotEnabledException
      */
-    private function distributeAsset(Tx_Asdis_Domain_Model_Asset $asset)
+    private function distributeAsset(Asset $asset)
     {
         try {
             if ($this->configurationProvider->isReplacementEnabled()) {
-                $collection = new Tx_Asdis_Domain_Model_Asset_Collection();
+                $collection = new AssetCollection();
                 $collection->append($asset);
                 $distributionAlgorithm = $this->distributionAlgorithmFactory
                     ->buildDistributionAlgorithmFromKey($this->configurationProvider->getDistributionAlgorithmKey());
                 $distributionAlgorithm->distribute($collection, $this->getServers());
             } else {
-                throw new Tx_Asdis_Api_Exception_NotEnabledException(1452171538);
+                throw new NotEnabledException(1452171538);
             }
-        } catch (Tx_Asdis_System_Configuration_Exception_TypoScriptSettingNotExists $e) {
-            throw new Tx_Asdis_Api_Exception_NotEnabledException(1452171530, $e);
+        } catch (TypoScriptSettingNotExists $e) {
+            throw new NotEnabledException(1452171530, $e);
         }
     }
 
     /**
-     * @return Tx_Asdis_Domain_Model_Server_Collection
+     * @return \Aoe\Asdis\Domain\Model\Server\Collection
      */
     private function getServers()
     {
@@ -113,14 +122,14 @@ class Tx_Asdis_Api_Url
     }
 
     /**
-     * @param Tx_Asdis_Domain_Model_Server_Collection $servers
+     * @param \Aoe\Asdis\Domain\Model\Server\Collection $servers
      * @return void
      */
-    private function forceSSL(Tx_Asdis_Domain_Model_Server_Collection $servers)
+    private function forceSSL(ServerCollection $servers)
     {
         foreach ($servers as $server) {
-            /** @var Tx_Asdis_Domain_Model_Server $server */
-            $server->setProtocol(Tx_Asdis_Domain_Model_Server::PROTOCOL_HTTPS);
+            /** @var Server $server */
+            $server->setProtocol(Server::PROTOCOL_HTTPS);
         }
         $servers->rewind();
     }

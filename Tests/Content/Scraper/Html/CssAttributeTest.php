@@ -1,39 +1,52 @@
 <?php
+namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
-/**
- * Tx_Asdis_Content_Scraper_Html_CssAttribute test case.
- */
-class Tx_Asdis_Content_Scraper_Html_CssAttributeTest extends Tx_Asdis_Tests_AbstractTestcase {
-	/**
-	 * @var Tx_Asdis_Content_Scraper_Html_CssAttribute
-	 */
-	private $cssAttribute;
-	/**
-	 * (non-PHPdoc)
-	 */
-	protected function setUp() {
-		$this->cssAttribute = new Tx_Asdis_Content_Scraper_Html_CssAttribute();
-	}
-	/**
-	 * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
-	 * @test
-	 */
-	public function scrape() {
-		$url = $this->getMock('Tx_Asdis_Content_Scraper_Css_Url');
-		$url->expects($this->once())->method('scrape')->with('');
-		$this->cssAttribute->injectCssUrlScraper($url);
-		$this->cssAttribute->scrape('');
-	}
-	/**
-	 * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
-	 * @test
-	 */
-	public function scrapeWithCss() {
-		$url = $this->getMock('Tx_Asdis_Content_Scraper_Css_Url');
-		$url->expects($this->once())->method('scrape')->with('url(uploads/tx_templavoila/130621_example_Buehne_AllnetFlatS_Aktion_5tage.gif)'.PHP_EOL.'url(uploads/tx_templavoila/D-Netz_icon_03.gif)'.PHP_EOL.'url(uploads/tx_templavoila/Newsletter_Teaser_Bucket.gif)');
-		$this->cssAttribute->injectCssUrlScraper($url);
-		$content = file_get_contents(dirname(__FILE__).'/Fixtures/testPage.html');
-		$this->cssAttribute->scrape($content);
-	}
+use Aoe\Asdis\Content\Scraper\Css\Url;
+use Aoe\Asdis\Content\Scraper\Html\CssAttribute;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
+
+class CssAttributeTest extends UnitTestCase
+{
+    /**
+     * @var CssAttribute
+     */
+    private $cssAttribute;
+    /**
+     * (non-PHPdoc)
+     */
+    protected function setUp()
+    {
+        $this->cssAttribute = new CssAttribute();
+    }
+    /**
+     * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
+     * @test
+     */
+    public function scrape()
+    {
+        $url = $this->getMockBuilder(Url::class)->getMock();
+        $url->expects($this->once())->method('scrape')->with('');
+        
+        $this->cssAttribute->injectCssUrlScraper($url);
+        $this->cssAttribute->scrape('');
+    }
+    /**
+     * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
+     * @test
+     */
+    public function scrapeWithCss()
+    {
+        $url = $this->getMockBuilder(Url::class)->getMock();
+        $url
+            ->expects($this->once())
+            ->method('scrape')
+            ->with('url(uploads/tx_templavoila/130621_example_Buehne_AllnetFlatS_Aktion_5tage.gif)'.PHP_EOL.'url(uploads/tx_templavoila/D-Netz_icon_03.gif)'.PHP_EOL.'url(uploads/tx_templavoila/Newsletter_Teaser_Bucket.gif)');
+        
+        $this->cssAttribute->injectCssUrlScraper($url);
+        
+        $content = file_get_contents(dirname(__FILE__).'/Fixtures/testPage.html');
+        
+        $this->cssAttribute->scrape($content);
+    }
 }
 

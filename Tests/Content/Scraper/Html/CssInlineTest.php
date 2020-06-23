@@ -1,33 +1,40 @@
 <?php
+namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
-/**
- * Tx_Asdis_Content_Scraper_Html_CssInline tests.
- */
-class Tx_Asdis_Content_Scraper_Html_CssInlineTest extends Tx_Asdis_Tests_AbstractTestcase {
+use Aoe\Asdis\Content\Scraper\Css\Url;
+use Aoe\Asdis\Content\Scraper\Html\CssInline;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 
-	/**
-	 * @var Tx_Asdis_Content_Scraper_Html_CssInline
-	 */
-	private $scraper;
+class CssInlineTest extends UnitTestCase
+{
+    /**
+     * @var CssInline
+     */
+    private $scraper;
 
-	/**
-	 * (non-PHPdoc)
-	 */
-	protected function setUp() {
-		$this->scraper = new Tx_Asdis_Content_Scraper_Html_CssInline();
-	}
+    /**
+     * (non-PHPdoc)
+     */
+    protected function setUp()
+    {
+        $this->scraper = new CssInline();
+    }
 
-	/**
-	 * @test
-	 */
-	public function scrape() {
-		$style1 = 'h1 { color: #fff; }';
-		$style2 = 'h2 { font-size: 12px; }';
-		$content = '<div><style>' . $style1 . '</style><style>' . $style2 . '</style></div>';
-		$cssUrlScraper = $this->getMock('Tx_Asdis_Content_Scraper_Css_Url');
-		$cssUrlScraper->expects($this->once())->method('scrape')->with($style1 . PHP_EOL . $style2);
-		$this->scraper->injectCssUrlScraper($cssUrlScraper);
-		$this->scraper->scrape($content);
-	}
+    /**
+     * @test
+     */
+    public function scrape()
+    {
+        $style1 = 'h1 { color: #fff; }';
+        $style2 = 'h2 { font-size: 12px; }';
+        
+        $content = '<div><style>' . $style1 . '</style><style>' . $style2 . '</style></div>';
+        
+        $cssUrlScraper = $this->getMockBuilder(Url::class)->getMock();
+        $cssUrlScraper->expects($this->once())->method('scrape')->with($style1 . PHP_EOL . $style2);
+        
+        $this->scraper->injectCssUrlScraper($cssUrlScraper);
+        $this->scraper->scrape($content);
+    }
 }
 

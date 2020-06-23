@@ -1,59 +1,87 @@
 <?php
+namespace Aoe\Asdis\Tests\System\Uri\Filter;
 
-/**
- * Tx_Asdis_System_Uri_Filter_ChainFactory test case.
- */
-class Tx_Asdis_System_Uri_Filter_ChainFactoryTest extends Tx_Asdis_Tests_AbstractTestcase {
+use Aoe\Asdis\System\Configuration\Provider;
+use Aoe\Asdis\System\Uri\Filter\Chain;
+use Aoe\Asdis\System\Uri\Filter\ChainFactory;
+use Aoe\Asdis\System\Uri\Filter\ContainsProtocol;
+use Aoe\Asdis\System\Uri\Filter\WildcardProtocol;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
-	/**
-	 * @var Tx_Asdis_System_Uri_Filter_ChainFactory
-	 */
-	private $factory;
+class ChainFactoryTest extends UnitTestCase
+{
+    /**
+     * @var ChainFactory
+     */
+    private $factory;
 
-	/**
-	 * (non-PHPdoc)
-	 */
-	protected function setUp() {
-		$this->factory = new Tx_Asdis_System_Uri_Filter_ChainFactory();
+    /**
+     * (non-PHPdoc)
+     */
+    protected function setUp()
+    {
+        $this->factory = new ChainFactory();
         parent::setUp();
-	}
+    }
 
-	/**
-	 * @test
-	 */
-	public function buildChain() {
-		global $asdisBaseDir;
-		$declarations = array(
-			array(
-				'key'   => 'containsProtocol',
-				'class' => 'Tx_Asdis_System_Uri_Filter_ContainsProtocol',
-				'file'  => $asdisBaseDir . 'Classes/System/Uri/Filter/ContainsProtocol.php'
-			),
-			array(
-				'key'   => 'wildcardProtocol',
-				'class' => 'Tx_Asdis_System_Uri_Filter_WildcardProtocol',
-				'file'  => $asdisBaseDir . 'Classes/System/Uri/Filter/WildcardProtocol.php'
-			)
-		);
-		$conf = $this->getMock('Tx_Asdis_System_Configuration_Provider', array('getFilterKeys'));
-		$conf->expects($this->once())->method('getFilterKeys')->will($this->returnValue(array('containsProtocol', 'wildcardProtocol')));
-		$factory = $this->getMock('Tx_Asdis_System_Uri_Filter_ChainFactory', array('getDeclarations', 'buildObjectFromKey'));
+    /**
+     * @test
+     */
+    public function buildChain()
+    {
+        global $asdisBaseDir;
 
-        $map = array(
-            array('Tx_Asdis_System_Uri_Filter_Chain', new Tx_Asdis_System_Uri_Filter_Chain()),
-            array('Tx_Asdis_System_Uri_Filter_WildcardProtocol', new Tx_Asdis_System_Uri_Filter_WildcardProtocol()),
-            array('Tx_Asdis_System_Uri_Filter_WildcardProtocol', new Tx_Asdis_System_Uri_Filter_WildcardProtocol()),
-        );
+        $declarations = [
+            [
+                'key'   => 'containsProtocol',
+                'class' => '\Aoe\Asdis\System\Uri\Filter\ContainsProtocol',
+                'file'  => $asdisBaseDir . 'Classes/System/Uri/Filter/ContainsProtocol.php'
+            ],
+            [
+                'key'   => 'wildcardProtocol',
+                'class' => '\Aoe\Asdis\System\Uri\Filter\WildcardProtocol',
+                'file'  => $asdisBaseDir . 'Classes/System/Uri/Filter/WildcardProtocol.php'
+            ]
+        ];
 
-        $this->objectManagerMock->expects($this->any())
+        $conf = $this->getMockBuilder(Provider::class)->setMethods(['getFilterKeys'])->getMock();
+        $conf->expects($this->once())->method('getFilterKeys')->will(
+            $this->returnValue(['containsProtocol', 'wildcardProtocol']
+        ));
+
+        $factory = $this->getMockBuilder(ChainFactory::class)
+            ->setMethods(['getDeclarations', 'buildObjectFromKey'])
+            ->getMock();
+
+        $map = [
+            [
+                '\Aoe\Asdis\System\Uri\Filter\Chain', 
+                new Chain()
+            ],
+            [
+                '\Aoe\Asdis\System\Uri\Filter\WildcardProtocol',
+                new WildcardProtocol()
+            ],
+            [
+                '\Aoe\Asdis\System\Uri\Filter\WildcardProtocol',
+                new WildcardProtocol()
+            ],
+        ];
+
+        $objectManagerMock = $this->getMockBuilder(ObjectManager::class)->getMock();
+        $objectManagerMock
+            ->expects($this->any())
             ->method('get')
             ->will($this->returnValueMap($map));
 
-		$factory->injectObjectManager($this->objectManagerMock);
-		$factory->injectConfigurationProvider($conf);
-		$factory->expects($this->once())->method('getDeclarations')->will($this->returnValue($declarations));
-		$factory->expects($this->exactly(2))->method('buildObjectFromKey')->will($this->returnValue(new Tx_Asdis_System_Uri_Filter_ContainsProtocol()));
-		$factory->buildChain();
-	}
+        $factory->injectObjectManager($objectManagerMock);
+        $factory->injectConfigurationProvider($conf);
+        $factory->expects($this->once())->method('getDeclarations')->will($this->returnValue($declarations));
+        $factory->expects($this->exactly(2))->method('buildObjectFromKey')->will(
+            $this->returnValue(new ContainsProtocol()
+        ));
+        $factory->buildChain();
+    }
 }
 

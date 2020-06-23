@@ -1,18 +1,22 @@
 <?php
+namespace Aoe\Asdis\Tests\Domain\Model\Server;
 
-/**
- * Tx_Asdis_Domain_Model_Server_Collection test case.
- */
-class Tx_Asdis_Domain_Model_Server_CollectionTest extends Tx_Asdis_Tests_AbstractTestcase {
+use Aoe\Asdis\Domain\Model\Server;
+use Aoe\Asdis\Domain\Model\Server\Collection;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 
-	/**
-	 * @test
-	 */
-	public function append() {
-		$collection = new Tx_Asdis_Domain_Model_Server_Collection();
-		$server = new Tx_Asdis_Domain_Model_Server();
-		$collection->append($server);
-		$this->assertEquals(1, $collection->count());
-	}
+class CollectionTest extends UnitTestCase
+{
+    /**
+     * @test
+     */
+    public function append()
+    {
+        $collection = new Collection();
+        $server = new Server();
+        $collection->append($server);
+        
+        $this->assertEquals(1, $collection->count());
+    }
 }
 

@@ -1,34 +1,55 @@
 <?php
+namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
-/**
- * Tx_Asdis_Content_Scraper_Html_Favicon tests.
- */
-class Tx_Asdis_Content_Scraper_Html_FaviconTest extends Tx_Asdis_Tests_AbstractTestcase {
+use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
+use Aoe\Asdis\Content\Scraper\Html\Favicon;
+use Aoe\Asdis\Domain\Model\Asset\Collection;
+use Aoe\Asdis\Domain\Model\Asset\Factory;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 
-	/**
-	 * @var Tx_Asdis_Content_Scraper_Html_Favicon
-	 */
-	private $scraper;
+class FaviconTest extends UnitTestCase
+{
+    /**
+     * @var Favicon
+     */
+    private $scraper;
 
-	/**
-	 * (non-PHPdoc)
-	 */
-	protected function setUp() {
-		$this->scraper = new Tx_Asdis_Content_Scraper_Html_Favicon();
-	}
+    /**
+     * (non-PHPdoc)
+     */
+    protected function setUp()
+    {
+        $this->scraper = new Favicon();
+    }
 
-	/**
-	 * @test
-	 */
-	public function scrape() {
-		$content      = '<link href="typo3temp/favicon.ico" rel="icon" />';
-		$assetFactory = $this->getMock('Tx_Asdis_Domain_Model_Asset_Factory');
-		$assetFactory->expects($this->exactly(3))->method('createAssetsFromPaths')->with(array('typo3temp/favicon.ico'))->will($this->returnValue(new Tx_Asdis_Domain_Model_Asset_Collection()));
-		$attributeExtractor = $this->getMock('Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute');
-		$attributeExtractor->expects($this->exactly(3))->method('getAttributeFromTag')->will($this->returnValue(array('paths' => array('typo3temp/favicon.ico'), 'masks' => array('"'))));
-		$this->scraper->injectAssetFactory($assetFactory);
-		$this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
-		$this->scraper->scrape($content);
-	}
+    /**
+     * @test
+     */
+    public function scrape()
+    {
+        $content = '<link href="typo3temp/favicon.ico" rel="icon" />';
+        
+        $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
+        $assetFactory
+            ->expects($this->exactly(3))
+            ->method('createAssetsFromPaths')
+            ->with(array('typo3temp/favicon.ico'))
+            ->will($this->returnValue(new Collection()));
+        
+        $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
+        $attributeExtractor
+            ->expects($this->exactly(3))
+            ->method('getAttributeFromTag')
+            ->will($this->returnValue(
+                [
+                    'paths' => ['typo3temp/favicon.ico'],
+                    'masks' => ['"']
+                ]
+            ));
+        
+        $this->scraper->injectAssetFactory($assetFactory);
+        $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
+        $this->scraper->scrape($content);
+    }
 }
 

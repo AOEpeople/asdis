@@ -1,38 +1,46 @@
 <?php
+namespace Aoe\Asdis\Tests\Domain\Model\DistributionAlgorithm;
 
-/**
- * Tx_Asdis_Domain_Model_DistributionAlgorithm_Factory test case.
- */
-class Tx_Asdis_Domain_Model_DistributionAlgorithm_FactoryTest extends Tx_Asdis_Tests_AbstractTestcase {
+use Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory;
+use Aoe\Asdis\Domain\Model\DistributionAlgorithm\HashBasedGroups;
+use Aoe\Asdis\Domain\Model\DistributionAlgorithm\RoundRobin;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
-	/**
-	 * @test
-	 */
-	public function buildDistributionAlgorithmFromKey() {
-		global $asdisBaseDir;
-		$declarations = array(
-			array(
-				'key'   => 'hashBasedGroups',
-				'class' => 'Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups',
-				'file'  => $asdisBaseDir . 'Classes/Domain/Model/DistributionAlgorithm/HashBasedGroups.php'
-			),
-			array(
-				'key'   => 'roundRobin',
-				'class' => 'Tx_Asdis_Domain_Model_DistributionAlgorithm_RoundRobin',
-				'file'  => $asdisBaseDir . 'Classes/Domain/Model/DistributionAlgorithm/RoundRobin.php'
-			)
-		);
-		$factory = $this->getMock('Tx_Asdis_Domain_Model_DistributionAlgorithm_Factory', array('getDeclarations'), array(), '', TRUE);
-		$factory->expects($this->once())->method('getDeclarations')->will($this->returnValue($declarations));
+class FactoryTest extends UnitTestCase
+{
+    /**
+     * @test
+     */
+    public function buildDistributionAlgorithmFromKey()
+    {
+        global $asdisBaseDir;
 
-		$this->objectManagerMock->method('get')
-			->with('Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups')
-			->willReturn(new Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups());
+        $declarations = [
+            [
+                'key'   => 'hashBasedGroups',
+                'class' => 'Aoe\Asdis\Domain\Model\DistributionAlgorithm\HashBasedGroups',
+                'file'  => $asdisBaseDir . 'Classes/Domain/Model/DistributionAlgorithm/HashBasedGroups.php'
+            ],
+            [
+                'key'   => 'roundRobin',
+                'class' => 'Aoe\Asdis\Domain\Model\DistributionAlgorithm\RoundRobin',
+                'file'  => $asdisBaseDir . 'Classes/Domain/Model/DistributionAlgorithm/RoundRobin.php'
+            ]
+        ];
+//TODO? , [], '', true
+        $factory = $this->getMockBuilder(Factory::class)->setMethods(['getDeclarations'])->getMock();
+        $factory->expects($this->once())->method('getDeclarations')->will($this->returnValue($declarations));
 
-		$factory->injectObjectManager($this->objectManagerMock);
+        $objectManagerMock = $this->getMockBuilder(ObjectManager::class)->getMock();
+        $objectManagerMock->method('get')
+            ->with(HashBasedGroups::class)
+            ->willReturn(new HashBasedGroups());
 
-		$algorithm = $factory->buildDistributionAlgorithmFromKey('hashBasedGroups');
-		$this->assertEquals('Tx_Asdis_Domain_Model_DistributionAlgorithm_HashBasedGroups', get_class($algorithm));
-	}
+        $factory->injectObjectManager($objectManagerMock);
+
+        $algorithm = $factory->buildDistributionAlgorithmFromKey('hashBasedGroups');
+        $this->assertEquals(HashBasedGroups::class, get_class($algorithm));
+    }
 }
 

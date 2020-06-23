@@ -1,34 +1,51 @@
 <?php
+namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
-/**
- * Tx_Asdis_Content_Scraper_Html_Embed tests.
- */
-class Tx_Asdis_Content_Scraper_Html_EmbedTest extends Tx_Asdis_Tests_AbstractTestcase {
+use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
+use Aoe\Asdis\Content\Scraper\Html\Embed;
+use Aoe\Asdis\Domain\Model\Asset\Factory;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 
-	/**
-	 * @var Tx_Asdis_Content_Scraper_Html_Embed
-	 */
-	private $scraper;
+class EmbedTest extends UnitTestCase
+{
+    /**
+     * @var Embed
+     */
+    private $scraper;
 
-	/**
-	 * (non-PHPdoc)
-	 */
-	protected function setUp() {
-		$this->scraper = new Tx_Asdis_Content_Scraper_Html_Embed();
-	}
+    /**
+     * (non-PHPdoc)
+     */
+    protected function setUp()
+    {
+        $this->scraper = new Embed();
+    }
 
-	/**
-	 * @test
-	 */
-	public function scrape() {
-		$content      = '<embed src="typo3temp/flash.swf" />';
-		$assetFactory = $this->getMock('Tx_Asdis_Domain_Model_Asset_Factory');
-		$assetFactory->expects($this->once())->method('createAssetsFromPaths')->with(array('typo3temp/flash.swf'));
-		$attributeExtractor = $this->getMock('Tx_Asdis_Content_Scraper_Extractor_XmlTagAttribute');
-		$attributeExtractor->expects($this->once())->method('getAttributeFromTag')->with('embed', 'src', $content)->will($this->returnValue(array('paths' => array('typo3temp/flash.swf'), 'masks' => array('"'))));
-		$this->scraper->injectAssetFactory($assetFactory);
-		$this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
-		$this->scraper->scrape($content);
-	}
+    /**
+     * @test
+     */
+    public function scrape()
+    {
+        $content = '<embed src="typo3temp/flash.swf" />';
+        
+        $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
+        $assetFactory->expects($this->once())->method('createAssetsFromPaths')->with(['typo3temp/flash.swf']);
+        
+        $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
+        $attributeExtractor
+            ->expects($this->once())
+            ->method('getAttributeFromTag')
+            ->with('embed', 'src', $content)
+            ->will($this->returnValue(
+                [
+                    'paths' => ['typo3temp/flash.swf'],
+                    'masks' => ['"']
+                ]
+            ));
+        
+        $this->scraper->injectAssetFactory($assetFactory);
+        $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
+        $this->scraper->scrape($content);
+    }
 }
 

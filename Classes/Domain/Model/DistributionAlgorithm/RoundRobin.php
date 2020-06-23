@@ -1,46 +1,49 @@
 <?php
+namespace Aoe\Asdis\Domain\Model\DistributionAlgorithm;
+
+use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
+use Aoe\Asdis\Domain\Model\DistributionAlgorithm\DistributionAlgorithmInterface;
+use Aoe\Asdis\Domain\Model\Server\Collection as ServerCollection;
 
 /**
  * RoundRobin implementation of a distribution algorithm.
- *
- * @package Tx_Asdis
- * @subpackage Domain_Model_DistributionAlgorithm
- * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
-class Tx_Asdis_Domain_Model_DistributionAlgorithm_RoundRobin implements Tx_Asdis_Domain_Model_DistributionAlgorithm_DistributionAlgorithmInterface {
+class RoundRobin implements DistributionAlgorithmInterface
+{
+    /**
+     * @var \Aoe\Asdis\Domain\Model\Server\Collection
+     */
+    private $servers;
 
-	/**
-	 * @var Tx_Asdis_Domain_Model_Server_Collection
-	 */
-	private $servers;
+    /**
+     * Distributes the given assets to the given servers.
+     *
+     * @param \Aoe\Asdis\Domain\Model\Asset\Collection $assets
+     * @param \Aoe\Asdis\Domain\Model\Server\Collection $servers
+     * @return void
+     */
+    public function distribute(AssetCollection $assets, ServerCollection $servers)
+    {
+        if ($servers->count() < 1) {
+            return;
+        }
+        $this->servers = $servers;
+        foreach($assets as $asset) {
+            /** @var \Aoe\Asdis\Domain\Model\Asset $asset */
+            $asset->setServer($this->getNextServer());
+        }
+    }
 
-	/**
-	 * Distributes the given assets to the given servers.
-	 *
-	 * @param Tx_Asdis_Domain_Model_Asset_Collection $assets
-	 * @param Tx_Asdis_Domain_Model_Server_Collection $servers
-	 * @return void
-	 */
-	public function distribute(Tx_Asdis_Domain_Model_Asset_Collection $assets, Tx_Asdis_Domain_Model_Server_Collection $servers) {
-		if($servers->count() < 1) {
-			return;
-		}
-		$this->servers = $servers;
-		foreach($assets as $asset) {
-			/** @var Tx_Asdis_Domain_Model_Asset $asset */
-			$asset->setServer($this->getNextServer());
-		}
-	}
-
-	/**
-	 * @return Tx_Asdis_Domain_Model_Server
-	 */
-	private function getNextServer() {
-		$server = $this->servers->current();
-		$this->servers->next();
-		if(FALSE === $this->servers->valid()) {
-			$this->servers->rewind();
-		}
-		return $server;
-	}
+    /**
+     * @return \Aoe\Asdis\Domain\Model\Server
+     */
+    private function getNextServer()
+    {
+        $server = $this->servers->current();
+        $this->servers->next();
+        if (false === $this->servers->valid()) {
+            $this->servers->rewind();
+        }
+        return $server;
+    }
 }

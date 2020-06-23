@@ -1,28 +1,28 @@
 <?php
+namespace Aoe\Asdis\Content\Replacement;
+
+use Aoe\Asdis\Content\Replacement\Map;
 
 /**
  * Replaces content.
- *
- * @package Tx_Asdis
- * @subpackage Content_Replacement
- * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
-class Tx_Asdis_Content_Replacement_Processor {
-
-	/**
-	 * @param Tx_Asdis_Content_Replacement_Map $replacementMap
-	 * @param string $content
-	 * @return string
-	 */
-	public function replace(Tx_Asdis_Content_Replacement_Map $replacementMap, $content) {
-		$result = preg_replace(
-			$replacementMap->getSources(),
-			$replacementMap->getTargets(),
-			$content
-		);
-		if(NULL === $result) {
-			return $content;
-		}
-		return $result;
-	}
+class Processor
+{
+    /**
+     * @param \Aoe\Asdis\Content\Replacement\Map $replacementMap
+     * @param string $content
+     * @return string
+     */
+    public function replace(Map $replacementMap, $content)
+    {
+        $result = preg_replace(
+            $replacementMap->getSources(),
+            $replacementMap->getTargets(),
+            $content
+        );
+        if (null === $result) {
+            return $content;
+        }
+        return $result;
+    }
 }

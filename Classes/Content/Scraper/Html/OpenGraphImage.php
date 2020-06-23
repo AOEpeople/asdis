@@ -1,19 +1,20 @@
 <?php
+namespace Aoe\Asdis\Content\Scraper\Html;
+
+use Aoe\Asdis\Content\Scraper\Html\AbstractHtmlScraper;
+use Aoe\Asdis\Content\Scraper\ScraperInterface;
 
 /**
  * Scrapes assets from "<meta property="og:image">" tags.
- *
- * @package Tx_Asdis
- * @subpackage Content_Scraper_Html
- * @author Timo Fuchs <timo.fuchs@aoe.com>
  */
-class Tx_Asdis_Content_Scraper_Html_OpenGraphImage extends Tx_Asdis_Content_Scraper_Html_AbstractHtmlScraper implements Tx_Asdis_Content_Scraper_ScraperInterface {
-
-	/**
-	 * @param $content
-	 * @return Tx_Asdis_Domain_Model_Asset_Collection
-	 */
-	public function scrape($content) {
-		return $this->getAssets('meta', 'content', $content, array('property' => 'og:image'));
-	}
+class OpenGraphImage extends AbstractHtmlScraper implements ScraperInterface
+{
+    /**
+     * @param $content
+     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     */
+    public function scrape($content)
+    {
+        return $this->getAssets('meta', 'content', $content, ['property' => 'og:image']);
+    }
 }

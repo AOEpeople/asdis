@@ -1,11 +1,7 @@
 <?php
+namespace Aoe\Asdis\Api\Exception;
 
-/**
- * @package Tx_Asdis
- * @subpackage Api_Exception
- * @author Kevin Schu <kevin.schu@aoe.com>
- */
-class Tx_Asdis_Api_Exception_NotEnabledException extends Exception
+class NotEnabledException extends Exception
 {
     /**
      * @param integer $code

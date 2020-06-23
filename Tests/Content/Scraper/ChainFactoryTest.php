@@ -1,26 +1,36 @@
 <?php
+namespace Aoe\Asdis\Tests\Content\Scraper;
 
-/**
- * Tests class Tx_Asdis_Content_Scraper_ChainFactory.
- */
-class Tx_Asdis_Content_Scraper_ChainFactoryTest extends Tx_Asdis_Tests_AbstractTestcase {
+use Aoe\Asdis\Content\Scraper\Chain;
+use Aoe\Asdis\Content\Scraper\ChainFactory;
+use Aoe\Asdis\Content\Scraper\Html\Image;
+use Aoe\Asdis\Content\Scraper\Html\Script;
+use Aoe\Asdis\Domain\Model\Asset\Collection;
+use Aoe\Asdis\System\Configuration\Provider;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
-	/**
-	 * @test
-	 */
-	public function buildChain() {
-		global $asdisBaseDir;
-		$configurationProvider = $this->getMock('Tx_Asdis_System_Configuration_Provider', array('getScraperKeys'));
-		$configurationProvider->expects($this->once())->method('getScraperKeys')->will($this->returnValue(array()));
-		$chainFactory = $this->getMock('Tx_Asdis_Content_Scraper_ChainFactory', array('getScraperDeclarations'));
-		$chainFactory->expects($this->once())->method('getScraperDeclarations')->will($this->returnValue(array()));
-		$chainFactory->injectConfigurationProvider($configurationProvider);
+class ChainFactoryTest extends UnitTestCase
+{
+    /**
+     * @test
+     */
+    public function buildChain()
+    {
+        global $asdisBaseDir;
+        $configurationProvider = $this->getMockBuilder(Provider::class)->setMethods(['getScraperKeys'])->getMock();
+        $configurationProvider->expects($this->once())->method('getScraperKeys')->will($this->returnValue([]));
+        
+        $chainFactory = $this->getMockBuilder(ChainFactory::class)->setMethods(['getScraperDeclarations'])->getMock();
+        $chainFactory->expects($this->once())->method('getScraperDeclarations')->will($this->returnValue([]));
+        $chainFactory->injectConfigurationProvider($configurationProvider);
 
-        $this->objectManagerMock->method('get')
-            ->with('Tx_Asdis_Content_Scraper_Chain')
-            ->willReturn(new Tx_Asdis_Content_Scraper_Chain());
+        $objectManagerMock = $this->getMockBuilder(ObjectManager::class)->getMock();
+        $objectManagerMock->method('get')
+            ->with(Chain::class)
+            ->willReturn(new Chain());
 
-        $chainFactory->injectObjectManager($this->objectManagerMock);
-		$chainFactory->buildChain();
-	}
+        $chainFactory->injectObjectManager($objectManagerMock);
+        $chainFactory->buildChain();
+    }
 }
