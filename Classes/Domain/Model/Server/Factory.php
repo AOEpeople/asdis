@@ -35,7 +35,7 @@ class Factory
     {
         try {
             $this->protocolMarker = $configurationProvider->getServerProtocolMarker();
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $this->protocolMarker = '';
         }
     }

@@ -116,7 +116,7 @@ class Page
         $distributionAlgorithmKey = '';
         try {
             $distributionAlgorithmKey = $this->configurationProvider->getDistributionAlgorithmKey();
-        } catch(Exception $e) {}
+        } catch(\Exception $e) {}
         $distributionAlgorithm = $this->distributionAlgorithmFactory->buildDistributionAlgorithmFromKey($distributionAlgorithmKey);
         $distributionAlgorithm->distribute($this->getAssets(), $this->serverRepository->findAllByPage($this));
         $this->pageObject->content = $this->replacementProcessor->replace(
