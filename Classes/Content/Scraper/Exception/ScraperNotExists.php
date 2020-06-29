@@ -4,7 +4,7 @@ namespace Aoe\Asdis\Content\Scraper\Exception;
 /**
  * Is thrown when a requested scraper does not exist.
  */
-class ScraperNotExists extends Exception
+class ScraperNotExists extends \Exception
 {
     /**
      * @param string $filterKey
