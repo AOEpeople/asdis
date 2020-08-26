@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
 	'title' => 'Asdis - Asset Distribution',
 	'description' => 'Distributes on page assets onto multiple servers.',
 	'category' => 'fe',
@@ -19,17 +19,14 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
 	'author_company' => 'AOE GmbH',
-	'version' => '7.0.0',
+	'version' => '8.0.0',
 	'constraints' => [
 		'depends' => [
-			'typo3' => '7.6.23-9.5.99',
+			'typo3' => '8.7.30-9.5.99',
         ],
-		'conflicts' => [
-        ],
-		'suggests' => [
-        ],
+		'conflicts' => [],
+		'suggests' => [],
     ],
 	'_md5_values_when_last_written' => '',
-	'suggests' => array(
-	),
-);
+	'suggests' => [],
+];
