@@ -46,7 +46,9 @@
     }
   },
   "autoload-dev": {
-    "classmap": ["Tests"]
+    "psr-4": {
+      "Aoe\\Asdis\\Tests\\": "Tests/"
+    }
   },
   "scripts": {
     "test:unit": [
