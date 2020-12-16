@@ -41,7 +41,9 @@
     }
   ],
   "autoload": {
-    "classmap": ["Classes"]
+    "psr-4": {
+        "Aoe\\Asdis\\": "Classes/"
+    }
   },
   "autoload-dev": {
     "classmap": ["Tests"]
