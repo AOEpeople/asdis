@@ -5,7 +5,7 @@ use Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory;
 use Aoe\Asdis\Domain\Model\DistributionAlgorithm\HashBasedGroups;
 use Aoe\Asdis\Domain\Model\DistributionAlgorithm\RoundRobin;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 class FactoryTest extends UnitTestCase
 {
@@ -32,7 +32,7 @@ class FactoryTest extends UnitTestCase
         $factory = $this->getMockBuilder(Factory::class)->setMethods(['getDeclarations'])->getMock();
         $factory->expects($this->once())->method('getDeclarations')->will($this->returnValue($declarations));
 
-        $objectManagerMock = $this->getMockBuilder(ObjectManager::class)->getMock();
+        $objectManagerMock = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
         $objectManagerMock->method('get')
             ->with(HashBasedGroups::class)
             ->willReturn(new HashBasedGroups());

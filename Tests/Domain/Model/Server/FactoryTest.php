@@ -5,7 +5,7 @@ use Aoe\Asdis\Domain\Model\Server;
 use Aoe\Asdis\Domain\Model\Server\Factory;
 use Aoe\Asdis\System\Configuration\Provider;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 class FactoryTest extends UnitTestCase
 {
@@ -21,7 +21,7 @@ class FactoryTest extends UnitTestCase
         $protocol = Server::PROTOCOL_MARKER;
         $blankServer = new Server();
 
-        $objectManagerMock = $this->getMockBuilder(ObjectManager::class)->setMethods(['get'])->getMock();
+        $objectManagerMock = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
         $objectManagerMock->expects($this->once())->method('get')->will($this->returnValue($blankServer));
 
         $configurationProvider = $this->getMockBuilder(Provider::class)
