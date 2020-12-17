@@ -34,7 +34,7 @@ class HookUtility
      */
     public static function registerHooks()
     {
-        $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['asdis']);
+        $extConf = self::useCompatibility8() ? unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['asdis']) : self::getConfiguration();
         switch ($extConf['hook']) {
             case 'contentPostProc-all':
                 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = \Aoe\Asdis\Typo3\Hook\ContentPostProcAll::class . '->process';
@@ -48,5 +48,27 @@ class HookUtility
                 break;
         }
         unset($extConf);
+    }
+
+    /**
+     * Check if version is < 8.7.99
+     * 
+     * @return bool
+     */
+    private static function useCompatibility8()
+    {
+        return version_compare(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getCurrentTypo3Version(), '9.5.0', '<');
+    }
+
+    /**
+     * Get asdis extension configuration
+     * 
+     * @return bool
+     */
+    private static function getConfiguration()
+    {
+        return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)
+        ->get('asdis');
     }
 }
