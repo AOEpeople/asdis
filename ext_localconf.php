@@ -3,7 +3,7 @@ if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$extensionPath =  \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY);
+$extensionPath =  \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('asdis');
 
 // Register post rendering hook
 \Aoe\Asdis\Backend\Utility\HookUtility::registerHooks();

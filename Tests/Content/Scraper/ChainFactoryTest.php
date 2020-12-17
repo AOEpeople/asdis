@@ -8,7 +8,7 @@ use Aoe\Asdis\Content\Scraper\Html\Script;
 use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\System\Configuration\Provider;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 class ChainFactoryTest extends UnitTestCase
 {
@@ -25,7 +25,7 @@ class ChainFactoryTest extends UnitTestCase
         $chainFactory->expects($this->once())->method('getScraperDeclarations')->will($this->returnValue([]));
         $chainFactory->injectConfigurationProvider($configurationProvider);
 
-        $objectManagerMock = $this->getMockBuilder(ObjectManager::class)->getMock();
+        $objectManagerMock = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
         $objectManagerMock->method('get')
             ->with(Chain::class)
             ->willReturn(new Chain());

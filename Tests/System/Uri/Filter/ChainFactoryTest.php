@@ -7,7 +7,7 @@ use Aoe\Asdis\System\Uri\Filter\ChainFactory;
 use Aoe\Asdis\System\Uri\Filter\ContainsProtocol;
 use Aoe\Asdis\System\Uri\Filter\WildcardProtocol;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 class ChainFactoryTest extends UnitTestCase
 {
@@ -69,7 +69,7 @@ class ChainFactoryTest extends UnitTestCase
             ],
         ];
 
-        $objectManagerMock = $this->getMockBuilder(ObjectManager::class)->getMock();
+        $objectManagerMock = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
         $objectManagerMock
             ->expects($this->any())
             ->method('get')
