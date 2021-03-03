@@ -6,7 +6,9 @@ if (!defined('TYPO3_MODE')) {
 $extensionPath =  \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('asdis');
 
 // Register post rendering hook
-\Aoe\Asdis\Backend\Utility\HookUtility::registerHooks();
+if (true === version_compare(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getCurrentTypo3Version(), '9.5.0', '<')) {
+	\Aoe\Asdis\Backend\Utility\HookUtility::registerHooks();
+}
 
 // Register scrapers
 \Aoe\Asdis\Backend\Utility\ScraperUtility::registerScrapers($extensionPath);

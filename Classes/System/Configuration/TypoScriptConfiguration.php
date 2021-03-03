@@ -4,6 +4,9 @@ namespace Aoe\Asdis\System\Configuration;
 use Aoe\Asdis\System\Configuration\Exception\InvalidTypoScriptSetting;
 use Aoe\Asdis\System\Configuration\Exception\TypoScriptSettingNotExists;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\TypoScript\TemplateService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\RootlineUtility;
 
 /**
  * TypoScript configuration provider.
@@ -64,6 +67,21 @@ class TypoScriptConfiguration implements SingletonInterface
      */
     protected function getTypoScriptConfigurationArray()
     {
-        return $GLOBALS['TSFE']->tmpl->setup['config.']['tx_asdis.'];
+        if (true === version_compare(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getCurrentTypo3Version(), '9.5.0', '<')) {
+            return $GLOBALS['TSFE']->tmpl->setup['config.']['tx_asdis.'];
+        }
+
+        /** @var Site $site */
+        $site = $GLOBALS['TYPO3_REQUEST']->getAttribute('site');
+        /** @var RootlineUtility $rootlineUtility */
+        $rootlineUtility = GeneralUtility::makeInstance(RootlineUtility::class, $site->getRootPageId());
+        $rootline = $rootlineUtility->get();
+        /** @var TemplateService $templateService */
+        $templateService = GeneralUtility::makeInstance(TemplateService::class);
+        $templateService->tt_track = 0;
+        $templateService->runThroughTemplates($rootline);
+        $templateService->generateConfig();
+
+        return $templateService->setup['config.']['tx_asdis.'];
     }
 }
