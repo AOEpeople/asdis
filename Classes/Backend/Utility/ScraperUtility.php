@@ -106,5 +106,10 @@ class ScraperUtility
             'class' => 'Aoe\Asdis\Content\Scraper\Html\DataSrc',
             'file'  => $extensionPath . 'Classes/Content/Scraper/Html/DataSrc.php'
         ];
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
+            'key'   => 'htmlSrcset',
+            'class' => 'Aoe\Asdis\Content\Scraper\Html\Srcset',
+            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/Srcset.php'
+        ];
     }
 }
