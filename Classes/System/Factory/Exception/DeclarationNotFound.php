@@ -1,7 +1,7 @@
 <?php
 namespace Aoe\Asdis\System\Factory\Exception;
 
-class TDeclarationNotFound extends \Exception
+class DeclarationNotFound extends \Exception
 {
     /**
      * @param string $key
