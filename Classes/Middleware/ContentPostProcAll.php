@@ -30,7 +30,7 @@ class ContentPostProcAll implements MiddlewareInterface
     {
         $response = $handler->handle($request);
 
-        if ($this->getConfigurationProvider()->isDefaultHookHandlingDisabled()) {
+        if ($this->getConfigurationProvider()->isReplacementEnabled() === false || $this->getConfigurationProvider()->isDefaultHookHandlingDisabled()) {
             return $response;
         }
 
