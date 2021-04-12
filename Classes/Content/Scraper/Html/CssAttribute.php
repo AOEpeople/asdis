@@ -46,7 +46,9 @@ class CssAttribute implements ScraperInterface
             $content,
             $matches
         );
-        if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[1])) {
+        if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[1]) 
+            && false === strpos($matches[1], 'clip-path:url')) {
+
             $blocks = $matches[1];
         }
         return $blocks;
