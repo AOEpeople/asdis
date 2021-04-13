@@ -49,11 +49,13 @@ class CssInline implements ScraperInterface
             PREG_PATTERN_ORDER
         );
 
-        if (is_array($matches) && sizeof($matches) > 1 
-            && is_array($matches[1]) 
-            && false === strpos($matches[1], 'fill:url')) {
-
-            $blocks = $matches[1];
+        if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[1])) {
+            foreach($matches[1] as $match) {
+                // filter inline svg styles
+                if (false === strpos($match, 'fill:url')) {
+                    $blocks[] = $match;
+                }
+            }
         }
 
         return $blocks;

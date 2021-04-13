@@ -42,13 +42,11 @@ class CssAttribute implements ScraperInterface
         $blocks = [];
         $matches = [];
         preg_match_all(
-            '/style=.*(url\(.*\))/i',
+            '/style=.*(url\(?!#.*\))/i',
             $content,
             $matches
         );
-        if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[1]) 
-            && false === strpos($matches[1], 'clip-path:url')) {
-
+        if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[1])) {
             $blocks = $matches[1];
         }
         return $blocks;
