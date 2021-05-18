@@ -46,7 +46,7 @@ class Url implements ScraperInterface
         $matches = [];
 
         preg_match_all(
-            '~url\(\s*([\'"]?)(/?(\.\./)?.*?)([\'"]?);?\s*\)~is',
+            '~url\((?!#)\s*([\'"]?)(/?(\.\./)?.*?)([\'"]?);?\s*\)~is',
             $cssContent,
             $matches,
             PREG_PATTERN_ORDER

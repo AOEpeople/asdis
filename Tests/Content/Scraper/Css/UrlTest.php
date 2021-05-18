@@ -41,7 +41,7 @@ class UrlTest extends UnitTestCase
         $factory->expects($this->once())->method('createAssetsFromPaths')->with(['uploads/tx_templavoila/example.gif']);
         
         $this->url->injectAssetFactory($factory);
-        $this->url->scrape("background-image: url('uploads/tx_templavoila/example.gif');");
+        $this->url->scrape("filter:url(#secondary);background-image: url('uploads/tx_templavoila/example.gif');");
     }
     /**
      * Tests _Url->scrape()
