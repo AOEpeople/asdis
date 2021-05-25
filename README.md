@@ -1,7 +1,7 @@
 # Asdis
 
 ## Build information
-[![Build Status](https://travis-ci.org/AOEpeople/asdis.svg?branch=master)](https://travis-ci.org/AOEpeople/asdis)
+[![Build Status](https://github.com/AOEpeople/asdis/workflows/CI/badge.svg?branch=master)](https://github.com/AOEpeople/asdis/actions)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/AOEpeople/asdis/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/AOEpeople/asdis/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/AOEpeople/asdis/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/AOEpeople/asdis/?branch=master)
 
