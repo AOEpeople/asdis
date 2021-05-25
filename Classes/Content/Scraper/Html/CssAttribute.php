@@ -42,7 +42,7 @@ class CssAttribute implements ScraperInterface
         $blocks = [];
         $matches = [];
         preg_match_all(
-            '/style=.*(url\(?!#.*\))/i',
+            '/style=.*(url\([^#].*\))/i',
             $content,
             $matches
         );
