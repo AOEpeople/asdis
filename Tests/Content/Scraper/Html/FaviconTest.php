@@ -31,14 +31,14 @@ class FaviconTest extends UnitTestCase
         
         $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
         $assetFactory
-            ->expects($this->exactly(3))
+            ->expects($this->exactly(5))
             ->method('createAssetsFromPaths')
             ->with(array('typo3temp/favicon.ico'))
             ->will($this->returnValue(new Collection()));
         
         $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
         $attributeExtractor
-            ->expects($this->exactly(3))
+            ->expects($this->exactly(5))
             ->method('getAttributeFromTag')
             ->will($this->returnValue(
                 [
