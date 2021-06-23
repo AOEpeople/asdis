@@ -18,6 +18,8 @@ class Favicon extends AbstractHtmlScraper implements ScraperInterface
         return
             $this->getAssets('link', 'href', $content, ['rel' => 'shortcut icon'])
                 ->merge($this->getAssets('link', 'href', $content, ['rel' => 'icon']))
+                ->merge($this->getAssets('link', 'href', $content, ['rel' => 'manifest']))
+                ->merge($this->getAssets('link', 'href', $content, ['rel' => 'mask-icon']))
                 ->merge($this->getAssets('link', 'href', $content, ['type' => 'image/vnd.microsoft.icon']));
     }
 }
