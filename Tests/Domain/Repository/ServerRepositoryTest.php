@@ -19,7 +19,7 @@ class ServerRepositoryTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serverRepository = new ServerRepository();
     }

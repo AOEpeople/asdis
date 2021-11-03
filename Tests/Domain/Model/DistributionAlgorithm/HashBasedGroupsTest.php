@@ -18,7 +18,7 @@ class HashBasedGroupsTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->algorithm = new HashBasedGroups();
     }

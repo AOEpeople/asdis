@@ -16,7 +16,7 @@ class DataSrcTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->imageScraper = new DataSrc();
     }

@@ -91,7 +91,7 @@ abstract class AbstractHook
      */
     protected function setPageObject(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj)
     {
-        /** @var Tx_Asdis_Domain_Model_Page $page */
+        /** @var Page $page */
         $page = $this->objectManager->get(Page::class);
         $page->setAssets($this->objectManager->get(Collection::class));
         $page->setPageObject($pObj);

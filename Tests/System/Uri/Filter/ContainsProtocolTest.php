@@ -14,7 +14,7 @@ class ContainsProtocolTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->filter = new ContainsProtocol();
     }
@@ -31,7 +31,13 @@ class ContainsProtocolTest extends UnitTestCase
             'typo3temp/pics/foo.jpg'
         ];
         $filteredPaths = $this->filter->filter($paths);
-        $this->assertInternalType('array', $filteredPaths);
+        if (false === method_exists($this, 'assertInternalType')) {
+            // phpunit 9.x or higher
+            $this->assertIsArray($filteredPaths);
+        } else {
+            // phpunit 8.x or lower
+            $this->assertInternalType('array', $filteredPaths);
+        }
         $this->assertEquals(1, sizeof($filteredPaths));
         $this->assertEquals($paths[3], $filteredPaths[0]);
     }

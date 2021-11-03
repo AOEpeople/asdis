@@ -1,6 +1,8 @@
 <?php
 namespace Aoe\Asdis\Tests\System\Configuration;
 
+use Aoe\Asdis\System\Configuration\Exception\InvalidTypoScriptSetting;
+use Aoe\Asdis\System\Configuration\Exception\TypoScriptSettingNotExists;
 use Aoe\Asdis\System\Configuration\TypoScriptConfiguration;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 
@@ -14,7 +16,7 @@ class TypoScriptConfigurationTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->typoScriptConfiguration = $this->getMockBuilder(TypoScriptConfiguration::class)
             ->setMethods(['getTypoScriptConfigurationArray'])
@@ -24,10 +26,11 @@ class TypoScriptConfigurationTest extends UnitTestCase
     /**
      * Tests Aoe\Asdis\System\Configuration\TypoScriptConfiguration->getSetting()
      * @test
-     * @expectedException Aoe\Asdis\System\Configuration\Exception\TypoScriptSettingNotExists
      */
     public function getSetting()
     {
+        $this->expectException(TypoScriptSettingNotExists::class);
+
         $this->typoScriptConfiguration->getSetting('xy');
     }
 
@@ -76,10 +79,11 @@ class TypoScriptConfigurationTest extends UnitTestCase
     /**
      * Tests Aoe\Asdis\System\Configuration\TypoScriptConfiguration->getSetting()
      * @test
-     * @expectedException Aoe\Asdis\System\Configuration\Exception\InvalidTypoScriptSetting
      */
     public function getSettingsWithInvalidConfig()
     {
+        $this->expectException(InvalidTypoScriptSetting::class);
+
         $config = [
             'logger.' => [
                 'severity' => 1,

@@ -19,7 +19,7 @@ class ChainFactoryTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->factory = new ChainFactory();
         parent::setUp();

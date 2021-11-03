@@ -15,7 +15,7 @@ class Css3ImageTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->css3Image = new Css3Image();
     }

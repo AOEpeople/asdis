@@ -15,7 +15,7 @@ class PageTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->page = new Page();
 

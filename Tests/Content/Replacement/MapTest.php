@@ -14,7 +14,7 @@ class MapTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->map = new Map();
     }
@@ -34,10 +34,17 @@ class MapTest extends UnitTestCase
         
         $sources = $this->map->getSources();
         $targets = $this->map->getTargets();
-        
-        $this->assertInternalType('array', $sources);
-        $this->assertInternalType('array', $targets);
-        
+
+        if (false === method_exists($this, 'assertInternalType')) {
+            // phpunit 9.x or higher
+            $this->assertIsArray($sources);
+            $this->assertIsArray($targets);
+        } else {
+            // phpunit 8.x or lower
+            $this->assertInternalType('array', $sources);
+            $this->assertInternalType('array', $targets);
+        }
+
         $this->assertEquals(2, sizeof($sources));
         $this->assertEquals(2, sizeof($targets));
         $this->assertEquals($source1, $sources[0]);
@@ -45,5 +52,4 @@ class MapTest extends UnitTestCase
         $this->assertEquals($target1, $targets[0]);
         $this->assertEquals($target2, $targets[1]);
     }
-
 }

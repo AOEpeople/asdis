@@ -14,7 +14,7 @@ class NormalizerTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp() 
+    protected function setUp(): void
     {
         $this->normalizer = new Normalizer();
     }

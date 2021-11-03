@@ -14,7 +14,7 @@ class XmlTagAttributeTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->extractor = new XmlTagAttribute();
     }
@@ -35,9 +35,17 @@ class XmlTagAttributeTest extends UnitTestCase
 
         $hits = $this->extractor->getAttributeFromTag('img', 'src', $content);
 
-        $this->assertInternalType('array', $hits);
-        $this->assertInternalType('array', $hits['paths']);
-        $this->assertInternalType('array', $hits['masks']);
+        if (false === method_exists($this, 'assertInternalType')) {
+            // phpunit 9.x or higher
+            $this->assertIsArray($hits);
+            $this->assertIsArray($hits['paths']);
+            $this->assertIsArray($hits['masks']);
+        } else {
+            // phpunit 8.x or lower
+            $this->assertInternalType('array', $hits);
+            $this->assertInternalType('array', $hits['paths']);
+            $this->assertInternalType('array', $hits['masks']);
+        }
         $this->assertEquals(2, sizeof($hits['paths']));
         $this->assertEquals(2, sizeof($hits['masks']));
         $this->assertEquals($path1, $hits['paths'][0]);
@@ -60,9 +68,17 @@ class XmlTagAttributeTest extends UnitTestCase
 
         $hits = $this->extractor->getAttributeFromTag('input', 'src', $content, ['type' => 'image']);
 
-        $this->assertInternalType('array', $hits);
-        $this->assertInternalType('array', $hits['paths']);
-        $this->assertInternalType('array', $hits['masks']);
+        if (false === method_exists($this, 'assertInternalType')) {
+            // phpunit 9.x or higher
+            $this->assertIsArray($hits);
+            $this->assertIsArray($hits['paths']);
+            $this->assertIsArray($hits['masks']);
+        } else {
+            // phpunit 8.x or lower
+            $this->assertInternalType('array', $hits);
+            $this->assertInternalType('array', $hits['paths']);
+            $this->assertInternalType('array', $hits['masks']);
+        }
         $this->assertEquals(1, sizeof($hits['paths']));
         $this->assertEquals(1, sizeof($hits['masks']));
         $this->assertEquals($path1, $hits['paths'][0]);
@@ -80,13 +96,20 @@ class XmlTagAttributeTest extends UnitTestCase
 
         $hits = $this->extractor->getAttributeFromTag('img', 'src', $content);
 
-        $this->assertInternalType('array', $hits);
-        $this->assertInternalType('array', $hits['paths']);
-        $this->assertInternalType('array', $hits['masks']);
+        if (false === method_exists($this, 'assertInternalType')) {
+            // phpunit 9.x or higher
+            $this->assertIsArray($hits);
+            $this->assertIsArray($hits['paths']);
+            $this->assertIsArray($hits['masks']);
+        } else {
+            // phpunit 8.x or lower
+            $this->assertInternalType('array', $hits);
+            $this->assertInternalType('array', $hits['paths']);
+            $this->assertInternalType('array', $hits['masks']);
+        }
         $this->assertEquals(1, sizeof($hits['paths']));
         $this->assertEquals(1, sizeof($hits['masks']));
         $this->assertEquals($path1, $hits['paths'][0]);
         $this->assertEquals('"', $hits['masks'][0]);
     }
-
 }

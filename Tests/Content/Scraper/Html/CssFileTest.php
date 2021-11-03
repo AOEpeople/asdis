@@ -17,7 +17,7 @@ class CssFileTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->scraper = new CssFile();
     }

@@ -15,7 +15,7 @@ class ProcessorTest extends UnitTestCase
     /**
      * (non-PHPdoc)
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->processor = new Processor();
     }
