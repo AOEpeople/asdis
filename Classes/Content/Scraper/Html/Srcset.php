@@ -48,7 +48,9 @@ class Srcset extends AbstractHtmlScraper implements ScraperInterface
             $expPaths = explode(',', $path);
 
             foreach ($expPaths as $singlePath) {
-                $paths[] = trim(str_replace(' 2x','', $singlePath));
+                $cleanSinglePath = trim($singlePath);
+
+                $paths[] = substr($cleanSinglePath, 0, strpos($cleanSinglePath, ' '));
                 $masks[] = '';
             }
         }
