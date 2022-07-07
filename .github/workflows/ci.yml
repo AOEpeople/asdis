@@ -10,8 +10,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        typo3: [ ^8.7, ^9.5, ^10.4 ]
-        php: [ '7.2', '7.3', '7.4' ]
+        typo3: [ ^8.7, ^9.5, ^10.4, ^11.5 ]
+        php: [ '7.4' ]
         experimental: [false]
 
     continue-on-error: ${{ matrix.experimental }}
@@ -29,9 +29,10 @@ jobs:
           php-version: ${{ matrix.php }}
           tools: composer:v2
 
-      - name: Environment Check
+      - name: Environment Check and fixed composer version
         run: |
           php --version
+          composer self-update --2.2
           composer --version
 
       - name: Validate composer.json and composer.lock
