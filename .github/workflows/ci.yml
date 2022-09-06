@@ -10,11 +10,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        typo3: [ ^8.7, ^9.5, ^10.4 ]
+        typo3: [ ^8.7, ^9.5, ^10.4, ^11.5 ]
         php: [ '7.4' ]
         experimental: [false]
         include:
-          - typo3: 11.5
+          - typo3: ^11.5
             php: '8.0'
             experimental: false
 
