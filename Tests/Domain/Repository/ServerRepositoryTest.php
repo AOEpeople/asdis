@@ -41,6 +41,7 @@ class ServerRepositoryTest extends UnitTestCase
         $server = [
             'identifier' => uniqid(),
             'domain' => 'example.com',
+            'protocol' => 'http',
         ];
         $servers = [$server];
         $config = $this->getMockBuilder(Provider::class)->getMock();
