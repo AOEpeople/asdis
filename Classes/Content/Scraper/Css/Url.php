@@ -1,7 +1,9 @@
 <?php
+
 namespace Aoe\Asdis\Content\Scraper\Css;
 
 use Aoe\Asdis\Content\Scraper\ScraperInterface;
+use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 
 /**
@@ -10,12 +12,12 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
 class Url implements ScraperInterface
 {
     /**
-     * @var \Aoe\Asdis\Domain\Model\Asset\Factory
+     * @var Factory
      */
     private $assetFactory;
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\Asset\Factory $assetFactory
+     * @param Factory $assetFactory
      */
     public function injectAssetFactory(Factory $assetFactory)
     {
@@ -24,7 +26,7 @@ class Url implements ScraperInterface
 
     /**
      * @param $content
-     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     * @return Collection
      */
     public function scrape($content)
     {
@@ -41,8 +43,8 @@ class Url implements ScraperInterface
      */
     private function extractUrlPaths($cssContent)
     {
-        $paths   = [];
-        $masks   = [];
+        $paths = [];
+        $masks = [];
         $matches = [];
 
         preg_match_all(
@@ -52,10 +54,10 @@ class Url implements ScraperInterface
             PREG_PATTERN_ORDER
         );
 
-        if (false === (is_array($matches) && sizeof($matches) > 1 && is_array($matches[2]))) {
+        if ((is_array($matches) && sizeof($matches) > 1 && is_array($matches[2])) === false) {
             return [
                 'paths' => $paths,
-                'masks' => $masks
+                'masks' => $masks,
             ];
         }
 
@@ -69,7 +71,7 @@ class Url implements ScraperInterface
 
         return [
             'paths' => $paths,
-            'masks' => $masks
+            'masks' => $masks,
         ];
     }
 }

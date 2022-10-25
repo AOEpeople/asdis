@@ -1,41 +1,29 @@
 <?php
+
 namespace Aoe\Asdis\Typo3\Hook;
 
 use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Page;
 use Aoe\Asdis\System\Configuration\Provider;
 use Aoe\Asdis\System\Log\Logger;
+use RectorPrefix20210613\TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Abstract hook class.
  */
 abstract class AbstractHook
 {
-    /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     */
-    private $objectManager;
+    private ObjectManagerInterface $objectManager;
 
-    /**
-     * @var \Aoe\Asdis\System\Log\Logger
-     */
-    private $logger;
+    private Logger $logger;
 
-    /**
-     * @var \Aoe\Asdis\Domain\Model\Page
-     */
-    private $page;
+    private Page $page;
 
-    /**
-     * @var \Aoe\Asdis\System\Configuration\Provider
-     */
-    private $configurationProvider;
+    private Provider $configurationProvider;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
@@ -43,53 +31,36 @@ abstract class AbstractHook
         $this->logger = $this->objectManager->get(Logger::class);
     }
 
-    /**
-     * @return \Aoe\Asdis\System\Configuration\Provider
-     */
-    protected function getConfigurationProvider()
+    protected function getConfigurationProvider(): Provider
     {
         return $this->configurationProvider;
     }
 
-    /**
-     * @return \Aoe\Asdis\System\Log\Logger
-     */
-    protected function getLogger()
+    protected function getLogger(): Logger
     {
         return $this->logger;
     }
 
-    /**
-     * @return void
-     */
-    protected function scrapeAssets()
+    protected function scrapeAssets(): void
     {
         $this->page->scrapeAssets();
     }
 
-    /**
-     * @return void
-     */
-    protected function replaceAssets()
+    protected function replaceAssets(): void
     {
         $this->page->replaceAssets();
     }
 
     /**
      * Scrapes and replaces the assets of the current page.
-     *
-     * @return void
      */
-    protected function scrapeAndReplace()
+    protected function scrapeAndReplace(): void
     {
         $this->scrapeAssets();
         $this->replaceAssets();
     }
 
-    /**
-     * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj
-     */
-    protected function setPageObject(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj)
+    protected function setPageObject(TypoScriptFrontendController $pObj): void
     {
         /** @var Page $page */
         $page = $this->objectManager->get(Page::class);

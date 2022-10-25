@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Content\Scraper\Extractor;
 
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
@@ -68,7 +69,7 @@ class XmlTagAttributeTest extends UnitTestCase
 
         $hits = $this->extractor->getAttributeFromTag('input', 'src', $content, ['type' => 'image']);
 
-        if (false === method_exists($this, 'assertInternalType')) {
+        if (method_exists($this, 'assertInternalType') === false) {
             // phpunit 9.x or higher
             $this->assertIsArray($hits);
             $this->assertIsArray($hits['paths']);
@@ -79,10 +80,10 @@ class XmlTagAttributeTest extends UnitTestCase
             $this->assertInternalType('array', $hits['paths']);
             $this->assertInternalType('array', $hits['masks']);
         }
-        $this->assertEquals(1, sizeof($hits['paths']));
-        $this->assertEquals(1, sizeof($hits['masks']));
-        $this->assertEquals($path1, $hits['paths'][0]);
-        $this->assertEquals('"', $hits['masks'][0]);
+        $this->assertSame(1, sizeof($hits['paths']));
+        $this->assertSame(1, sizeof($hits['masks']));
+        $this->assertSame($path1, $hits['paths'][0]);
+        $this->assertSame('"', $hits['masks'][0]);
     }
 
     /**
@@ -96,7 +97,7 @@ class XmlTagAttributeTest extends UnitTestCase
 
         $hits = $this->extractor->getAttributeFromTag('img', 'src', $content);
 
-        if (false === method_exists($this, 'assertInternalType')) {
+        if (method_exists($this, 'assertInternalType') === false) {
             // phpunit 9.x or higher
             $this->assertIsArray($hits);
             $this->assertIsArray($hits['paths']);
@@ -107,9 +108,9 @@ class XmlTagAttributeTest extends UnitTestCase
             $this->assertInternalType('array', $hits['paths']);
             $this->assertInternalType('array', $hits['masks']);
         }
-        $this->assertEquals(1, sizeof($hits['paths']));
-        $this->assertEquals(1, sizeof($hits['masks']));
-        $this->assertEquals($path1, $hits['paths'][0]);
-        $this->assertEquals('"', $hits['masks'][0]);
+        $this->assertSame(1, sizeof($hits['paths']));
+        $this->assertSame(1, sizeof($hits['masks']));
+        $this->assertSame($path1, $hits['paths'][0]);
+        $this->assertSame('"', $hits['masks'][0]);
     }
 }

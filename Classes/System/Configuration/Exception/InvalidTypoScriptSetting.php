@@ -1,10 +1,13 @@
 <?php
+
 namespace Aoe\Asdis\System\Configuration\Exception;
+
+use Exception;
 
 /**
  * Exception which is thrown when a requested TypoScript setting is invalid.
  */
-class InvalidTypoScriptSetting extends \Exception
+class InvalidTypoScriptSetting extends Exception
 {
     /**
      * @param string $key Setting key. E.g. "logger.severity".
@@ -13,6 +16,6 @@ class InvalidTypoScriptSetting extends \Exception
      */
     public function __construct($key, $type, $code)
     {
-        parent::__construct('Invalid TypoScript Setting "'.$key.'". Type is "'.$type.'".', $code);
+        parent::__construct('Invalid TypoScript Setting "' . $key . '". Type is "' . $type . '".', $code);
     }
 }

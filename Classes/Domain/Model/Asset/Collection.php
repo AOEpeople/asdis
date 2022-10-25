@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Domain\Model\Asset;
 
 use Aoe\Asdis\Content\Replacement\Map;
@@ -25,7 +26,7 @@ class Collection extends \ArrayIterator
     }
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\Asset $asset
+     * @param Asset $asset
      */
     public function append($asset)
     {
@@ -38,23 +39,25 @@ class Collection extends \ArrayIterator
     }
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\Asset\Collection $assetCollection
-     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     * @param Collection $assetCollection
+     * @return Collection
      */
-    public function merge(AssetCollection $assetCollection) {
-        foreach($assetCollection as $asset) {
+    public function merge(AssetCollection $assetCollection)
+    {
+        foreach ($assetCollection as $asset) {
             $this->append($asset);
         }
         return $this;
     }
 
     /**
-     * @return \Aoe\Asdis\Content\Replacement\Map
+     * @return Map
      */
-    public function getReplacementMap() {
+    public function getReplacementMap()
+    {
         $map = new Map();
-        foreach($this as $asset) {
-            /** @var \Aoe\Asdis\Domain\Model\Asset $asset */
+        foreach ($this as $asset) {
+            /** @var Asset $asset */
             $map->addMapping(
                 $asset->getMaskedPregQuotedOriginalPath(),
                 $asset->getMask() . $asset->getUri() . $asset->getMask()

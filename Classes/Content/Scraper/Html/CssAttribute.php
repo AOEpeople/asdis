@@ -1,8 +1,10 @@
 <?php
+
 namespace Aoe\Asdis\Content\Scraper\Html;
 
 use Aoe\Asdis\Content\Scraper\Css\Url;
 use Aoe\Asdis\Content\Scraper\ScraperInterface;
+use Aoe\Asdis\Domain\Model\Asset\Collection;
 
 /**
  * Scrapes assets from inline CSS.
@@ -10,12 +12,12 @@ use Aoe\Asdis\Content\Scraper\ScraperInterface;
 class CssAttribute implements ScraperInterface
 {
     /**
-     * @var \Aoe\Asdis\Content\Scraper\Css\Url
+     * @var Url
      */
     private $cssUrlScraper;
 
     /**
-     * @param \Aoe\Asdis\Content\Scraper\Css\Url $cssUrlScraper
+     * @param Url $cssUrlScraper
      */
     public function injectCssUrlScraper(Url $cssUrlScraper)
     {
@@ -24,7 +26,7 @@ class CssAttribute implements ScraperInterface
 
     /**
      * @param $content
-     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     * @return Collection
      */
     public function scrape($content)
     {

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\System\Configuration\Exception;
 
 /**

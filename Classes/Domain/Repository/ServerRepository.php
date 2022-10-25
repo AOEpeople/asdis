@@ -1,9 +1,12 @@
 <?php
+
 namespace Aoe\Asdis\Domain\Repository;
 
+use Aoe\Asdis\Domain\Model\Page;
 use Aoe\Asdis\Domain\Model\Server\Collection;
 use Aoe\Asdis\Domain\Model\Server\Factory;
 use Aoe\Asdis\System\Configuration\Provider;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 /**
  * Repository for server objects.
@@ -11,30 +14,30 @@ use Aoe\Asdis\System\Configuration\Provider;
 class ServerRepository
 {
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     * @var ObjectManagerInterface
      */
     private $objectManager;
 
     /**
-     * @var \Aoe\Asdis\System\Configuration\Provider
+     * @var Provider
      */
     private $configurationProvider;
 
     /**
-     * @var \Aoe\Asdis\Domain\Model\Server\Factory
+     * @var Factory
      */
     private $serverFactory;
 
     /**
-     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
+     * @param ObjectManagerInterface $objectManager
      */
-    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
+    public function injectObjectManager(ObjectManagerInterface $objectManager)
     {
         $this->objectManager = $objectManager;
     }
 
     /**
-     * @param \Aoe\Asdis\System\Configuration\Provider $configurationProvider
+     * @param Provider $configurationProvider
      */
     public function injectConfigurationProvider(Provider $configurationProvider)
     {
@@ -42,23 +45,19 @@ class ServerRepository
     }
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\Server\Factory $serverFactory
+     * @param Factory $serverFactory
      */
     public function injectServerFactory(Factory $serverFactory)
     {
         $this->serverFactory = $serverFactory;
     }
 
-    /**
-     * @param \Aoe\Asdis\Domain\Model\Page $page
-     * @return \Aoe\Asdis\Domain\Model\Server\Collection
-     */
-    public function findAllByPage(\Aoe\Asdis\Domain\Model\Page $page)
+    public function findAllByPage(Page $page): Collection
     {
-        /** @var \Aoe\Asdis\Domain\Model\Server\Collection $servers */
+        /** @var Collection $servers */
         $servers = new Collection();
         $serverDefinitions = $this->configurationProvider->getServerDefinitions();
-        foreach($serverDefinitions as $serverDefinition) {
+        foreach ($serverDefinitions as $serverDefinition) {
             $servers->append($this->serverFactory->createServer(
                 $serverDefinition['identifier'],
                 $serverDefinition['domain'],
@@ -67,5 +66,4 @@ class ServerRepository
         }
         return $servers;
     }
-
 }

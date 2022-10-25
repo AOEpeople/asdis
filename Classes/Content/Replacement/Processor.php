@@ -1,7 +1,6 @@
 <?php
-namespace Aoe\Asdis\Content\Replacement;
 
-use Aoe\Asdis\Content\Replacement\Map;
+namespace Aoe\Asdis\Content\Replacement;
 
 /**
  * Replaces content.
@@ -9,7 +8,7 @@ use Aoe\Asdis\Content\Replacement\Map;
 class Processor
 {
     /**
-     * @param \Aoe\Asdis\Content\Replacement\Map $replacementMap
+     * @param Map $replacementMap
      * @param string $content
      * @return string
      */
@@ -20,7 +19,7 @@ class Processor
             $replacementMap->getTargets(),
             $content
         );
-        if (null === $result) {
+        if ($result === null) {
             return $content;
         }
         return $result;

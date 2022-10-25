@@ -1,7 +1,7 @@
 <?php
+
 namespace Aoe\Asdis\Content\Scraper;
 
-use Aoe\Asdis\Content\Scraper\ScraperInterface;
 use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
 
 /**
@@ -19,7 +19,7 @@ class Chain extends \ArrayIterator implements ScraperInterface
     }
 
     /**
-     * @param \Aoe\Asdis\Content\Scraper\ScraperInterface $scraper
+     * @param ScraperInterface $scraper
      */
     public function append($scraper)
     {
@@ -28,13 +28,13 @@ class Chain extends \ArrayIterator implements ScraperInterface
 
     /**
      * @param $content
-     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     * @return AssetCollection
      */
     public function scrape($content)
     {
         $assetCollection = new AssetCollection();
-        foreach($this as $scraper) {
-            /** @var \Aoe\Asdis\Content\Scraper\ScraperInterface $scraper */
+        foreach ($this as $scraper) {
+            /** @var ScraperInterface $scraper */
             $assetCollection->merge($scraper->scrape($content));
         }
         return $assetCollection;

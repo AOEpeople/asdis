@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Domain\Model\DistributionAlgorithm;
 
 use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
@@ -14,7 +15,6 @@ interface DistributionAlgorithmInterface
      *
      * @param \Aoe\Asdis\Domain\Model\Asset\Collection $assets
      * @param \Aoe\Asdis\Domain\Model\Server\Collection $servers
-     * @return void
      */
     public function distribute(AssetCollection $assets, ServerCollection $servers);
 }

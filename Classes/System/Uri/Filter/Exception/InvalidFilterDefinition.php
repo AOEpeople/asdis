@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\System\Uri\Filter\Exception;
 
 /**
@@ -6,5 +7,4 @@ namespace Aoe\Asdis\System\Uri\Filter\Exception;
  */
 class InvalidFilterDefinition extends \Exception
 {
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\System\Uri\Filter\Exception;
 
 /**
@@ -6,10 +7,7 @@ namespace Aoe\Asdis\System\Uri\Filter\Exception;
  */
 class FilterNotExists extends \Exception
 {
-    /**
-     * @param string $filterKey
-     */
-    public function __construct($filterKey)
+    public function __construct(string $filterKey)
     {
         parent::__construct('Filter with the key ' . $filterKey . ' does not exist.', 1372172405389);
     }

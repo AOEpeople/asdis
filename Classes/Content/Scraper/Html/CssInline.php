@@ -1,8 +1,10 @@
 <?php
+
 namespace Aoe\Asdis\Content\Scraper\Html;
 
 use Aoe\Asdis\Content\Scraper\Css\Url;
 use Aoe\Asdis\Content\Scraper\ScraperInterface;
+use Aoe\Asdis\Domain\Model\Asset\Collection;
 
 /**
  * Scrapes assets from inline CSS.
@@ -10,12 +12,12 @@ use Aoe\Asdis\Content\Scraper\ScraperInterface;
 class CssInline implements ScraperInterface
 {
     /**
-     * @var \Aoe\Asdis\Content\Scraper\Css\Url
+     * @var Url
      */
     private $cssUrlScraper;
 
     /**
-     * @param \Aoe\Asdis\Content\Scraper\Css\Url $cssUrlScraper
+     * @param Url $cssUrlScraper
      */
     public function injectCssUrlScraper(Url $cssUrlScraper)
     {
@@ -24,7 +26,7 @@ class CssInline implements ScraperInterface
 
     /**
      * @param $content
-     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     * @return Collection
      */
     public function scrape($content)
     {
@@ -39,7 +41,7 @@ class CssInline implements ScraperInterface
      */
     private function getStyleBlocksFromMarkup($content)
     {
-        $blocks  = [];
+        $blocks = [];
         $matches = [];
 
         preg_match_all(
@@ -50,9 +52,9 @@ class CssInline implements ScraperInterface
         );
 
         if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[1])) {
-            foreach($matches[1] as $match) {
+            foreach ($matches[1] as $match) {
                 // filter inline svg styles
-                if (false === strpos($match, 'fill:url')) {
+                if (!str_contains($match, 'fill:url')) {
                     $blocks[] = $match;
                 }
             }

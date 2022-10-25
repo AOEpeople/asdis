@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Domain\Model;
 
 /**
@@ -9,27 +10,27 @@ class Server
     /**
      * @var string
      */
-    const PROTOCOL_WILDCARD = 'wildcard';
+    public const PROTOCOL_WILDCARD = 'wildcard';
 
     /**
      * @var string
      */
-    const PROTOCOL_MARKER = 'marker';
+    public const PROTOCOL_MARKER = 'marker';
 
     /**
      * @var string
      */
-    const PROTOCOL_DYNAMIC = 'dynamic';
+    public const PROTOCOL_DYNAMIC = 'dynamic';
 
     /**
      * @var string
      */
-    const PROTOCOL_HTTP = 'http';
+    public const PROTOCOL_HTTP = 'http';
 
     /**
      * @var string
      */
-    const PROTOCOL_HTTPS = 'https';
+    public const PROTOCOL_HTTPS = 'https';
 
     /**
      * @var string
@@ -88,7 +89,15 @@ class Server
      */
     public function setProtocol($protocol)
     {
-        if (false === in_array($protocol, [self::PROTOCOL_WILDCARD, self::PROTOCOL_MARKER, self::PROTOCOL_HTTP, self::PROTOCOL_HTTPS, self::PROTOCOL_DYNAMIC])) {
+        if (in_array(
+            $protocol,
+            [self::PROTOCOL_WILDCARD,
+                self::PROTOCOL_MARKER,
+                self::PROTOCOL_HTTP,
+                self::PROTOCOL_HTTPS,
+                self::PROTOCOL_DYNAMIC,
+            ]
+        ) === false) {
             return;
         }
         $this->protocol = $protocol;
@@ -121,6 +130,17 @@ class Server
     /**
      * @return string
      */
+    protected function getRequestProtocol()
+    {
+        if (strlen($_SERVER['HTTPS']) > 0 || strtolower($_SERVER['HTTPS']) !== 'off') {
+            return self::PROTOCOL_HTTPS;
+        }
+        return self::PROTOCOL_HTTP;
+    }
+
+    /**
+     * @return string
+     */
     private function getProtocolPrefix()
     {
         $protocolPrefix = '';
@@ -129,30 +149,19 @@ class Server
             $protocol = $this->getRequestProtocol();
         }
         switch ($protocol) {
-            case self::PROTOCOL_MARKER :
+            case self::PROTOCOL_MARKER:
                 $protocolPrefix = $this->protocolMarker;
                 break;
-            case self::PROTOCOL_WILDCARD :
+            case self::PROTOCOL_WILDCARD:
                 $protocolPrefix = '//';
                 break;
-            case self::PROTOCOL_HTTP :
+            case self::PROTOCOL_HTTP:
                 $protocolPrefix = 'http://';
                 break;
-            case self::PROTOCOL_HTTPS :
-                $protocolPrefix = 'https://';;
+            case self::PROTOCOL_HTTPS:
+                $protocolPrefix = 'https://';
                 break;
         }
         return $protocolPrefix;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getRequestProtocol()
-    {
-        if (strlen($_SERVER['HTTPS']) > 0 || strtolower($_SERVER['HTTPS']) !== 'off') {
-            return \Aoe\Asdis\Domain\Model\Server::PROTOCOL_HTTPS;
-        }
-        return T\Aoe\Asdis\Domain\Model\Server::PROTOCOL_HTTP;
     }
 }

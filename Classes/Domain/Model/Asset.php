@@ -1,7 +1,6 @@
 <?php
-namespace Aoe\Asdis\Domain\Model;
 
-use Aoe\Asdis\Domain\Model\Server;
+namespace Aoe\Asdis\Domain\Model;
 
 /**
  * Represents an asset.
@@ -19,7 +18,7 @@ class Asset
     private $normalizedPath;
 
     /**
-     * @var \Aoe\Asdis\Domain\Model\Server
+     * @var Server
      */
     private $server;
 
@@ -87,7 +86,7 @@ class Asset
     }
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\Server $server
+     * @param Server $server
      */
     public function setServer(Server $server)
     {
@@ -95,7 +94,7 @@ class Asset
     }
 
     /**
-     * @return \Aoe\Asdis\Domain\Model\Server
+     * @return Server
      */
     public function getServer()
     {
@@ -125,7 +124,8 @@ class Asset
     /**
      * @param string $mask
      */
-    public function setMask($mask){
+    public function setMask($mask)
+    {
         $this->mask = $mask;
     }
 }

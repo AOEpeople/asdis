@@ -1,9 +1,11 @@
 <?php
+
 namespace Aoe\Asdis\Domain\Model\Server;
 
 use Aoe\Asdis\Domain\Model\Server;
 use Aoe\Asdis\System\Configuration\Provider;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use Exception;
 
 /**
  * Factory for server objects.
@@ -35,7 +37,7 @@ class Factory
     {
         try {
             $this->protocolMarker = $configurationProvider->getServerProtocolMarker();
-        } catch(\Exception $e) {
+        } catch (Exception $e) {
             $this->protocolMarker = '';
         }
     }

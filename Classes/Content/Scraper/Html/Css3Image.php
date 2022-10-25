@@ -1,8 +1,9 @@
 <?php
+
 namespace Aoe\Asdis\Content\Scraper\Html;
 
-use Aoe\Asdis\Content\Scraper\Html\AbstractHtmlScraper;
 use Aoe\Asdis\Content\Scraper\ScraperInterface;
+use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 
 /**
@@ -11,12 +12,12 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
 class Css3Image extends AbstractHtmlScraper implements ScraperInterface
 {
     /**
-     * @var \Aoe\Asdis\Domain\Model\Asset\Factory
+     * @var Factory
      */
     private $assetFactory;
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\Asset\Factory $assetFactory
+     * @param Factory $assetFactory
      */
     public function injectAssetFactory(Factory $assetFactory)
     {
@@ -25,7 +26,7 @@ class Css3Image extends AbstractHtmlScraper implements ScraperInterface
 
     /**
      * @param string $content
-     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     * @return Collection
      */
     public function scrape($content)
     {

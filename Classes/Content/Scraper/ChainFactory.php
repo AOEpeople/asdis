@@ -1,8 +1,7 @@
 <?php
+
 namespace Aoe\Asdis\Content\Scraper;
 
-use Aoe\Asdis\Content\Scraper\Chain;
-use Aoe\Asdis\Content\Scraper\ScraperInterface;
 use Aoe\Asdis\System\Factory\AbstractDeclarationBasedFactory;
 
 /**
@@ -11,22 +10,30 @@ use Aoe\Asdis\System\Factory\AbstractDeclarationBasedFactory;
 class ChainFactory extends AbstractDeclarationBasedFactory
 {
     /**
-     * @return \Aoe\Asdis\Content\Scraper\Chain
+     * @return Chain
      */
     public function buildChain()
     {
         $this->initialize();
-        /** @var \Aoe\Asdis\Content\Scraper\Chain $chain */
+        /** @var Chain $chain */
         $chain = $this->objectManager->get(Chain::class);
-        foreach($this->configurationProvider->getScraperKeys() as $scraperKey) {
+        foreach ($this->configurationProvider->getScraperKeys() as $scraperKey) {
             $chain->append($this->buildScraper($scraperKey));
         }
         return $chain;
     }
 
     /**
-     * @return void
+     * @return array
      */
+    protected function getScraperDeclarations()
+    {
+        if (isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers']) === false) {
+            return [];
+        }
+        return $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'];
+    }
+
     private function initialize()
     {
         $this->setDeclarations($this->getScraperDeclarations());
@@ -35,21 +42,10 @@ class ChainFactory extends AbstractDeclarationBasedFactory
 
     /**
      * @param string $scraperKey
-     * @return \Aoe\Asdis\Content\Scraper\ScraperInterface
+     * @return ScraperInterface
      */
     private function buildScraper($scraperKey)
     {
         return $this->buildObjectFromKey($scraperKey);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getScraperDeclarations()
-    {
-        if (false === isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'])) {
-            return array();
-        }
-        return $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Api;
 
 use Aoe\Asdis\Api\Exception\NotEnabledException;
@@ -17,42 +18,42 @@ use Aoe\Asdis\System\Uri\Normalizer;
 class Url
 {
     /**
-     * @var \Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory
+     * @var AlgorithmFactory
      */
     private $distributionAlgorithmFactory;
 
     /**
-     * @var \Aoe\Asdis\Domain\Repository\ServerRepository
+     * @var ServerRepository
      */
     private $serverRepository;
 
     /**
-     * @var \Aoe\Asdis\System\Configuration\Provider
+     * @var Provider
      */
     private $configurationProvider;
 
     /**
-     * @var \Aoe\Asdis\System\Uri\Normalizer
+     * @var Normalizer
      */
     private $uriNormalizer;
 
     /**
-     * @var \Aoe\Asdis\Domain\Model\Page
+     * @var Page
      */
     private $page;
 
     /**
-     * @var \Aoe\Asdis\Domain\Model\Server\Factory
+     * @var ServerFactory
      */
     private $serverFactory;
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory $distributionAlgorithmFactory
-     * @param \Aoe\Asdis\Domain\Repository\ServerRepository $serverRepository
-     * @param \Aoe\Asdis\System\Configuration\Provider $configurationProvider
-     * @param \Aoe\Asdis\System\Uri\Normalizer $uriNormalizer
-     * @param \Aoe\Asdis\Domain\Model\Page $page
-     * @param \Aoe\Asdis\Domain\Model\Server\Factory $serverFactory
+     * @param AlgorithmFactory $distributionAlgorithmFactory
+     * @param ServerRepository $serverRepository
+     * @param Provider $configurationProvider
+     * @param Normalizer $uriNormalizer
+     * @param Page $page
+     * @param ServerFactory $serverFactory
      */
     public function __construct(
         AlgorithmFactory $distributionAlgorithmFactory,
@@ -91,8 +92,8 @@ class Url
     }
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\Asset $asset
-     * @throws \Aoe\Asdis\Api\Exception\NotEnabledException
+     * @param Asset $asset
+     * @throws NotEnabledException
      */
     private function distributeAsset(Asset $asset)
     {
@@ -112,7 +113,7 @@ class Url
     }
 
     /**
-     * @return \Aoe\Asdis\Domain\Model\Server\Collection
+     * @return ServerCollection
      */
     private function getServers()
     {
@@ -122,8 +123,7 @@ class Url
     }
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\Server\Collection $servers
-     * @return void
+     * @param ServerCollection $servers
      */
     private function forceSSL(ServerCollection $servers)
     {

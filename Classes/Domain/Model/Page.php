@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Domain\Model;
 
 use Aoe\Asdis\Content\Replacement\Processor;
@@ -7,6 +8,8 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory;
 use Aoe\Asdis\Domain\Repository\ServerRepository;
 use Aoe\Asdis\System\Configuration\Provider;
+use Exception;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Represents a page in the TYPO3 page tree.
@@ -14,42 +17,42 @@ use Aoe\Asdis\System\Configuration\Provider;
 class Page
 {
     /**
-     * @var \Aoe\Asdis\Domain\Model\Asset\Collection
+     * @var Collection
      */
     private $assets;
 
     /**
-     * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     * @var TypoScriptFrontendController
      */
     private $pageObject;
 
     /**
-     * @var \Aoe\Asdis\Content\Scraper\ChainFactory
+     * @var ChainFactory
      */
     private $scraperChainFactory;
 
     /**
-     * @var \Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory
+     * @var Factory
      */
     private $distributionAlgorithmFactory;
 
     /**
-     * @var \Aoe\Asdis\Domain\Repository\ServerRepository
+     * @var ServerRepository
      */
     private $serverRepository;
 
     /**
-     * @var \Aoe\Asdis\System\Configuration\Provider
+     * @var Provider
      */
     private $configurationProvider;
 
     /**
-     * @var \Aoe\Asdis\Content\Replacement\Processor
+     * @var Processor
      */
     private $replacementProcessor;
 
     /**
-     * @param \Aoe\Asdis\Content\Scraper\ChainFactory $scraperChainFactory
+     * @param ChainFactory $scraperChainFactory
      */
     public function injectScraperChainFactory(ChainFactory $scraperChainFactory)
     {
@@ -57,7 +60,7 @@ class Page
     }
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory $distributionAlgorithmFactory
+     * @param Factory $distributionAlgorithmFactory
      */
     public function injectDistributionAlgorithmFactory(Factory $distributionAlgorithmFactory)
     {
@@ -65,7 +68,7 @@ class Page
     }
 
     /**
-     * @param \Aoe\Asdis\Domain\Repository\ServerRepository $serverRepository
+     * @param ServerRepository $serverRepository
      */
     public function injectServerRepository(ServerRepository $serverRepository)
     {
@@ -73,7 +76,7 @@ class Page
     }
 
     /**
-     * @param \Aoe\Asdis\System\Configuration\Provider $configurationProvider
+     * @param Provider $configurationProvider
      */
     public function injectConfigurationProvider(Provider $configurationProvider)
     {
@@ -81,7 +84,7 @@ class Page
     }
 
     /**
-     * @param \Aoe\Asdis\Content\Replacement\Processor $replacementProcessor
+     * @param Processor $replacementProcessor
      */
     public function injectReplacementProcessor(Processor $replacementProcessor)
     {
@@ -91,12 +94,10 @@ class Page
     /**
      * Scrapes the assets of the page. There is no replacement taking place. You have to call "replaceAssets" to replace
      * the paths after calling "scrapeAssets".
-     *
-     * @return void
      */
     public function scrapeAssets()
     {
-        if (false === $this->configurationProvider->isReplacementEnabled()) {
+        if ($this->configurationProvider->isReplacementEnabled() === false) {
             return;
         }
         $this->setAssets($this->scraperChainFactory->buildChain()->scrape($this->pageObject->content));
@@ -105,18 +106,17 @@ class Page
     /**
      * Replaces the assets of the page.
      * To force any replacement, you have to call "scrapeAssets" before.
-     *
-     * @return void
      */
     public function replaceAssets()
     {
-        if (false === $this->configurationProvider->isReplacementEnabled()) {
+        if ($this->configurationProvider->isReplacementEnabled() === false) {
             return;
         }
         $distributionAlgorithmKey = '';
         try {
             $distributionAlgorithmKey = $this->configurationProvider->getDistributionAlgorithmKey();
-        } catch(\Exception $e) {}
+        } catch (Exception $e) {
+        }
         $distributionAlgorithm = $this->distributionAlgorithmFactory->buildDistributionAlgorithmFromKey($distributionAlgorithmKey);
         $distributionAlgorithm->distribute($this->getAssets(), $this->serverRepository->findAllByPage($this));
         $this->pageObject->content = $this->replacementProcessor->replace(
@@ -126,7 +126,7 @@ class Page
     }
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\Asset\Collection $assets
+     * @param Collection $assets
      */
     public function setAssets(Collection $assets)
     {
@@ -134,15 +134,15 @@ class Page
     }
 
     /**
-     * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pageObject
+     * @param TypoScriptFrontendController $pageObject
      */
-    public function setPageObject(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pageObject)
+    public function setPageObject(TypoScriptFrontendController $pageObject)
     {
         $this->pageObject = $pageObject;
     }
 
     /**
-     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     * @return TypoScriptFrontendController
      */
     public function getPageObject()
     {
@@ -150,7 +150,7 @@ class Page
     }
 
     /**
-     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     * @return Collection
      */
     public function getAssets()
     {

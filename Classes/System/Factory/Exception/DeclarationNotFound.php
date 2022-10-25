@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\System\Factory\Exception;
 
 class DeclarationNotFound extends \Exception
@@ -9,6 +10,6 @@ class DeclarationNotFound extends \Exception
      */
     public function __construct($key, $code)
     {
-        parent::__construct('No declaration with key "'.$key.'" found.', $code);
+        parent::__construct('No declaration with key "' . $key . '" found.', $code);
     }
 }

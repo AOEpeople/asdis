@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\System\Configuration;
 
 use Aoe\Asdis\System\Configuration\Exception\InvalidTypoScriptSetting;
@@ -7,11 +8,12 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * TypoScript configuration provider.
  */
-class TypoScriptConfiguration implements SingletonInterface 
+class TypoScriptConfiguration implements SingletonInterface
 {
     /**
      * @var array
@@ -28,8 +30,8 @@ class TypoScriptConfiguration implements SingletonInterface
      * @param string $validateType The data type to be validated against (E.g. "string"). Empty string to skip validation.
      * @param boolean $hasSubkeys Tells whether the requested key is assumed to has subkeys.
      * @return mixed
-     * @throws \Aoe\Asdis\System\Configuration\Exception\InvalidTypoScriptSetting
-     * @throws \Aoe\Asdis\System\Configuration\Exception\TypoScriptSettingNotExists
+     * @throws InvalidTypoScriptSetting
+     * @throws TypoScriptSettingNotExists
      */
     public function getSetting($key, $validateType = '', $hasSubkeys = false)
     {
@@ -37,17 +39,17 @@ class TypoScriptConfiguration implements SingletonInterface
             return $this->configurationCache[$key];
         }
         $parts = explode('.', $key);
-        if (false === is_array($parts) || sizeof($parts) < 1) {
+        if (is_array($parts) === false || sizeof($parts) < 1) {
             throw new TypoScriptSettingNotExists($key, 1372050700894);
         }
         $conf = $this->getTypoScriptConfigurationArray();
         $lastPartIndex = sizeof($parts) - 1;
-        foreach($parts as $index => $part) {
+        foreach ($parts as $index => $part) {
             $subkey = $part;
             if ($lastPartIndex !== $index || $hasSubkeys) {
                 $subkey .= '.';
             }
-            if (false === isset($conf[$subkey])) {
+            if (isset($conf[$subkey]) === false) {
                 throw new TypoScriptSettingNotExists($key, 1372063884313);
             }
             $conf = $conf[$subkey];
@@ -67,7 +69,7 @@ class TypoScriptConfiguration implements SingletonInterface
      */
     protected function getTypoScriptConfigurationArray()
     {
-        if (true === version_compare(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getCurrentTypo3Version(), '9.5.0', '<')) {
+        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '9.5.0', '<') === true) {
             return $GLOBALS['TSFE']->tmpl->setup['config.']['tx_asdis.'];
         }
 

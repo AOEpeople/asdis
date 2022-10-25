@@ -1,7 +1,6 @@
 <?php
-namespace Aoe\Asdis\System\Uri\Filter;
 
-use Aoe\Asdis\System\Uri\Filter\FilterInterface;
+namespace Aoe\Asdis\System\Uri\Filter;
 
 /**
  * Filters paths that contain "http:" or "https:".
@@ -12,10 +11,10 @@ class ContainsProtocol implements FilterInterface
      * @param array $paths Array of paths.
      * @return array Valid paths.
      */
-    public function filter(array $paths)
+    public function filter(array $paths): array
     {
         $filteredPaths = [];
-        foreach($paths as $path) {
+        foreach ($paths as $path) {
             if ($this->containsProtocol($path) || $this->containsProtocolMarker($path)) {
                 continue;
             }
@@ -24,21 +23,13 @@ class ContainsProtocol implements FilterInterface
         return $filteredPaths;
     }
 
-    /**
-     * @param string $path
-     * @return boolean
-     */
-    private function containsProtocol($path)
+    private function containsProtocol(string $path): bool
     {
-        return (1 === preg_match('/^(http|https)\:/', $path));
+        return preg_match('/^(http|https)\:/', $path) === 1;
     }
 
-    /**
-     * @param string $path
-     * @return boolean
-     */
-    private function containsProtocolMarker($path)
+    private function containsProtocolMarker(string $path): bool
     {
-        return (1 === preg_match('/^(###HTTP###|###HTTP_S###)/', $path));
+        return preg_match('/^(###HTTP###|###HTTP_S###)/', $path) === 1;
     }
 }

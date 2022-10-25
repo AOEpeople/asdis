@@ -1,9 +1,10 @@
 <?php
+
 namespace Aoe\Asdis\Domain\Model\DistributionAlgorithm;
 
 use Aoe\Asdis\Domain\Model\Asset;
 use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
-use Aoe\Asdis\Domain\Model\DistributionAlgorithm\DistributionAlgorithmInterface;
+use Aoe\Asdis\Domain\Model\Server;
 use Aoe\Asdis\Domain\Model\Server\Collection as ServerCollection;
 
 /**
@@ -14,10 +15,10 @@ class HashBasedGroups implements DistributionAlgorithmInterface
     /**
      * @var string
      */
-    const UNKNOWN_GROUP_KEY = 'unknown';
+    public const UNKNOWN_GROUP_KEY = 'unknown';
 
     /**
-     * @var \Aoe\Asdis\Domain\Model\Server\Collection
+     * @var ServerCollection
      */
     private $servers;
 
@@ -34,59 +35,55 @@ class HashBasedGroups implements DistributionAlgorithmInterface
     /**
      * Distributes the given assets to the given servers.
      *
-     * @param \Aoe\Asdis\Domain\Model\Asset\Collection $assets
-     * @param \Aoe\Asdis\Domain\Model\Server\Collection $servers
-     * @return void
+     * @param AssetCollection $assets
+     * @param ServerCollection $servers
      */
     public function distribute(AssetCollection $assets, ServerCollection $servers)
     {
         if ($servers->count() < 1) {
             return;
         }
-        $this->groups  = [];
+        $this->groups = [];
         $this->servers = $servers;
         $this->buildGroups();
         foreach ($assets as $asset) {
-            /** @var \Aoe\Asdis\Domain\Model\Asset $asset */
+            /** @var Asset $asset */
             $asset->setServer($this->groups[$this->getGroupCharacter($asset)]);
         }
     }
 
     /**
-     * @return \Aoe\Asdis\Domain\Model\Server
+     * @return Server
      */
     private function getNextServer()
     {
         $server = $this->servers->current();
         $this->servers->next();
-        if (FALSE === $this->servers->valid()) {
+        if ($this->servers->valid() === false) {
             $this->servers->rewind();
         }
         return $server;
     }
 
-    /**
-     * @return void
-     */
     private function buildGroups()
     {
         $serverCount = $this->servers->count();
-        $charCount   = strlen($this->characters);
-        for($i = 0; $i < $charCount; $i++) {
+        $charCount = strlen($this->characters);
+        for ($i = 0; $i < $charCount; $i++) {
             $this->groups[$this->characters[$i]] = $this->getNextServer();
         }
         $this->groups[self::UNKNOWN_GROUP_KEY] = $this->getNextServer();
     }
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\Asset $asset
+     * @param Asset $asset
      * @return string
      */
     private function getGroupCharacter(Asset $asset)
     {
         $hash = md5(sha1($asset->getNormalizedPath()));
         $character = $hash[strlen($hash) - 3];
-        if (false === strpos($this->characters, $character)) {
+        if (!str_contains($this->characters, $character)) {
             return self::UNKNOWN_GROUP_KEY;
         }
         return $character;

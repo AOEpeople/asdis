@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\System\Factory\Exception;
 
 class MissingImplementation extends \Exception
@@ -12,8 +13,8 @@ class MissingImplementation extends \Exception
     public function __construct($objectClassName, $implementationClassName, $factoryClassName, $code)
     {
         parent::__construct(
-            'Unable to create object of class "'.$objectClassName.'" in factory "'.$factoryClassName.'". '.
-            'Implementation of "'.$implementationClassName.'" is missing.',
+            'Unable to create object of class "' . $objectClassName . '" in factory "' . $factoryClassName . '" . ' .
+            'Implementation of "' . $implementationClassName . '" is missing.',
             $code
         );
     }

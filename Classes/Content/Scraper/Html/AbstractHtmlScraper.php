@@ -1,8 +1,9 @@
 <?php
+
 namespace Aoe\Asdis\Content\Scraper\Html;
 
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
-use Aoe\Asdis\Content\Scraper\ScraperInterface;
+use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 
 /**
@@ -11,17 +12,17 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
 abstract class AbstractHtmlScraper
 {
     /**
-     * @var \Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute
+     * @var XmlTagAttribute
      */
     private $xmlTagAttributeExtractor;
 
     /**
-     * @var \Aoe\Asdis\Domain\Model\Asset\Factory
+     * @var Factory
      */
     private $assetFactory;
 
     /**
-     * @param \Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute $xmlTagAttributeExtractor
+     * @param XmlTagAttribute $xmlTagAttributeExtractor
      */
     public function injectXmlTagAttributeExtractor(XmlTagAttribute $xmlTagAttributeExtractor)
     {
@@ -29,7 +30,7 @@ abstract class AbstractHtmlScraper
     }
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\Asset\Factory $assetFactory
+     * @param Factory $assetFactory
      */
     public function injectAssetFactory(Factory $assetFactory)
     {
@@ -41,12 +42,15 @@ abstract class AbstractHtmlScraper
      * @param string $attributeName
      * @param string $content
      * @param array $requiredOtherAttributes
-     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
+     * @return Collection
      */
     protected function getAssets($tagName, $attributeName, $content, array $requiredOtherAttributes = [])
     {
         $attributes = $this->xmlTagAttributeExtractor->getAttributeFromTag(
-            $tagName, $attributeName, $content, $requiredOtherAttributes
+            $tagName,
+            $attributeName,
+            $content,
+            $requiredOtherAttributes
         );
         return $this->assetFactory->createAssetsFromPaths(
             $attributes['paths'],
