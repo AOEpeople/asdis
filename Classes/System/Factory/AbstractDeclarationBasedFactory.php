@@ -6,7 +6,7 @@ use Aoe\Asdis\System\Configuration\Provider;
 use Aoe\Asdis\System\Factory\Exception\DeclarationNotFound;
 use Aoe\Asdis\System\Factory\Exception\InvalidDeclaration;
 use Aoe\Asdis\System\Factory\Exception\MissingImplementation;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Abstract factory class for factories that create their products from array based declarations.
@@ -28,59 +28,25 @@ abstract class AbstractDeclarationBasedFactory
      */
     public const DECLARATION_FILE = 'file';
 
-    /**
-     * @var ObjectManagerInterface
-     */
-    protected $objectManager;
+    protected ?Provider $configurationProvider = null;
 
-    /**
-     * @var Provider
-     */
-    protected $configurationProvider;
+    private ?string $fallbackKey = null;
 
-    /**
-     * @var string
-     */
-    private $fallbackKey;
+    private array $declarations = [];
 
-    /**
-     * @var array
-     */
-    private $declarations;
+    private array $classImplements = [];
 
-    /**
-     * @var array
-     */
-    private $classImplements = [];
-
-    /**
-     * @param ObjectManagerInterface $objectManager
-     */
-    public function injectObjectManager(ObjectManagerInterface $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
-    /**
-     * @param Provider $configurationProvider
-     */
-    public function injectConfigurationProvider(Provider $configurationProvider)
+    public function injectConfigurationProvider(Provider $configurationProvider): void
     {
         $this->configurationProvider = $configurationProvider;
     }
 
-    /**
-     * @param array $classImplements
-     */
-    protected function setClassImplements(array $classImplements)
+    protected function setClassImplements(array $classImplements): void
     {
         $this->classImplements = $classImplements;
     }
 
-    /**
-     * @param array $declarations
-     */
-    protected function setDeclarations(array $declarations)
+    protected function setDeclarations(array $declarations): void
     {
         $this->declarations = [];
         foreach ($declarations as $declaration) {
@@ -88,40 +54,36 @@ abstract class AbstractDeclarationBasedFactory
         }
     }
 
-    /**
-     * @param string $fallbackKey
-     */
-    protected function setFallbackKey($fallbackKey)
+    protected function setFallbackKey(string $fallbackKey): void
     {
         $this->fallbackKey = $fallbackKey;
     }
 
     /**
-     * @param string $key
      * @return object
      * @throws DeclarationNotFound
      * @throws MissingImplementation
      */
-    protected function buildObjectFromKey($key)
+    protected function buildObjectFromKey(string $key)
     {
         $declaration = null;
         try {
             $declaration = $this->getDeclarationByKey($key);
-        } catch (DeclarationNotFound $e) {
-            if (isset($this->fallbackKey) === false) {
-                throw $e;
+        } catch (DeclarationNotFound $declarationNotFound) {
+            if (!isset($this->fallbackKey)) {
+                throw $declarationNotFound;
             }
             $declaration = $this->getDeclarationByKey($this->fallbackKey);
         }
 
-        if (class_exists($declaration[self::DECLARATION_CLASS]) === false) {
+        if (!class_exists($declaration[self::DECLARATION_CLASS])) {
             require_once $declaration[self::DECLARATION_FILE];
         }
 
-        $object = $this->objectManager->get($declaration[self::DECLARATION_CLASS]);
+        $object = GeneralUtility::makeInstance($declaration[self::DECLARATION_CLASS]);
         $implemented = class_implements($object);
         foreach ($this->classImplements as $classImplement) {
-            if (in_array($classImplement, $implemented) === false) {
+            if (!in_array($classImplement, $implemented)) {
                 throw new MissingImplementation(
                     $declaration[self::DECLARATION_CLASS],
                     $classImplement,
@@ -134,36 +96,34 @@ abstract class AbstractDeclarationBasedFactory
     }
 
     /**
-     * @param array $declaration
      * @throws InvalidDeclaration
      */
     private function addDeclaration(array $declaration): void
     {
         if (
-            array_key_exists(self::DECLARATION_KEY, $declaration) === false ||
-            array_key_exists(self::DECLARATION_CLASS, $declaration) === false ||
-            array_key_exists(self::DECLARATION_FILE, $declaration) === false
+            !array_key_exists(self::DECLARATION_KEY, $declaration) ||
+            !array_key_exists(self::DECLARATION_CLASS, $declaration) ||
+            !array_key_exists(self::DECLARATION_FILE, $declaration)
         ) {
             throw new InvalidDeclaration(
                 'Missing declaration element.',
-                1372422185108
+                1_372_422_185_108
             );
         }
         $this->declarations[] = $declaration;
     }
 
     /**
-     * @param $key
      * @return mixed
      * @throws DeclarationNotFound
      */
-    private function getDeclarationByKey($key)
+    private function getDeclarationByKey(string $key)
     {
         foreach ($this->declarations as $declaration) {
             if (strcmp($declaration[self::DECLARATION_KEY], $key) === 0) {
                 return $declaration;
             }
         }
-        throw new DeclarationNotFound($key, 1372422430920);
+        throw new DeclarationNotFound($key, 1_372_422_430_920);
     }
 }

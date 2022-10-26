@@ -11,35 +11,22 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
  */
 class CssAttribute implements ScraperInterface
 {
-    /**
-     * @var Url
-     */
-    private $cssUrlScraper;
+    private ?Url $cssUrlScraper = null;
 
-    /**
-     * @param Url $cssUrlScraper
-     */
-    public function injectCssUrlScraper(Url $cssUrlScraper)
+    public function injectCssUrlScraper(Url $cssUrlScraper): void
     {
         $this->cssUrlScraper = $cssUrlScraper;
     }
 
-    /**
-     * @param $content
-     * @return Collection
-     */
-    public function scrape($content)
+    public function scrape(string $content): ?Collection
     {
         return $this->cssUrlScraper->scrape(implode(PHP_EOL, $this->getStyleBlocksFromMarkup($content)));
     }
 
     /**
      * Returns the inner content of all <style></style> blocks of the given markup as an array.
-     *
-     * @param string $content
-     * @return array
      */
-    private function getStyleBlocksFromMarkup($content)
+    private function getStyleBlocksFromMarkup(string $content): array
     {
         $blocks = [];
         $matches = [];
@@ -48,7 +35,7 @@ class CssAttribute implements ScraperInterface
             $content,
             $matches
         );
-        if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[1])) {
+        if (is_array($matches) && count($matches) > 1 && is_array($matches[1])) {
             $blocks = $matches[1];
         }
         return $blocks;

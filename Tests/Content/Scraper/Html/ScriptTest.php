@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
@@ -8,29 +9,22 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class ScriptTest extends UnitTestCase
 {
-    /**
-     * @var Script
-     */
-    private $scraper;
+    private Script $scraper;
 
-    /**
-     * (non-PHPdoc)
-     */
     protected function setUp(): void
     {
         $this->scraper = new Script();
     }
 
-    /**
-     * @test
-     */
-    public function scrape()
+    public function testScrape()
     {
         $content = '<script type="text/javascript" src="typo3temp/js/main.js" />';
-        
+
         $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
-        $assetFactory->expects($this->once())->method('createAssetsFromPaths')->with(['typo3temp/js/main.js']);
-        
+        $assetFactory->expects($this->once())
+            ->method('createAssetsFromPaths')
+            ->with(['typo3temp/js/main.js']);
+
         $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
         $attributeExtractor
             ->expects($this->once())
@@ -42,10 +36,9 @@ class ScriptTest extends UnitTestCase
                     'masks' => ['"'],
                 ]
             ));
-        
+
         $this->scraper->injectAssetFactory($assetFactory);
         $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
         $this->scraper->scrape($content);
     }
 }
-

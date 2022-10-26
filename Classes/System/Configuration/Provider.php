@@ -9,25 +9,17 @@ use Aoe\Asdis\System\Configuration\Exception\InvalidStructure;
  */
 class Provider
 {
-    /**
-     * @var TypoScriptConfiguration
-     */
-    private $typoScriptConfiguration;
+    private ?TypoScriptConfiguration $typoScriptConfiguration = null;
 
-    /**
-     * @param TypoScriptConfiguration $typoScriptConfiguration
-     */
-    public function injectTypoScriptConfiguration(TypoScriptConfiguration $typoScriptConfiguration)
+    public function injectTypoScriptConfiguration(TypoScriptConfiguration $typoScriptConfiguration): void
     {
         $this->typoScriptConfiguration = $typoScriptConfiguration;
     }
 
     /**
      * Tells if the assets on the current page should be replaced.
-     *
-     * @return boolean
      */
-    public function isReplacementEnabled()
+    public function isReplacementEnabled(): bool
     {
         return (bool) ((int) $this->typoScriptConfiguration->getSetting('enabled'));
     }
@@ -35,18 +27,13 @@ class Provider
     /**
      * This disables any processing in hook handlers of the asdis extension.
      * You can use this, if you have to implement your own hook processing in another extension.
-     *
-     * @return boolean
      */
-    public function isDefaultHookHandlingDisabled()
+    public function isDefaultHookHandlingDisabled(): bool
     {
         return (bool) ((int) $this->typoScriptConfiguration->getSetting('disableDefaultHookHandling'));
     }
 
-    /**
-     * @return string
-     */
-    public function getDistributionAlgorithmKey()
+    public function getDistributionAlgorithmKey(): string
     {
         return (string) $this->typoScriptConfiguration->getSetting('distributionAlgorithm');
     }
@@ -60,7 +47,11 @@ class Provider
     {
         $keyList = $this->typoScriptConfiguration->getSetting('scrapers', 'string');
         $keys = explode(',', $keyList);
-        if (is_array($keys) === false || sizeof($keys) < 1) {
+
+        if (!is_array($keys)) {
+            return [];
+        }
+        if (count($keys) < 1) {
             return [];
         }
         $scraperKeys = [];
@@ -80,7 +71,10 @@ class Provider
         $keyList = $this->typoScriptConfiguration->getSetting('filters', 'string');
         $keys = explode(',', $keyList);
 
-        if (is_array($keys) === false || sizeof($keys) < 1) {
+        if (!is_array($keys)) {
+            return [];
+        }
+        if (count($keys) < 1) {
             return [];
         }
         $filterKeys = [];
@@ -113,13 +107,13 @@ class Provider
         $definitions = [];
         $serverDefinitions = $this->typoScriptConfiguration->getSetting('servers', 'array', true);
         foreach ($serverDefinitions as $identifier => $serverDefinition) {
-            if (is_array($serverDefinition) === false || isset($serverDefinition['domain']) === false) {
+            if (!is_array($serverDefinition) || !isset($serverDefinition['domain'])) {
                 throw new InvalidStructure(
-                    'Configured server definition for "' . ((string) $serverDefinition) . '" is invalid.',
+                    'Configured server definition for "' . $serverDefinition . '" is invalid.',
                     1_372_159_113_552
                 );
             }
-            if (isset($serverDefinition['protocol']) === false) {
+            if (!isset($serverDefinition['protocol'])) {
                 $serverDefinition['protocol'] = 'marker';
             }
             $definitions[] = [
@@ -131,10 +125,7 @@ class Provider
         return $definitions;
     }
 
-    /**
-     * @return string
-     */
-    public function getServerProtocolMarker()
+    public function getServerProtocolMarker(): string
     {
         return $this->typoScriptConfiguration->getSetting('serverProtocolMarker', 'string');
     }

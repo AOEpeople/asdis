@@ -10,11 +10,7 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
  */
 class MetaMsApplication extends AbstractHtmlScraper implements ScraperInterface
 {
-    /**
-     * @param $content
-     * @return Collection
-     */
-    public function scrape($content)
+    public function scrape(string $content): ?Collection
     {
         return $this->getAssets('meta', 'content', $content, ['name' => 'msapplication-TileImage'])
             ->merge($this->getAssets('meta', 'content', $content, ['name' => 'msapplication-config']));

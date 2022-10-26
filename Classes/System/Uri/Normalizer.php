@@ -24,7 +24,7 @@ class Normalizer
             }
         }
 
-        if (strpos($path, '/') === 0) {
+        if (str_starts_with($path, '/')) {
             $path = substr($path, 1);
         }
         return $path;

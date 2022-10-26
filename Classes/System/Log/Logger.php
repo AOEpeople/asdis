@@ -7,21 +7,22 @@ use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Core\Log\Logger as T3Logger;
 
 /**
  * System logger.
  */
 class Logger implements SingletonInterface
 {
+    private T3Logger $logger;
+
     /**
      * @param string $context
-     * @param Exception $e
      */
-    public function logException($context, Exception $e)
+    public function logException($context, Exception $e): void
     {
-        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '9.5.0', '<') === true) {
+        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '9.5.0', '<')) {
             $this->syslog(
-                $context,
                 'Exception occured ' . PHP_EOL .
                 '  Code:    ' . $e->getCode() . PHP_EOL .
                 '  Message: "' . $e->getMessage() . '"' . PHP_EOL .
@@ -42,7 +43,7 @@ class Logger implements SingletonInterface
      * @param string $message
      * @param integer $severity
      */
-    private function syslog($message, $severity)
+    private function syslog($message, $severity): void
     {
         GeneralUtility::sysLog($message, 'asdis', $severity);
     }

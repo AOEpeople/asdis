@@ -9,6 +9,6 @@ class FilterNotExists extends \Exception
 {
     public function __construct(string $filterKey)
     {
-        parent::__construct('Filter with the key ' . $filterKey . ' does not exist.', 1372172405389);
+        parent::__construct('Filter with the key ' . $filterKey . ' does not exist.', 1_372_172_405_389);
     }
 }

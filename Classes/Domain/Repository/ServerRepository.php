@@ -6,55 +6,28 @@ use Aoe\Asdis\Domain\Model\Page;
 use Aoe\Asdis\Domain\Model\Server\Collection;
 use Aoe\Asdis\Domain\Model\Server\Factory;
 use Aoe\Asdis\System\Configuration\Provider;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 /**
  * Repository for server objects.
  */
 class ServerRepository
 {
-    /**
-     * @var ObjectManagerInterface
-     */
-    private $objectManager;
+    private ?Provider $configurationProvider = null;
 
-    /**
-     * @var Provider
-     */
-    private $configurationProvider;
+    private ?Factory $serverFactory = null;
 
-    /**
-     * @var Factory
-     */
-    private $serverFactory;
-
-    /**
-     * @param ObjectManagerInterface $objectManager
-     */
-    public function injectObjectManager(ObjectManagerInterface $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
-    /**
-     * @param Provider $configurationProvider
-     */
-    public function injectConfigurationProvider(Provider $configurationProvider)
+    public function injectConfigurationProvider(Provider $configurationProvider): void
     {
         $this->configurationProvider = $configurationProvider;
     }
 
-    /**
-     * @param Factory $serverFactory
-     */
-    public function injectServerFactory(Factory $serverFactory)
+    public function injectServerFactory(Factory $serverFactory): void
     {
         $this->serverFactory = $serverFactory;
     }
 
     public function findAllByPage(Page $page): Collection
     {
-        /** @var Collection $servers */
         $servers = new Collection();
         $serverDefinitions = $this->configurationProvider->getServerDefinitions();
         foreach ($serverDefinitions as $serverDefinition) {

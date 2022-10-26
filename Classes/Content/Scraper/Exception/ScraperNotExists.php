@@ -12,6 +12,6 @@ class ScraperNotExists extends \Exception
      */
     public function __construct($filterKey)
     {
-        parent::__construct('Scraper with the key ' . $filterKey . ' does not exist.', 1371818682112);
+        parent::__construct('Scraper with the key ' . $filterKey . ' does not exist.', 1_371_818_682_112);
     }
 }

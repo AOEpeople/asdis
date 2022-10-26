@@ -10,11 +10,7 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
  */
 class Embed extends AbstractHtmlScraper implements ScraperInterface
 {
-    /**
-     * @param $content
-     * @return Collection
-     */
-    public function scrape($content)
+    public function scrape(string $content): ?Collection
     {
         return $this->getAssets('embed', 'src', $content);
     }

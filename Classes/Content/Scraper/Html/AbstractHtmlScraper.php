@@ -11,40 +11,20 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
  */
 abstract class AbstractHtmlScraper
 {
-    /**
-     * @var XmlTagAttribute
-     */
-    private $xmlTagAttributeExtractor;
+    private ?XmlTagAttribute $xmlTagAttributeExtractor = null;
+    private ?Factory $assetFactory = null;
 
-    /**
-     * @var Factory
-     */
-    private $assetFactory;
-
-    /**
-     * @param XmlTagAttribute $xmlTagAttributeExtractor
-     */
-    public function injectXmlTagAttributeExtractor(XmlTagAttribute $xmlTagAttributeExtractor)
+    public function injectXmlTagAttributeExtractor(XmlTagAttribute $xmlTagAttributeExtractor): void
     {
         $this->xmlTagAttributeExtractor = $xmlTagAttributeExtractor;
     }
 
-    /**
-     * @param Factory $assetFactory
-     */
-    public function injectAssetFactory(Factory $assetFactory)
+    public function injectAssetFactory(Factory $assetFactory): void
     {
         $this->assetFactory = $assetFactory;
     }
 
-    /**
-     * @param string $tagName
-     * @param string $attributeName
-     * @param string $content
-     * @param array $requiredOtherAttributes
-     * @return Collection
-     */
-    protected function getAssets($tagName, $attributeName, $content, array $requiredOtherAttributes = [])
+    protected function getAssets(string $tagName, string $attributeName, string $content, array $requiredOtherAttributes = []): ?Collection
     {
         $attributes = $this->xmlTagAttributeExtractor->getAttributeFromTag(
             $tagName,

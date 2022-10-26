@@ -7,104 +7,64 @@ namespace Aoe\Asdis\Domain\Model;
  */
 class Asset
 {
-    /**
-     * @var string
-     */
-    private $originalPath;
+    private ?string $originalPath = null;
 
-    /**
-     * @var string
-     */
-    private $normalizedPath;
+    private ?string $normalizedPath = null;
 
-    /**
-     * @var Server
-     */
-    private $server;
+    private ?Server $server = null;
 
     /**
      * The mask character in the content. eg. " or '
-     * @var string
      */
-    private $mask;
+    private ?string $mask = null;
 
-    /**
-     * @return string
-     */
-    public function getHash()
+    public function getHash(): string
     {
         return md5($this->originalPath);
     }
 
-    /**
-     * @param string $originalPath
-     */
-    public function setOriginalPath($originalPath)
+    public function setOriginalPath(string $originalPath): void
     {
         $this->originalPath = $originalPath;
     }
 
-    /**
-     * @return string
-     */
-    public function getOriginalPath()
+    public function getOriginalPath(): ?string
     {
         return $this->originalPath;
     }
 
-    /**
-     * @param string $normalizedPath
-     */
-    public function setNormalizedPath($normalizedPath)
+    public function setNormalizedPath(string $normalizedPath): void
     {
         $this->normalizedPath = $normalizedPath;
     }
 
-    /**
-     * @return string
-     */
-    public function getNormalizedPath()
+    public function getNormalizedPath(): ?string
     {
         return $this->normalizedPath;
     }
 
-    /**
-     * @return string
-     */
-    public function getPregQuotedOriginalPath()
+    public function getPregQuotedOriginalPath(): string
     {
         return '~/?' . preg_quote($this->originalPath) . '~is';
     }
 
-    /**
-     * @return string
-     */
-    public function getMaskedPregQuotedOriginalPath()
+    public function getMaskedPregQuotedOriginalPath(): string
     {
-        $mask = preg_quote($this->getMask());
+        $mask = preg_quote($this->mask);
         return '~/?' . $mask . preg_quote($this->originalPath) . $mask . '~is';
     }
 
-    /**
-     * @param Server $server
-     */
-    public function setServer(Server $server)
+    public function setServer(Server $server): void
     {
         $this->server = $server;
     }
 
-    /**
-     * @return Server
-     */
-    public function getServer()
+    public function getServer(): ?Server
     {
         return $this->server;
     }
 
-    /**
-     * @return string
-     */
-    public function getUri()
+    public function getUri(): string
     {
         $domain = '';
         if (isset($this->server)) {
@@ -113,18 +73,12 @@ class Asset
         return $domain . $this->normalizedPath;
     }
 
-    /**
-     * @return string
-     */
-    public function getMask()
+    public function getMask(): ?string
     {
         return $this->mask;
     }
 
-    /**
-     * @param string $mask
-     */
-    public function setMask($mask)
+    public function setMask(string $mask): void
     {
         $this->mask = $mask;
     }

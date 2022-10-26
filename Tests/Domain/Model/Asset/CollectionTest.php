@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Domain\Model\Asset;
 
 use Aoe\Asdis\Domain\Model\Asset;
@@ -7,23 +8,17 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class CollectionTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
-    public function append()
+    public function testAppend()
     {
         $collection = new Collection();
         $asset = new Asset();
 
         $collection->append($asset);
 
-        $this->assertEquals(1, $collection->count());
+        $this->assertSame(1, $collection->count());
     }
 
-    /**
-     * @test
-     */
-    public function appendWithSameOriginalPath()
+    public function testAppendWithSameOriginalPath()
     {
         $collection = new Collection();
         $asset1 = new Asset();
@@ -36,13 +31,10 @@ class CollectionTest extends UnitTestCase
         $collection->append($asset1);
         $collection->append($asset2);
 
-        $this->assertEquals(1, $collection->count());
+        $this->assertSame(1, $collection->count());
     }
 
-    /**
-     * @test
-     */
-    public function merge()
+    public function testMerge()
     {
         $collection1 = new Collection();
         $collection2 = new Collection();
@@ -60,16 +52,14 @@ class CollectionTest extends UnitTestCase
         $collection1->append($asset1);
         $collection2->append($asset2);
         $collection2->append($asset3);
+
         $collection1->merge($collection2);
 
-        $this->assertEquals(3, $collection1->count());
-        $this->assertEquals(2, $collection2->count());
+        $this->assertSame(3, $collection1->count());
+        $this->assertSame(2, $collection2->count());
     }
 
-    /**
-     * @test
-     */
-    public function getReplacementMap()
+    public function testGetReplacementMap()
     {
         $collection = new Collection();
         $asset1 = new Asset();
@@ -79,6 +69,7 @@ class CollectionTest extends UnitTestCase
 
         $asset1->setOriginalPath($path1);
         $asset1->setNormalizedPath($path1);
+
         $asset2->setOriginalPath($path2);
         $asset2->setNormalizedPath($path2);
 
@@ -87,8 +78,7 @@ class CollectionTest extends UnitTestCase
 
         $map = $collection->getReplacementMap();
 
-        $this->assertEquals(2, sizeof($map->getSources()));
-        $this->assertEquals(2, sizeof($map->getTargets()));
+        $this->assertSame(2, count($map->getSources()));
+        $this->assertSame(2, count($map->getTargets()));
     }
 }
-

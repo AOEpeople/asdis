@@ -9,7 +9,6 @@ use PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer;
 use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
 use PhpCsFixer\Fixer\Strict\StrictComparisonFixer;
 use PhpCsFixer\Fixer\Strict\StrictParamFixer;
-use PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer;
 use PhpCsFixer\Fixer\Whitespace\ArrayIndentationFixer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
@@ -25,6 +24,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         Option::PATHS,
         [
             __DIR__ . '/../Classes',
+            __DIR__ . '/../Tests',
             __DIR__ . '/ecs.php',
         ]
     );
@@ -46,19 +46,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         Option::SKIP,
         [
             // Default Skips
-            Symplify\CodingStandard\Fixer\LineLength\LineLengthFixer::class => [
-                __DIR__ . '/ecs.php',
-            ],
+            DocBlockLineLengthFixer::class => null,
+            NotOperatorWithSuccessorSpaceFixer::class => null,
+            OrderedImportsFixer::class => null,
             ArrayListItemNewlineFixer::class => null,
+            ArrayIndentationFixer::class => null,
             ArrayOpenerAndCloserNewlineFixer::class => null,
             ClassAttributesSeparationFixer::class => null,
-            OrderedImportsFixer::class => null,
-            NotOperatorWithSuccessorSpaceFixer::class => null,
-            ExplicitStringVariableFixer::class => null,
-            ArrayIndentationFixer::class => null,
-            DocBlockLineLengthFixer::class => null,
-            '\SlevomatCodingStandard\Sniffs\Whitespaces\DuplicateSpacesSniff.DuplicateSpaces' => null,
-            '\SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff.PartialUse' => null,
 
             // @todo for next upgrade
             NoSuperfluousPhpdocTagsFixer::class => null,

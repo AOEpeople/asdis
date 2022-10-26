@@ -5,6 +5,7 @@ namespace Aoe\Asdis\System\Configuration;
 use Aoe\Asdis\System\Configuration\Exception\InvalidTypoScriptSetting;
 use Aoe\Asdis\System\Configuration\Exception\TypoScriptSettingNotExists;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
@@ -15,15 +16,7 @@ use TYPO3\CMS\Core\Utility\VersionNumberUtility;
  */
 class TypoScriptConfiguration implements SingletonInterface
 {
-    /**
-     * @var array
-     */
-    private $configuration;
-
-    /**
-     * @var array
-     */
-    private $configurationCache = [];
+    private array $configurationCache = [];
 
     /**
      * @param string $key The setting key. E.g. "logger.severity"
@@ -39,18 +32,18 @@ class TypoScriptConfiguration implements SingletonInterface
             return $this->configurationCache[$key];
         }
         $parts = explode('.', $key);
-        if (is_array($parts) === false || sizeof($parts) < 1) {
-            throw new TypoScriptSettingNotExists($key, 1372050700894);
+        if (!is_array($parts) || count($parts) < 1) {
+            throw new TypoScriptSettingNotExists($key, 1_372_050_700_894);
         }
         $conf = $this->getTypoScriptConfigurationArray();
-        $lastPartIndex = sizeof($parts) - 1;
+        $lastPartIndex = count($parts) - 1;
         foreach ($parts as $index => $part) {
             $subkey = $part;
             if ($lastPartIndex !== $index || $hasSubkeys) {
                 $subkey .= '.';
             }
-            if (isset($conf[$subkey]) === false) {
-                throw new TypoScriptSettingNotExists($key, 1372063884313);
+            if (!isset($conf[$subkey])) {
+                throw new TypoScriptSettingNotExists($key, 1_372_063_884_313);
             }
             $conf = $conf[$subkey];
             if ($lastPartIndex === $index) {
@@ -58,7 +51,7 @@ class TypoScriptConfiguration implements SingletonInterface
             }
         }
         if (strlen($validateType) > 0 && strcmp($validateType, gettype($conf)) !== 0) {
-            throw new InvalidTypoScriptSetting($key, gettype($conf), 1372064668444);
+            throw new InvalidTypoScriptSetting($key, gettype($conf), 1_372_064_668_444);
         }
         $this->configurationCache[$key] = $conf;
         return $conf;
@@ -69,7 +62,7 @@ class TypoScriptConfiguration implements SingletonInterface
      */
     protected function getTypoScriptConfigurationArray()
     {
-        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '9.5.0', '<') === true) {
+        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '9.5.0', '<')) {
             return $GLOBALS['TSFE']->tmpl->setup['config.']['tx_asdis.'];
         }
 
@@ -80,7 +73,7 @@ class TypoScriptConfiguration implements SingletonInterface
         $rootline = $rootlineUtility->get();
         /** @var TemplateService $templateService */
         $templateService = GeneralUtility::makeInstance(TemplateService::class);
-        $templateService->tt_track = 0;
+        $templateService->tt_track = false;
         $templateService->runThroughTemplates($rootline);
         $templateService->generateConfig();
 

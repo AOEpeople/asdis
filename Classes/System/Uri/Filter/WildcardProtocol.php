@@ -15,7 +15,7 @@ class WildcardProtocol implements FilterInterface
     {
         $filteredPaths = [];
         foreach ($paths as $path) {
-            if (strpos($path, '//') === 0) {
+            if (str_starts_with($path, '//')) {
                 continue;
             }
             $filteredPaths[] = $path;

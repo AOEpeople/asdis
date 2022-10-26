@@ -12,18 +12,12 @@ use Aoe\Asdis\Domain\Model\Server\Collection as ServerCollection;
  */
 class RoundRobin implements DistributionAlgorithmInterface
 {
-    /**
-     * @var ServerCollection
-     */
-    private $servers;
+    private ?ServerCollection $servers = null;
 
     /**
      * Distributes the given assets to the given servers.
-     *
-     * @param AssetCollection $assets
-     * @param ServerCollection $servers
      */
-    public function distribute(AssetCollection $assets, ServerCollection $servers)
+    public function distribute(AssetCollection $assets, ServerCollection $servers): void
     {
         if ($servers->count() < 1) {
             return;
@@ -35,14 +29,11 @@ class RoundRobin implements DistributionAlgorithmInterface
         }
     }
 
-    /**
-     * @return Server
-     */
-    private function getNextServer()
+    private function getNextServer(): Server
     {
         $server = $this->servers->current();
         $this->servers->next();
-        if ($this->servers->valid() === false) {
+        if (!$this->servers->valid()) {
             $this->servers->rewind();
         }
         return $server;

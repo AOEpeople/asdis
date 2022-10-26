@@ -24,9 +24,9 @@ class ContentPostProcAll extends AbstractHook
         try {
             $this->setPageObject($pObj);
             $this->scrapeAndReplace();
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $this->getLogger()
-                ->logException(__METHOD__, $e);
+                ->logException(__METHOD__, $exception);
         }
     }
 

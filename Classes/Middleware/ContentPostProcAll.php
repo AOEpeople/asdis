@@ -12,26 +12,21 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use Exception;
 
 class ContentPostProcAll implements MiddlewareInterface
 {
-    /**
-     * @var Page
-     */
-    private $page;
+    private ?Page $page = null;
 
-    /**
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);
 
-        if ($this->getConfigurationProvider()->isReplacementEnabled() === false || $this->getConfigurationProvider()->isDefaultHookHandlingDisabled()) {
+        if (!$this->getConfigurationProvider()->isReplacementEnabled()) {
+            return $response;
+        }
+        if ($this->getConfigurationProvider()->isDefaultHookHandlingDisabled()) {
             return $response;
         }
 
@@ -39,38 +34,30 @@ class ContentPostProcAll implements MiddlewareInterface
             $this->setPageObject($GLOBALS['TSFE']);
             $this->scrapeAndReplace();
             $response = new HtmlResponse($this->page->getPageObject()->content);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $this->getLogger()
-                ->logException(__METHOD__, $e);
+                ->logException(__METHOD__, $exception);
         }
 
         return $response;
     }
 
-    /**
-     * @return Provider
-     */
-    protected function getConfigurationProvider()
+    protected function getConfigurationProvider(): Provider
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        return $objectManager->get(Provider::class);
+        return GeneralUtility::makeInstance(Provider::class);
     }
 
-    /**
-     * @return Logger
-     */
-    protected function getLogger()
+    protected function getLogger(): Logger
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        return $objectManager->get(Logger::class);
+        return GeneralUtility::makeInstance(Logger::class);
     }
 
-    protected function scrapeAssets()
+    protected function scrapeAssets(): void
     {
         $this->page->scrapeAssets();
     }
 
-    protected function replaceAssets()
+    protected function replaceAssets(): void
     {
         $this->page->replaceAssets();
     }
@@ -78,21 +65,17 @@ class ContentPostProcAll implements MiddlewareInterface
     /**
      * Scrapes and replaces the assets of the current page.
      */
-    protected function scrapeAndReplace()
+    protected function scrapeAndReplace(): void
     {
         $this->scrapeAssets();
         $this->replaceAssets();
     }
 
-    /**
-     * @param TypoScriptFrontendController $pObj
-     */
-    protected function setPageObject(TypoScriptFrontendController $pObj)
+    protected function setPageObject(TypoScriptFrontendController $pObj): void
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         /** @var Page $page */
-        $page = $objectManager->get(Page::class);
-        $page->setAssets($objectManager->get(Collection::class));
+        $page = GeneralUtility::makeInstance(Page::class);
+        $page->setAssets(GeneralUtility::makeInstance(Collection::class));
         $page->setPageObject($pObj);
         $this->page = $page;
     }

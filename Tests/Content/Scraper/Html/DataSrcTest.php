@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
@@ -8,32 +9,23 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class DataSrcTest extends UnitTestCase
 {
-    /**
-     * @var DataSrc
-     */
-    private $imageScraper;
+    private DataSrc $imageScraper;
 
-    /**
-     * (non-PHPdoc)
-     */
     protected function setUp(): void
     {
         $this->imageScraper = new DataSrc();
     }
 
-    /**
-     * @test
-     */
-    public function scrape()
+    public function testScrape()
     {
         $content = '<div data-src="uploads/images/foo.gif" />';
-        
+
         $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
         $assetFactory
             ->expects($this->once())
             ->method('createAssetsFromPaths')
             ->with(['uploads/tx_templavoila/example.gif']);
-        
+
         $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
         $attributeExtractor
             ->expects($this->once())
@@ -42,13 +34,12 @@ class DataSrcTest extends UnitTestCase
             ->will($this->returnValue(
                 [
                     'paths' => ['uploads/tx_templavoila/example.gif'],
-                    'masks' => ['"']
-                ]
+                    'masks' => ['"'],
+                ],
             ));
-        
+
         $this->imageScraper->injectAssetFactory($assetFactory);
         $this->imageScraper->injectXmlTagAttributeExtractor($attributeExtractor);
         $this->imageScraper->scrape($content);
     }
 }
-

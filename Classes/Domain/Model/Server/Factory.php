@@ -4,40 +4,21 @@ namespace Aoe\Asdis\Domain\Model\Server;
 
 use Aoe\Asdis\Domain\Model\Server;
 use Aoe\Asdis\System\Configuration\Provider;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use Exception;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Factory for server objects.
  */
 class Factory
 {
-    /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     */
-    private $objectManager;
+    private ?string $protocolMarker = '';
 
-    /**
-     * @var string
-     */
-    private $protocolMarker;
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
-     */
-    public function injectObjectManager(ObjectManagerInterface $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
-    /**
-     * @param \Aoe\Asdis\System\Configuration\Provider $configurationProvider
-     */
-    public function injectConfigurationProvider(Provider $configurationProvider)
+    public function injectConfigurationProvider(Provider $configurationProvider): void
     {
         try {
             $this->protocolMarker = $configurationProvider->getServerProtocolMarker();
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $this->protocolMarker = '';
         }
     }
@@ -50,8 +31,7 @@ class Factory
      */
     public function createServer($identifier, $domain, $protocol)
     {
-        /** @var \Aoe\Asdis\Domain\Model\Server $server */
-        $server = $this->objectManager->get(Server::class);
+        $server = GeneralUtility::makeInstance(Server::class);
         $server->setIdentifier($identifier);
         $server->setDomain($domain);
         $server->setProtocol($protocol);

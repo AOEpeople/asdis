@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Domain\Model\DistributionAlgorithm;
 
 use Aoe\Asdis\Domain\Model\Asset;
@@ -10,23 +11,14 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class RoundRobinTest extends UnitTestCase
 {
-    /**
-     * @var RoundRobin
-     */
-    private $algorithm;
+    private RoundRobin $algorithm;
 
-    /**
-     * (non-PHPdoc)
-     */
     protected function setUp(): void
     {
         $this->algorithm = new RoundRobin();
     }
 
-    /**
-     * @test
-     */
-    public function distribute()
+    public function testDistribute()
     {
         $assets = new AssetCollection();
         $asset1 = new Asset();
@@ -53,9 +45,8 @@ class RoundRobinTest extends UnitTestCase
 
         $this->algorithm->distribute($assets, $servers);
 
-        $this->assertEquals('m1', $asset1->getServer()->getIdentifier());
-        $this->assertEquals('m2', $asset2->getServer()->getIdentifier());
-        $this->assertEquals('m1', $asset3->getServer()->getIdentifier());
+        $this->assertSame('m1', $asset1->getServer()->getIdentifier());
+        $this->assertSame('m2', $asset2->getServer()->getIdentifier());
+        $this->assertSame('m1', $asset3->getServer()->getIdentifier());
     }
 }
-

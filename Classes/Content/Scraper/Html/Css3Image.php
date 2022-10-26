@@ -11,24 +11,14 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
  */
 class Css3Image extends AbstractHtmlScraper implements ScraperInterface
 {
-    /**
-     * @var Factory
-     */
-    private $assetFactory;
+    private Factory $assetFactory;
 
-    /**
-     * @param Factory $assetFactory
-     */
-    public function injectAssetFactory(Factory $assetFactory)
+    public function injectAssetFactory(Factory $assetFactory): void
     {
         $this->assetFactory = $assetFactory;
     }
 
-    /**
-     * @param string $content
-     * @return Collection
-     */
-    public function scrape($content)
+    public function scrape(string $content): ?Collection
     {
         $paths = [];
         $masks = [];
@@ -38,7 +28,7 @@ class Css3Image extends AbstractHtmlScraper implements ScraperInterface
             $content,
             $matches
         );
-        if (is_array($matches) && sizeof($matches) > 1 && is_array($matches[2])) {
+        if (is_array($matches) && count($matches) > 1 && is_array($matches[2])) {
             $paths = $matches[2];
             $masks = $matches[1];
         }

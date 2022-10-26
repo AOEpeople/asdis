@@ -11,24 +11,14 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
  */
 class Srcset extends AbstractHtmlScraper implements ScraperInterface
 {
-    /**
-     * @var Factory
-     */
-    private $assetFactory;
+    private Factory $assetFactory;
 
-    /**
-     * @param Factory $assetFactory
-     */
-    public function injectAssetFactory(Factory $assetFactory)
+    public function injectAssetFactory(Factory $assetFactory): void
     {
         $this->assetFactory = $assetFactory;
     }
 
-    /**
-     * @param string $content
-     * @return Collection
-     */
-    public function scrape($content)
+    public function scrape(string $content): ?Collection
     {
         $paths = [];
         $masks = [];
@@ -40,7 +30,7 @@ class Srcset extends AbstractHtmlScraper implements ScraperInterface
         );
 
         foreach ($matches[2] as $mkey => $path) {
-            if (strpos($path, ',') === false) {
+            if (!str_contains($path, ',')) {
                 $paths[] = $path;
                 $masks[] = $matches[1][$mkey];
                 continue;
@@ -51,7 +41,7 @@ class Srcset extends AbstractHtmlScraper implements ScraperInterface
             foreach ($expPaths as $singlePath) {
                 $cleanSinglePath = trim($singlePath);
 
-                if (strpos($cleanSinglePath, ' ') !== false) {
+                if (str_contains($cleanSinglePath, ' ')) {
                     $paths[] = substr($cleanSinglePath, 0, strpos($cleanSinglePath, ' '));
                 } else {
                     $paths[] = $cleanSinglePath;

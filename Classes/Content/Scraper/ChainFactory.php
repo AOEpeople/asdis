@@ -3,6 +3,7 @@
 namespace Aoe\Asdis\Content\Scraper;
 
 use Aoe\Asdis\System\Factory\AbstractDeclarationBasedFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Scraper chain factory.
@@ -16,35 +17,31 @@ class ChainFactory extends AbstractDeclarationBasedFactory
     {
         $this->initialize();
         /** @var Chain $chain */
-        $chain = $this->objectManager->get(Chain::class);
+        $chain = GeneralUtility::makeInstance(Chain::class);
         foreach ($this->configurationProvider->getScraperKeys() as $scraperKey) {
             $chain->append($this->buildScraper($scraperKey));
         }
         return $chain;
     }
 
-    /**
-     * @return array
-     */
-    protected function getScraperDeclarations()
+    protected function getScraperDeclarations(): array
     {
-        if (isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers']) === false) {
+        if (!isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'])) {
             return [];
         }
         return $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'];
     }
 
-    private function initialize()
+    private function initialize(): void
     {
         $this->setDeclarations($this->getScraperDeclarations());
-        $this->setClassImplements(['Aoe\Asdis\Content\Scraper\ScraperInterface']);
+        $this->setClassImplements([ScraperInterface::class]);
     }
 
     /**
-     * @param string $scraperKey
      * @return ScraperInterface
      */
-    private function buildScraper($scraperKey)
+    private function buildScraper(string $scraperKey)
     {
         return $this->buildObjectFromKey($scraperKey);
     }

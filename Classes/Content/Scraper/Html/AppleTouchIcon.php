@@ -10,11 +10,7 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
  */
 class AppleTouchIcon extends AbstractHtmlScraper implements ScraperInterface
 {
-    /**
-     * @param string $content
-     * @return Collection
-     */
-    public function scrape($content)
+    public function scrape(string $content): ?Collection
     {
         return $this->getAssets('link', 'href', $content, ['rel' => 'apple-touch-icon'])
             ->merge($this->getAssets('link', 'href', $content, ['rel' => 'apple-touch-icon-precomposed']));

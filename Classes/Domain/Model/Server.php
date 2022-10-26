@@ -32,64 +32,37 @@ class Server
      */
     public const PROTOCOL_HTTPS = 'https';
 
-    /**
-     * @var string
-     */
-    private $domain;
+    private ?string $domain = null;
 
-    /**
-     * @var string
-     */
-    private $protocol;
+    private ?string $protocol = null;
 
-    /**
-     * @var string
-     */
-    private $identifier;
+    private ?string $identifier = null;
 
-    /**
-     * @var string
-     */
-    private $protocolMarker;
+    private ?string $protocolMarker = null;
 
-    /**
-     * @param string $domain
-     */
-    public function setDomain($domain)
+    public function setDomain(string $domain): void
     {
         $this->domain = $domain;
     }
 
-    /**
-     * @return string
-     */
-    public function getDomain()
+    public function getDomain(): ?string
     {
         return $this->domain;
     }
 
-    /**
-     * @param string $identifier
-     */
-    public function setIdentifier($identifier)
+    public function setIdentifier(string $identifier): void
     {
         $this->identifier = $identifier;
     }
 
-    /**
-     * @return string
-     */
-    public function getIdentifier()
+    public function getIdentifier(): ?string
     {
         return $this->identifier;
     }
 
-    /**
-     * @param string $protocol
-     */
-    public function setProtocol($protocol)
+    public function setProtocol(string $protocol): void
     {
-        if (in_array(
+        if (!in_array(
             $protocol,
             [self::PROTOCOL_WILDCARD,
                 self::PROTOCOL_MARKER,
@@ -97,51 +70,39 @@ class Server
                 self::PROTOCOL_HTTPS,
                 self::PROTOCOL_DYNAMIC,
             ]
-        ) === false) {
+        )) {
             return;
         }
         $this->protocol = $protocol;
     }
 
-    /**
-     * @return string
-     */
-    public function getProtocol()
+    public function getProtocol(): ?string
     {
         return $this->protocol;
     }
 
-    /**
-     * @param string $protocolMarker
-     */
-    public function setProtocolMarker($protocolMarker)
+    public function setProtocolMarker(string $protocolMarker): void
     {
         $this->protocolMarker = $protocolMarker;
     }
 
-    /**
-     * @return string
-     */
-    public function getUri()
+    public function getUri(): string
     {
         return $this->getProtocolPrefix() . $this->domain . '/';
     }
 
-    /**
-     * @return string
-     */
-    protected function getRequestProtocol()
+    protected function getRequestProtocol(): string
     {
-        if (strlen($_SERVER['HTTPS']) > 0 || strtolower($_SERVER['HTTPS']) !== 'off') {
+        if (strlen($_SERVER['HTTPS']) > 0) {
+            return self::PROTOCOL_HTTPS;
+        }
+        if (strtolower($_SERVER['HTTPS']) !== 'off') {
             return self::PROTOCOL_HTTPS;
         }
         return self::PROTOCOL_HTTP;
     }
 
-    /**
-     * @return string
-     */
-    private function getProtocolPrefix()
+    private function getProtocolPrefix(): string
     {
         $protocolPrefix = '';
         $protocol = $this->protocol;

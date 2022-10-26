@@ -7,12 +7,7 @@ namespace Aoe\Asdis\Content\Replacement;
  */
 class Processor
 {
-    /**
-     * @param Map $replacementMap
-     * @param string $content
-     * @return string
-     */
-    public function replace(Map $replacementMap, $content)
+    public function replace(Map $replacementMap, string $content): string
     {
         $result = preg_replace(
             $replacementMap->getSources(),

@@ -2,7 +2,7 @@
 
 namespace Aoe\Asdis\Content\Scraper;
 
-use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
+use Aoe\Asdis\Domain\Model\Asset\Collection;
 
 /**
  * Scraper which chains other scrapers.
@@ -26,13 +26,9 @@ class Chain extends \ArrayIterator implements ScraperInterface
         parent::append($scraper);
     }
 
-    /**
-     * @param $content
-     * @return AssetCollection
-     */
-    public function scrape($content)
+    public function scrape(string $content): Collection
     {
-        $assetCollection = new AssetCollection();
+        $assetCollection = new Collection();
         foreach ($this as $scraper) {
             /** @var ScraperInterface $scraper */
             $assetCollection->merge($scraper->scrape($content));

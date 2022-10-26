@@ -9,9 +9,5 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
  */
 interface ScraperInterface
 {
-    /**
-     * @param string $content
-     * @return Collection
-     */
-    public function scrape($content);
+    public function scrape(string $content): ?Collection;
 }

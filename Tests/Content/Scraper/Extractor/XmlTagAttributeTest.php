@@ -7,23 +7,14 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class XmlTagAttributeTest extends UnitTestCase
 {
-    /**
-     * @var XmlTagAttribute
-     */
-    private $extractor;
+    private XmlTagAttribute $extractor;
 
-    /**
-     * (non-PHPdoc)
-     */
     protected function setUp(): void
     {
         $this->extractor = new XmlTagAttribute();
     }
 
-    /**
-     * @test
-     */
-    public function getAttributeFromTag()
+    public function testGetAttributeFromTag()
     {
         $path1 = 'uploads/pics/foo.jpg';
         $path2 = 'typo3temp/tx_foo/bar.gif';
@@ -36,7 +27,7 @@ class XmlTagAttributeTest extends UnitTestCase
 
         $hits = $this->extractor->getAttributeFromTag('img', 'src', $content);
 
-        if (false === method_exists($this, 'assertInternalType')) {
+        if (!method_exists($this, 'assertInternalType')) {
             // phpunit 9.x or higher
             $this->assertIsArray($hits);
             $this->assertIsArray($hits['paths']);
@@ -47,18 +38,15 @@ class XmlTagAttributeTest extends UnitTestCase
             $this->assertInternalType('array', $hits['paths']);
             $this->assertInternalType('array', $hits['masks']);
         }
-        $this->assertEquals(2, sizeof($hits['paths']));
-        $this->assertEquals(2, sizeof($hits['masks']));
-        $this->assertEquals($path1, $hits['paths'][0]);
-        $this->assertEquals('"', $hits['masks'][0]);
-        $this->assertEquals($path2, $hits['paths'][1]);
-        $this->assertEquals('"', $hits['masks'][1]);
+        $this->assertSame(2, count($hits['paths']));
+        $this->assertSame(2, count($hits['masks']));
+        $this->assertSame($path1, $hits['paths'][0]);
+        $this->assertSame('"', $hits['masks'][0]);
+        $this->assertSame($path2, $hits['paths'][1]);
+        $this->assertSame('"', $hits['masks'][1]);
     }
 
-    /**
-     * @test
-     */
-    public function getAttributeFromTagWithRequiredOtherAttributes()
+    public function testGetAttributeFromTagWithRequiredOtherAttributes()
     {
         $path1 = 'uploads/pics/foo.jpg';
         $path2 = 'typo3temp/tx_foo/bar.gif';
@@ -69,7 +57,7 @@ class XmlTagAttributeTest extends UnitTestCase
 
         $hits = $this->extractor->getAttributeFromTag('input', 'src', $content, ['type' => 'image']);
 
-        if (method_exists($this, 'assertInternalType') === false) {
+        if (!method_exists($this, 'assertInternalType')) {
             // phpunit 9.x or higher
             $this->assertIsArray($hits);
             $this->assertIsArray($hits['paths']);
@@ -80,16 +68,13 @@ class XmlTagAttributeTest extends UnitTestCase
             $this->assertInternalType('array', $hits['paths']);
             $this->assertInternalType('array', $hits['masks']);
         }
-        $this->assertSame(1, sizeof($hits['paths']));
-        $this->assertSame(1, sizeof($hits['masks']));
+        $this->assertSame(1, count($hits['paths']));
+        $this->assertSame(1, count($hits['masks']));
         $this->assertSame($path1, $hits['paths'][0]);
         $this->assertSame('"', $hits['masks'][0]);
     }
 
-    /**
-     * @test
-     */
-    public function getAttributeFromTagWithSeveralSrcAttributes()
+    public function testGetAttributeFromTagWithSeveralSrcAttributes()
     {
         $path1 = 'uploads/pics/foo.jpg';
         $path2 = 'typo3temp/tx_foo/bar.gif';
@@ -97,7 +82,7 @@ class XmlTagAttributeTest extends UnitTestCase
 
         $hits = $this->extractor->getAttributeFromTag('img', 'src', $content);
 
-        if (method_exists($this, 'assertInternalType') === false) {
+        if (!method_exists($this, 'assertInternalType')) {
             // phpunit 9.x or higher
             $this->assertIsArray($hits);
             $this->assertIsArray($hits['paths']);
@@ -108,8 +93,8 @@ class XmlTagAttributeTest extends UnitTestCase
             $this->assertInternalType('array', $hits['paths']);
             $this->assertInternalType('array', $hits['masks']);
         }
-        $this->assertSame(1, sizeof($hits['paths']));
-        $this->assertSame(1, sizeof($hits['masks']));
+        $this->assertSame(1, count($hits['paths']));
+        $this->assertSame(1, count($hits['masks']));
         $this->assertSame($path1, $hits['paths'][0]);
         $this->assertSame('"', $hits['masks'][0]);
     }

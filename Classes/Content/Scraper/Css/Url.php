@@ -11,24 +11,14 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
  */
 class Url implements ScraperInterface
 {
-    /**
-     * @var Factory
-     */
-    private $assetFactory;
+    private ?Factory $assetFactory = null;
 
-    /**
-     * @param Factory $assetFactory
-     */
-    public function injectAssetFactory(Factory $assetFactory)
+    public function injectAssetFactory(Factory $assetFactory): void
     {
         $this->assetFactory = $assetFactory;
     }
 
-    /**
-     * @param $content
-     * @return Collection
-     */
-    public function scrape($content)
+    public function scrape(string $content): ?Collection
     {
         $urls = $this->extractUrlPaths($content);
         return $this->assetFactory->createAssetsFromPaths($urls['paths'], $urls['masks']);
@@ -54,7 +44,7 @@ class Url implements ScraperInterface
             PREG_PATTERN_ORDER
         );
 
-        if ((is_array($matches) && sizeof($matches) > 1 && is_array($matches[2])) === false) {
+        if (!(is_array($matches) && count($matches) > 1 && is_array($matches[2]))) {
             return [
                 'paths' => $paths,
                 'masks' => $masks,
@@ -62,7 +52,7 @@ class Url implements ScraperInterface
         }
 
         foreach ($matches[2] as $mkey => $path) {
-            if (strpos($path, ',') !== false) {
+            if (str_contains($path, ',')) {
                 continue;
             }
             $paths[] = $path;

@@ -6,9 +6,7 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Page;
 use Aoe\Asdis\System\Configuration\Provider;
 use Aoe\Asdis\System\Log\Logger;
-use RectorPrefix20210613\TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
@@ -16,8 +14,6 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
  */
 abstract class AbstractHook
 {
-    private ObjectManagerInterface $objectManager;
-
     private Logger $logger;
 
     private Page $page;
@@ -26,9 +22,8 @@ abstract class AbstractHook
 
     public function __construct()
     {
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->configurationProvider = $this->objectManager->get(Provider::class);
-        $this->logger = $this->objectManager->get(Logger::class);
+        $this->configurationProvider = GeneralUtility::makeInstance(Provider::class);
+        $this->logger = GeneralUtility::makeInstance(Logger::class);
     }
 
     protected function getConfigurationProvider(): Provider
@@ -63,8 +58,8 @@ abstract class AbstractHook
     protected function setPageObject(TypoScriptFrontendController $pObj): void
     {
         /** @var Page $page */
-        $page = $this->objectManager->get(Page::class);
-        $page->setAssets($this->objectManager->get(Collection::class));
+        $page = GeneralUtility::makeInstance(Page::class);
+        $page->setAssets(GeneralUtility::makeInstance(Collection::class));
         $page->setPageObject($pObj);
         $this->page = $page;
     }

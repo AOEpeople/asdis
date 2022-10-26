@@ -5,35 +5,28 @@ declare(strict_types=1);
 use Rector\Arguments\Rector\ClassMethod\ArgumentAdderRector;
 use Rector\CodeQuality\Rector\Array_\CallableThisArrayToAnonymousFunctionRector;
 use Rector\CodeQuality\Rector\Equal\UseIdenticalOverEqualWithSameTypeRector;
-use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
-use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
-use Rector\CodeQualityStrict\Rector\If_\MoveOutMethodCallInsideIfConditionRector;
-use Rector\CodingStyle\Rector\ClassMethod\ReturnArrayClassMethodToYieldRector;
+use Rector\CodeQuality\Rector\FuncCall\AddPregQuoteDelimiterRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\CodingStyle\Rector\FuncCall\ConsistentPregDelimiterRector;
 use Rector\CodingStyle\Rector\PostInc\PostIncDecToPreIncDecRector;
 use Rector\CodingStyle\Rector\Property\AddFalseDefaultToBoolPropertyRector;
 use Rector\Core\Configuration\Option;
-use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveDelegatingParentCallRector;
-use Rector\DeadCode\Rector\If_\RemoveDeadInstanceOfRector;
 use Rector\DeadCode\Rector\Property\RemoveUnusedPrivatePropertyRector;
-use Rector\Defluent\Rector\Return_\ReturnFluentChainMethodCallToNormalMethodCallRector;
 use Rector\EarlyReturn\Rector\If_\ChangeAndIfToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\ChangeOrIfReturnToEarlyReturnRector;
-use Rector\EarlyReturn\Rector\Return_\ReturnBinaryAndToEarlyReturnRector;
-use Rector\Naming\Rector\ClassMethod\RenameVariableToMatchNewTypeRector;
-use Rector\Naming\Rector\Foreach_\RenameForeachValueVariableToMatchMethodCallReturnTypeRector;
-use Rector\Naming\Rector\Property\MakeBoolPropertyRespectIsHasWasMethodNamingRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
-use Rector\Php74\Rector\LNumber\AddLiteralSeparatorToNumberRector;
+use Rector\Php73\Rector\FuncCall\RegexDashEscapeRector;
+use Rector\Php80\Rector\Catch_\RemoveUnusedVariableInCatchRector;
+use Rector\Php80\Rector\Switch_\ChangeSwitchToMatchRector;
+use Rector\PHPUnit\Rector\Class_\AddSeeTestAnnotationRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Class_\ChangeReadOnlyVariableWithDefaultValueToConstantRector;
 use Rector\Privatization\Rector\Class_\FinalizeClassesWithoutChildrenRector;
 use Rector\Privatization\Rector\Class_\RepeatedLiteralToClassConstantRector;
-use Rector\Privatization\Rector\MethodCall\PrivatizeLocalGetterToPropertyRector;
-use Rector\Privatization\Rector\Property\PrivatizeLocalPropertyToPrivatePropertyRector;
+use Rector\Privatization\Rector\ClassMethod\ChangeGlobalVariablesToPropertiesRector;
+use Rector\Privatization\Rector\Property\ChangeReadOnlyPropertyWithDefaultValueToConstantRector;
 use Rector\Set\ValueObject\SetList;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddArrayParamDocTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddArrayReturnDocTypeRector;
@@ -67,6 +60,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         Option::PATHS,
         [
             __DIR__ . '/../Classes',
+            __DIR__ . '/../Tests',
             __DIR__ . '/rector.php',
         ]
     );
@@ -76,18 +70,29 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(
         Option::SKIP,
         [
-            RecastingRemovalRector::class,
-            ConsistentPregDelimiterRector::class,
-            PostIncDecToPreIncDecRector::class,
+            // Default Skips
             FinalizeClassesWithoutChildrenRector::class,
+            RepeatedLiteralToClassConstantRector::class,
+            RegexDashEscapeRector::class,
+            ConsistentPregDelimiterRector::class,
+            AddArrayReturnDocTypeRector::class,
+            RemoveDelegatingParentCallRector::class,
+            AddArrayParamDocTypeRector::class,
+            PostIncDecToPreIncDecRector::class,
             ChangeOrIfReturnToEarlyReturnRector::class,
             ChangeAndIfToEarlyReturnRector::class,
+
+            // Test Skips
+            ChangeReadOnlyVariableWithDefaultValueToConstantRector::class,
+            ChangeReadOnlyPropertyWithDefaultValueToConstantRector::class,
+            ChangeGlobalVariablesToPropertiesRector::class,
+            /*
+            RecastingRemovalRector::class,
+
             ReturnBinaryAndToEarlyReturnRector::class,
             MakeBoolPropertyRespectIsHasWasMethodNamingRector::class,
             MoveOutMethodCallInsideIfConditionRector::class,
             ReturnArrayClassMethodToYieldRector::class,
-            AddArrayParamDocTypeRector::class,
-            AddArrayReturnDocTypeRector::class,
             ReturnFluentChainMethodCallToNormalMethodCallRector::class,
             IssetOnPropertyObjectToPropertyExistsRector::class,
             FlipTypeControlToUseExclusiveTypeRector::class,
@@ -95,22 +100,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             RenameVariableToMatchNewTypeRector::class,
             AddLiteralSeparatorToNumberRector::class,
             RenameForeachValueVariableToMatchMethodCallReturnTypeRector::class,
-            ChangeReadOnlyVariableWithDefaultValueToConstantRector::class,
             PrivatizeLocalPropertyToPrivatePropertyRector::class,
-            RemoveDelegatingParentCallRector::class,
-            RemoveUnusedPrivatePropertyRector::class => [
-                __DIR__ . '/../Classes/Typo3/Hook/LinkWizzard.php',
-            ],
-            RemoveDeadInstanceOfRector::class => [
-                __DIR__ . '/../Classes/Service/RenderingService.php',
-                __DIR__ . '/../Classes/Domain/Repository/FootnoteRepository.php',
-            ],
-            PrivatizeLocalGetterToPropertyRector::class => [
-                __DIR__ . '/../Classes/Service/FCEFootnoteService.php',
-            ],
-            CallableThisArrayToAnonymousFunctionRector::class => [
-                __DIR__ . '/../Classes/Domain/Repository/FootnoteRepository.php',
-            ],
+            */
+
+            AddSeeTestAnnotationRector::class,
+            ChangeSwitchToMatchRector::class,
+            RemoveUnusedVariableInCatchRector::class,
+            AddPregQuoteDelimiterRector::class,
 
             // @todo strict php
             ArgumentAdderRector::class,

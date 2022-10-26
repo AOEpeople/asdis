@@ -17,7 +17,7 @@ class Chain extends \ArrayIterator implements FilterInterface
     }
 
     /**
-     * @param \Aoe\Asdis\System\Uri\Filter\FilterInterface $filter
+     * @param FilterInterface $filter
      */
     public function append($filter)
     {
@@ -34,7 +34,7 @@ class Chain extends \ArrayIterator implements FilterInterface
             return $paths;
         }
         foreach ($this as $filter) {
-            /** @var \Aoe\Asdis\System\Uri\Filter\FilterInterface $filter */
+            /** @var FilterInterface $filter */
             $paths = $filter->filter($paths);
         }
         return $paths;

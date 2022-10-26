@@ -4,50 +4,26 @@ namespace Aoe\Asdis\Domain\Model\Asset;
 
 use Aoe\Asdis\Domain\Model\Asset;
 use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
+use Aoe\Asdis\System\Uri\Filter\Chain;
 use Aoe\Asdis\System\Uri\Normalizer;
 use Aoe\Asdis\System\Uri\Filter\ChainFactory;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Factory which builds asset objects and collections.
  */
 class Factory
 {
-    /**
-     * @var ObjectManagerInterface
-     */
-    private $objectManager;
+    private ?Normalizer $uriNormalizer = null;
 
-    /**
-     * @var Normalizer
-     */
-    private $uriNormalizer;
+    private ?Chain $filterChain = null;
 
-    /**
-     * @var \Aoe\Asdis\System\Uri\Filter\Chain
-     */
-    private $filterChain;
-
-    /**
-     * @param ObjectManagerInterface $objectManager
-     */
-    public function injectObjectManager(ObjectManagerInterface $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
-    /**
-     * @param Normalizer $uriNormalizer
-     */
-    public function injectUriNormalizer(Normalizer $uriNormalizer)
+    public function injectUriNormalizer(Normalizer $uriNormalizer): void
     {
         $this->uriNormalizer = $uriNormalizer;
     }
 
-    /**
-     * @param ChainFactory $filterChainFactory
-     */
-    public function injectFilterChainFactory(ChainFactory $filterChainFactory)
+    public function injectFilterChainFactory(ChainFactory $filterChainFactory): void
     {
         $this->filterChain = $filterChainFactory->buildChain();
     }
@@ -55,9 +31,8 @@ class Factory
     /**
      * @param array $paths Array of path strings.
      * @param array $masks Array of mask strings.
-     * @return Collection
      */
-    public function createAssetsFromPaths(array $paths, array $masks)
+    public function createAssetsFromPaths(array $paths, array $masks): Collection
     {
         $filteredPaths = $this->filterChain->filter($paths);
         $paths = array_intersect($paths, $filteredPaths);
@@ -70,12 +45,7 @@ class Factory
         return $assets;
     }
 
-    /**
-     * @param string $path
-     * @param string $mask
-     * @return Asset
-     */
-    protected function createAssetFromPath($path, $mask)
+    protected function createAssetFromPath(string $path, string $mask): Asset
     {
         $asset = $this->createAsset();
         $asset->setOriginalPath($path);
@@ -84,27 +54,17 @@ class Factory
         return $asset;
     }
 
-    /**
-     * @return Asset
-     */
-    protected function createAsset()
+    protected function createAsset(): Asset
     {
-        return $this->objectManager->get(Asset::class);
+        return GeneralUtility::makeInstance(Asset::class);
     }
 
-    /**
-     * @return Collection
-     */
-    protected function createAssetCollection()
+    protected function createAssetCollection(): Collection
     {
-        return $this->objectManager->get(AssetCollection::class);
+        return GeneralUtility::makeInstance(AssetCollection::class);
     }
 
-    /**
-     * @param string $originalPath
-     * @return string
-     */
-    private function getNormalizedPath($originalPath)
+    private function getNormalizedPath(string $originalPath): string
     {
         return $this->uriNormalizer->normalizePath($originalPath);
     }

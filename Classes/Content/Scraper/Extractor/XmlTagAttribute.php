@@ -37,14 +37,14 @@ class XmlTagAttribute
 
         $count = preg_match_all($pattern, $content, $matches, PREG_PATTERN_ORDER);
 
-        if ($count === false || $count === 0 || is_array($matches[2]) === false || sizeof($matches[2]) < 1) {
+        if ($count === false || $count === 0 || !is_array($matches[2]) || count($matches[2]) < 1) {
             return [
                 'paths' => [],
                 'masks' => [],
             ];
         }
 
-        if (sizeof($requiredOtherAttributes) < 1) {
+        if (count($requiredOtherAttributes) < 1) {
             return [
                 'paths' => $matches[2],
                 'masks' => $matches[1],

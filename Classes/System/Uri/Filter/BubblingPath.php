@@ -23,12 +23,8 @@ class BubblingPath implements FilterInterface
         return $filteredPaths;
     }
 
-    /**
-     * @param string $path
-     * @return boolean
-     */
     private function containsBubblingPath(string $path): bool
     {
-        return strpos($path, '../') !== false;
+        return str_contains($path, '../');
     }
 }

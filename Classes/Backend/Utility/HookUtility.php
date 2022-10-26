@@ -33,7 +33,7 @@ class HookUtility
     /**
      * Register hooks
      */
-    public static function registerHooks()
+    public static function registerHooks(): void
     {
         $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['asdis']);
         switch ($extConf['hook']) {

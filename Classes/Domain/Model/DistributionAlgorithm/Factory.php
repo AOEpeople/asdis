@@ -10,10 +10,9 @@ use Aoe\Asdis\System\Factory\AbstractDeclarationBasedFactory;
 class Factory extends AbstractDeclarationBasedFactory
 {
     /**
-     * @param string $key
      * @return DistributionAlgorithmInterface
      */
-    public function buildDistributionAlgorithmFromKey($key)
+    public function buildDistributionAlgorithmFromKey(string $key)
     {
         $this->initialize();
         return $this->buildObjectFromKey($key);
@@ -27,10 +26,10 @@ class Factory extends AbstractDeclarationBasedFactory
         return $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['distributionAlgorithms'];
     }
 
-    private function initialize()
+    private function initialize(): void
     {
         $this->setDeclarations($this->getDeclarations());
         $this->setFallbackKey('hashBasedGroups');
-        $this->setClassImplements(['Aoe\Asdis\Domain\Model\DistributionAlgorithm\DistributionAlgorithmInterface']);
+        $this->setClassImplements([DistributionAlgorithmInterface::class]);
     }
 }

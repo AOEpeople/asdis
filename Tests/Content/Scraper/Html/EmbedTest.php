@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
@@ -8,29 +9,22 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class EmbedTest extends UnitTestCase
 {
-    /**
-     * @var Embed
-     */
-    private $scraper;
+    private Embed $scraper;
 
-    /**
-     * (non-PHPdoc)
-     */
     protected function setUp(): void
     {
         $this->scraper = new Embed();
     }
 
-    /**
-     * @test
-     */
-    public function scrape()
+    public function testScrape()
     {
         $content = '<embed src="typo3temp/flash.swf" />';
-        
+
         $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
-        $assetFactory->expects($this->once())->method('createAssetsFromPaths')->with(['typo3temp/flash.swf']);
-        
+        $assetFactory->expects($this->once())
+            ->method('createAssetsFromPaths')
+            ->with(['typo3temp/flash.swf']);
+
         $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
         $attributeExtractor
             ->expects($this->once())
@@ -39,13 +33,12 @@ class EmbedTest extends UnitTestCase
             ->will($this->returnValue(
                 [
                     'paths' => ['typo3temp/flash.swf'],
-                    'masks' => ['"']
-                ]
+                    'masks' => ['"'],
+                ],
             ));
-        
+
         $this->scraper->injectAssetFactory($assetFactory);
         $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
         $this->scraper->scrape($content);
     }
 }
-

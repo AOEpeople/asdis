@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Content\Scraper\Css;
 
 use Aoe\Asdis\Content\Scraper\Css\Url;
@@ -7,13 +8,8 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class UrlTest extends UnitTestCase
 {
-    /**
-     * @var Url
-     */
-    private $url;
-    /**
-     * (non-PHPdoc)
-     */
+    private Url $url;
+
     protected function setUp(): void
     {
         $this->url = new Url();
@@ -21,33 +17,34 @@ class UrlTest extends UnitTestCase
 
     /**
      * Tests Url->scrape()
-     * @test
      */
-    public function scrape()
+    public function testScrape()
     {
         $factory = $this->getMockBuilder(Factory::class)->getMock();
-        $factory->expects($this->once())->method('createAssetsFromPaths')->with([]);
-        
+        $factory->expects($this->once())
+            ->method('createAssetsFromPaths')
+            ->with([]);
+
         $this->url->injectAssetFactory($factory);
         $this->url->scrape('');
     }
     /**
      * Tests Url->scrape()
-     * @test
      */
-    public function scrapeWithCss()
+    public function testScrapeWithCss()
     {
         $factory = $this->getMockBuilder(Factory::class)->getMock();
-        $factory->expects($this->once())->method('createAssetsFromPaths')->with(['uploads/tx_templavoila/example.gif']);
-        
+        $factory->expects($this->once())
+            ->method('createAssetsFromPaths')
+            ->with(['uploads/tx_templavoila/example.gif']);
+
         $this->url->injectAssetFactory($factory);
         $this->url->scrape("filter:url(#secondary);background-image: url('uploads/tx_templavoila/example.gif');");
     }
     /**
      * Tests _Url->scrape()
-     * @test
      */
-    public function scrapeWithInlineCss()
+    public function testScrapeWithInlineCss()
     {
         $factory = $this->getMockBuilder(Factory::class)->getMock();
         $factory
@@ -56,7 +53,6 @@ class UrlTest extends UnitTestCase
             ->with(['uploads/tx_templavoila/Newsletter_Teaser_Bucket.gif']);
 
         $this->url->injectAssetFactory($factory);
-        $this->url->scrape("url(uploads/tx_templavoila/Newsletter_Teaser_Bucket.gif)");
+        $this->url->scrape('url(uploads/tx_templavoila/Newsletter_Teaser_Bucket.gif)');
     }
-
 }

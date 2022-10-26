@@ -11,10 +11,7 @@ use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
  */
 class Collection extends \ArrayIterator
 {
-    /**
-     * @var array
-     */
-    private $elementHashes = [];
+    private array $elementHashes = [];
 
     /**
      * Needs to be called due to an extbase bug.
@@ -38,11 +35,7 @@ class Collection extends \ArrayIterator
         parent::append($asset);
     }
 
-    /**
-     * @param Collection $assetCollection
-     * @return Collection
-     */
-    public function merge(AssetCollection $assetCollection)
+    public function merge(AssetCollection $assetCollection): static
     {
         foreach ($assetCollection as $asset) {
             $this->append($asset);
@@ -50,10 +43,7 @@ class Collection extends \ArrayIterator
         return $this;
     }
 
-    /**
-     * @return Map
-     */
-    public function getReplacementMap()
+    public function getReplacementMap(): Map
     {
         $map = new Map();
         foreach ($this as $asset) {

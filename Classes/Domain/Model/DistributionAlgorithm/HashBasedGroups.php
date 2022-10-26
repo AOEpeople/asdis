@@ -17,28 +17,16 @@ class HashBasedGroups implements DistributionAlgorithmInterface
      */
     public const UNKNOWN_GROUP_KEY = 'unknown';
 
-    /**
-     * @var ServerCollection
-     */
-    private $servers;
+    private ?ServerCollection $servers = null;
 
-    /**
-     * @var string
-     */
-    private $characters = '0123456789abcdef';
+    private string $characters = '0123456789abcdef';
 
-    /**
-     * @var array
-     */
-    private $groups;
+    private array $groups = [];
 
     /**
      * Distributes the given assets to the given servers.
-     *
-     * @param AssetCollection $assets
-     * @param ServerCollection $servers
      */
-    public function distribute(AssetCollection $assets, ServerCollection $servers)
+    public function distribute(AssetCollection $assets, ServerCollection $servers): void
     {
         if ($servers->count() < 1) {
             return;
@@ -52,22 +40,18 @@ class HashBasedGroups implements DistributionAlgorithmInterface
         }
     }
 
-    /**
-     * @return Server
-     */
-    private function getNextServer()
+    private function getNextServer(): Server
     {
         $server = $this->servers->current();
         $this->servers->next();
-        if ($this->servers->valid() === false) {
+        if (!$this->servers->valid()) {
             $this->servers->rewind();
         }
         return $server;
     }
 
-    private function buildGroups()
+    private function buildGroups(): void
     {
-        $serverCount = $this->servers->count();
         $charCount = strlen($this->characters);
         for ($i = 0; $i < $charCount; $i++) {
             $this->groups[$this->characters[$i]] = $this->getNextServer();
@@ -75,11 +59,7 @@ class HashBasedGroups implements DistributionAlgorithmInterface
         $this->groups[self::UNKNOWN_GROUP_KEY] = $this->getNextServer();
     }
 
-    /**
-     * @param Asset $asset
-     * @return string
-     */
-    private function getGroupCharacter(Asset $asset)
+    private function getGroupCharacter(Asset $asset): string
     {
         $hash = md5(sha1($asset->getNormalizedPath()));
         $character = $hash[strlen($hash) - 3];

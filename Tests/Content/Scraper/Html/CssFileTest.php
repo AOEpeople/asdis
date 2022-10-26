@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
@@ -9,33 +10,24 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class CssFileTest extends UnitTestCase
 {
-    /**
-     * @var CssFile
-     */
-    private $scraper;
+    private CssFile $scraper;
 
-    /**
-     * (non-PHPdoc)
-     */
     protected function setUp(): void
     {
         $this->scraper = new CssFile();
     }
 
-    /**
-     * @test
-     */
-    public function scrape()
+    public function testScrape()
     {
         $content = '<link href="typo3temp/foo.css" rel="stylesheet" />';
-        
+
         $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
         $assetFactory
             ->expects($this->exactly(2))
             ->method('createAssetsFromPaths')
-            ->with(array('typo3temp/foo.css'))
+            ->with(['typo3temp/foo.css'])
             ->will($this->returnValue(new Collection()));
-        
+
         $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
         $attributeExtractor
             ->expects($this->exactly(2))
@@ -46,10 +38,9 @@ class CssFileTest extends UnitTestCase
                     'masks' => ['"'],
                 ]
             ));
-        
+
         $this->scraper->injectAssetFactory($assetFactory);
         $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
         $this->scraper->scrape($content);
     }
 }
-

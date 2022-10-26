@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Domain\Model;
 
 use Aoe\Asdis\Domain\Model\Page;
@@ -7,32 +8,25 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class PageTest extends UnitTestCase
 {
-    /**
-     * @var Page
-     */
-    private $page;
+    private Page $page;
 
-    /**
-     * (non-PHPdoc)
-     */
     protected function setUp(): void
     {
         $this->page = new Page();
-
     }
 
     /**
      * Tests Page->scrapeAssets()
-     * @test
      */
-    public function scrapeAssets()
+    public function testScrapeAssets()
     {
         $config = $this->getMockBuilder(Provider::class)->getMock();
-        $config->expects($this->any())->method('isReplacementEnabled')->will($this->returnValue(false));
+        $config
+            ->method('isReplacementEnabled')
+            ->will($this->returnValue(false));
 
         $this->page->injectConfigurationProvider($config);
 
         $this->assertNull($this->page->scrapeAssets());
     }
 }
-
