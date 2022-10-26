@@ -31,7 +31,7 @@ class Url
         ServerRepository $serverRepository,
         Provider $configurationProvider,
         Normalizer $uriNormalizer,
-        Page $page,
+        Page $page
     ) {
         $this->distributionAlgorithmFactory = $distributionAlgorithmFactory;
         $this->serverRepository = $serverRepository;

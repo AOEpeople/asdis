@@ -35,7 +35,7 @@ class Collection extends \ArrayIterator
         parent::append($asset);
     }
 
-    public function merge(AssetCollection $assetCollection): static
+    public function merge(AssetCollection $assetCollection): self
     {
         foreach ($assetCollection as $asset) {
             $this->append($asset);
