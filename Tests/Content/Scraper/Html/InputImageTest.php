@@ -1,36 +1,24 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
 use Aoe\Asdis\Content\Scraper\Html\InputImage;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class InputImageTest extends UnitTestCase
 {
-    /**
-     * @var InputImage
-     */
-    private $scraper;
-
-    /**
-     * (non-PHPdoc)
-     */
-    protected function setUp(): void
-    {
-        $this->scraper = new InputImage();
-    }
-
-    /**
-     * @test
-     */
-    public function scrape()
+    public function testScrape()
     {
         $content = '<input type="image" src="uploads/images/foo.gif" />';
-        
+
         $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
-        $assetFactory->expects($this->once())->method('createAssetsFromPaths')->with(['uploads/images/foo.gif']);
-        
+        $assetFactory->expects($this->once())
+            ->method('createAssetsFromPaths')
+            ->with(['uploads/images/foo.gif']);
+
         $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
         $attributeExtractor
             ->expects($this->once())
@@ -42,10 +30,8 @@ class InputImageTest extends UnitTestCase
                     'masks' => ['"'],
                 ]
             ));
-        
-        $this->scraper->injectAssetFactory($assetFactory);
-        $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
-        $this->scraper->scrape($content);
+
+        $scraper = GeneralUtility::makeInstance(InputImage::class, $attributeExtractor, $assetFactory);
+        $scraper->scrape($content);
     }
 }
-

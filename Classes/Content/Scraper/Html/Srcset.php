@@ -1,8 +1,9 @@
 <?php
+
 namespace Aoe\Asdis\Content\Scraper\Html;
 
-use Aoe\Asdis\Content\Scraper\Html\AbstractHtmlScraper;
 use Aoe\Asdis\Content\Scraper\ScraperInterface;
+use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 
 /**
@@ -10,24 +11,14 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
  */
 class Srcset extends AbstractHtmlScraper implements ScraperInterface
 {
-    /**
-     * @var \Aoe\Asdis\Domain\Model\Asset\Factory
-     */
-    private $assetFactory;
+    private Factory $assetFactory;
 
-    /**
-     * @param \Aoe\Asdis\Domain\Model\Asset\Factory $assetFactory
-     */
-    public function injectAssetFactory(Factory $assetFactory)
+    public function injectAssetFactory(Factory $assetFactory): void
     {
         $this->assetFactory = $assetFactory;
     }
 
-    /**
-     * @param string $content
-     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
-     */
-    public function scrape($content)
+    public function scrape(string $content): ?Collection
     {
         $paths = [];
         $masks = [];
@@ -39,7 +30,7 @@ class Srcset extends AbstractHtmlScraper implements ScraperInterface
         );
 
         foreach ($matches[2] as $mkey => $path) {
-            if (strpos($path, ',') === false) {
+            if (!str_contains($path, ',')) {
                 $paths[] = $path;
                 $masks[] = $matches[1][$mkey];
                 continue;
@@ -50,7 +41,7 @@ class Srcset extends AbstractHtmlScraper implements ScraperInterface
             foreach ($expPaths as $singlePath) {
                 $cleanSinglePath = trim($singlePath);
 
-                if (false !== strpos($cleanSinglePath, ' ')) {
+                if (str_contains($cleanSinglePath, ' ')) {
                     $paths[] = substr($cleanSinglePath, 0, strpos($cleanSinglePath, ' '));
                 } else {
                     $paths[] = $cleanSinglePath;

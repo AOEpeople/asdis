@@ -1,41 +1,42 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
+use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
 use Aoe\Asdis\Content\Scraper\Html\Srcset;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class SrcsetTest extends UnitTestCase
 {
-    /**
-     * @var Srcset
-     */
-    private $srcset;
+    private Srcset $srcset;
 
-    /**
-     * (non-PHPdoc)
-     */
     protected function setUp(): void
     {
-        $this->srcset = new Srcset();
+        $xmlTagAttributeExtractor = new XmlTagAttribute();
+        $factory = new Factory();
+
+        $this->srcset = GeneralUtility::makeInstance(Srcset::class, $xmlTagAttributeExtractor, $factory);
     }
 
     /**
      * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
-     * @test
      */
-    public function scrapePictureSource()
+    public function testScrapePictureSource()
     {
         $assetFactory = $this->getMockBuilder(Factory::class)
-            ->setMethods(array('createAssetsFromPaths'))
+            ->setMethods(['createAssetsFromPaths'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $assetFactory->expects($this->once())->method('createAssetsFromPaths')->with([
+        $assetFactory->expects($this->once())
+            ->method('createAssetsFromPaths')
+            ->with([
             '//my-domain.local/fileadmin/a.webp',
             '//my-domain.local/fileadmin/b.webp',
             '//my-domain.local/fileadmin/c.png',
-            '//my-domain.local/fileadmin/d.png'
+            '//my-domain.local/fileadmin/d.png',
         ]);
 
         $this->srcset->injectAssetFactory($assetFactory);
@@ -50,21 +51,22 @@ class SrcsetTest extends UnitTestCase
 
     /**
      * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
-     * @test
      */
-    public function scrapeLinkImagesrcset()
+    public function testScrapeLinkImagesrcset()
     {
         $assetFactory = $this->getMockBuilder(Factory::class)
-            ->setMethods(array('createAssetsFromPaths'))
+            ->setMethods(['createAssetsFromPaths'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $assetFactory->expects($this->once())->method('createAssetsFromPaths')->with([
+        $assetFactory->expects($this->once())
+            ->method('createAssetsFromPaths')
+            ->with([
             '//my-domain.local/fileadmin/a.webp',
             '//my-domain.local/fileadmin/b.webp',
             '//my-domain.local/fileadmin/c.webp',
             '//my-domain.local/fileadmin/d.webp',
-            '//my-domain.local/fileadmin/e.webp'
+            '//my-domain.local/fileadmin/e.webp',
         ]);
 
         $this->srcset->injectAssetFactory($assetFactory);

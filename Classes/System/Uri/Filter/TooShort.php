@@ -1,7 +1,6 @@
 <?php
-namespace Aoe\Asdis\System\Uri\Filter;
 
-use Aoe\Asdis\System\Uri\Filter\FilterInterface;
+namespace Aoe\Asdis\System\Uri\Filter;
 
 /**
  * Filters paths which are too short.
@@ -9,17 +8,17 @@ use Aoe\Asdis\System\Uri\Filter\FilterInterface;
 class TooShort implements FilterInterface
 {
     /**
-     * @var integer
+     * @var int
      */
-    const MIN_LENGTH = 5;
+    public const MIN_LENGTH = 5;
 
     /**
      * @param array $paths Array of paths.
      * @return array Valid paths.
      */
-    public function filter(array $paths)
+    public function filter(array $paths): array
     {
-        $filteredPaths = array();
+        $filteredPaths = [];
         foreach ($paths as $path) {
             if (strlen($path) < self::MIN_LENGTH) {
                 continue;

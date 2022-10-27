@@ -1,5 +1,14 @@
 <?php
+
 namespace Aoe\Asdis\Backend\Utility;
+
+use Aoe\Asdis\Domain\Model\DistributionAlgorithm\HashBasedGroups;
+use Aoe\Asdis\Domain\Model\DistributionAlgorithm\RoundRobin;
+use Aoe\Asdis\System\Uri\Filter\BubblingPath;
+use Aoe\Asdis\System\Uri\Filter\ContainsInlineData;
+use Aoe\Asdis\System\Uri\Filter\ContainsProtocol;
+use Aoe\Asdis\System\Uri\Filter\WildcardProtocol;
+use Aoe\Asdis\System\Uri\Filter\TooShort;
 
 /***************************************************************
  *  Copyright notice
@@ -29,50 +38,45 @@ class FiltersUtility
 {
     /**
      * Registers filters
-     *
-     * @param $extensionPath string
-     *
-     * @return void
      */
-    public static function registerFilters($extensionPath)
+    public static function registerFilters(string $extensionPath): void
     {
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = [
-            'key'   => 'bubblingPath',
-            'class' => 'Aoe\Asdis\System\Uri\Filter\BubblingPath',
-            'file'  => $extensionPath . 'Classes/System/Uri/Filter/BubblingPath.php'
+            'key' => 'bubblingPath',
+            'class' => BubblingPath::class,
+            'file' => $extensionPath . 'Classes/System/Uri/Filter/BubblingPath.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = [
-            'key'   => 'containsInlineData',
-            'class' => 'Aoe\Asdis\System\Uri\Filter\ContainsInlineData',
-            'file'  => $extensionPath . 'Classes/System/Uri/Filter/ContainsInlineData.php'
+            'key' => 'containsInlineData',
+            'class' => ContainsInlineData::class,
+            'file' => $extensionPath . 'Classes/System/Uri/Filter/ContainsInlineData.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = [
-            'key'   => 'containsProtocol',
-            'class' => 'Aoe\Asdis\System\Uri\Filter\ContainsProtocol',
-            'file'  => $extensionPath . 'Classes/System/Uri/Filter/ContainsProtocol.php'
+            'key' => 'containsProtocol',
+            'class' => ContainsProtocol::class,
+            'file' => $extensionPath . 'Classes/System/Uri/Filter/ContainsProtocol.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = [
-            'key'   => 'tooShort',
-            'class' => 'Aoe\Asdis\System\Uri\Filter\TooShort',
-            'file'  => $extensionPath . 'Classes/System/Uri/Filter/TooShort.php'
+            'key' => 'tooShort',
+            'class' => TooShort::class,
+            'file' => $extensionPath . 'Classes/System/Uri/Filter/TooShort.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['filters'][] = [
-            'key'   => 'wildcardProtocol',
-            'class' => 'Aoe\Asdis\System\Uri\Filter\WildcardProtocol',
-            'file'  => $extensionPath . 'Classes/System/Uri/Filter/WildcardProtocol.php'
+            'key' => 'wildcardProtocol',
+            'class' => WildcardProtocol::class,
+            'file' => $extensionPath . 'Classes/System/Uri/Filter/WildcardProtocol.php',
         ];
 
         // Register distribution algorithms
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['distributionAlgorithms'][] = [
-            'key'   => 'hashBasedGroups',
-            'class' => 'Aoe\Asdis\Domain\Model\DistributionAlgorithm\HashBasedGroups',
-            'file'  => $extensionPath . 'Classes/Domain/Model/DistributionAlgorithm/HashBasedGroups.php'
+            'key' => 'hashBasedGroups',
+            'class' => HashBasedGroups::class,
+            'file' => $extensionPath . 'Classes/Domain/Model/DistributionAlgorithm/HashBasedGroups.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['distributionAlgorithms'][] = [
-            'key'   => 'roundRobin',
-            'class' => 'Aoe\Asdis\Domain\Model\DistributionAlgorithm\RoundRobin',
-            'file'  => $extensionPath . 'Classes/Domain/Model/DistributionAlgorithm/RoundRobin.php'
+            'key' => 'roundRobin',
+            'class' => RoundRobin::class,
+            'file' => $extensionPath . 'Classes/Domain/Model/DistributionAlgorithm/RoundRobin.php',
         ];
-
     }
 }

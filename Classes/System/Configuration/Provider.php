@@ -1,52 +1,46 @@
 <?php
+
 namespace Aoe\Asdis\System\Configuration;
 
 use Aoe\Asdis\System\Configuration\Exception\InvalidStructure;
-use Aoe\Asdis\System\Configuration\TypoScriptConfiguration;
 
 /**
  * Provides all configuration settings.
  */
 class Provider
 {
-    /**
-     * @var \Aoe\Asdis\System\Configuration\TypoScriptConfiguration
-     */
-    private $typoScriptConfiguration;
+    private ?TypoScriptConfiguration $typoScriptConfiguration = null;
 
-    /**
-     * @param \Aoe\Asdis\System\Configuration\TypoScriptConfiguration $typoScriptConfiguration
-     */
-    public function injectTypoScriptConfiguration(TypoScriptConfiguration $typoScriptConfiguration)
+    public function __construct(TypoScriptConfiguration $typoScriptConfiguration)
     {
         $this->typoScriptConfiguration = $typoScriptConfiguration;
     }
 
+    /*
+    public function injectTypoScriptConfiguration(TypoScriptConfiguration $typoScriptConfiguration): void
+    {
+        $this->typoScriptConfiguration = $typoScriptConfiguration;
+    }
+    */
+
     /**
      * Tells if the assets on the current page should be replaced.
-     *
-     * @return boolean
      */
-    public function isReplacementEnabled()
+    public function isReplacementEnabled(): bool
     {
-        return (boolean) ((integer) $this->typoScriptConfiguration->getSetting('enabled'));
+        return (bool) ((int) $this->typoScriptConfiguration->getSetting('enabled'));
     }
 
     /**
      * This disables any processing in hook handlers of the asdis extension.
      * You can use this, if you have to implement your own hook processing in another extension.
-     *
-     * @return boolean
      */
-    public function isDefaultHookHandlingDisabled()
+    public function isDefaultHookHandlingDisabled(): bool
     {
-        return (boolean)((integer)$this->typoScriptConfiguration->getSetting('disableDefaultHookHandling'));
+        return (bool) ((int) $this->typoScriptConfiguration->getSetting('disableDefaultHookHandling'));
     }
 
-    /**
-     * @return string
-     */
-    public function getDistributionAlgorithmKey()
+    public function getDistributionAlgorithmKey(): string
     {
         return (string) $this->typoScriptConfiguration->getSetting('distributionAlgorithm');
     }
@@ -59,8 +53,12 @@ class Provider
     public function getScraperKeys()
     {
         $keyList = $this->typoScriptConfiguration->getSetting('scrapers', 'string');
-        $keys    = explode(",", $keyList);
-        if (FALSE === is_array($keys) || sizeof($keys) < 1) {
+        $keys = explode(',', $keyList);
+
+        if (!is_array($keys)) {
+            return [];
+        }
+        if (count($keys) < 1) {
             return [];
         }
         $scraperKeys = [];
@@ -79,8 +77,11 @@ class Provider
     {
         $keyList = $this->typoScriptConfiguration->getSetting('filters', 'string');
         $keys = explode(',', $keyList);
-        
-        if (FALSE === is_array($keys) || sizeof($keys) < 1) {
+
+        if (!is_array($keys)) {
+            return [];
+        }
+        if (count($keys) < 1) {
             return [];
         }
         $filterKeys = [];
@@ -106,35 +107,32 @@ class Provider
      * )
      *
      * @return array
-     * @throws \Aoe\Asdis\System\Configuration\Exception\InvalidStructure
+     * @throws InvalidStructure
      */
     public function getServerDefinitions()
     {
-        $definitions = array();
+        $definitions = [];
         $serverDefinitions = $this->typoScriptConfiguration->getSetting('servers', 'array', true);
-        foreach($serverDefinitions as $identifier => $serverDefinition) {
-            if (false === is_array($serverDefinition) || false === isset($serverDefinition['domain'])) {
+        foreach ($serverDefinitions as $identifier => $serverDefinition) {
+            if (!is_array($serverDefinition) || !isset($serverDefinition['domain'])) {
                 throw new InvalidStructure(
-                    'Configured server definition for "'.((string) $serverDefinition) . '" is invalid.',
-                    1372159113552
+                    'Configured server definition for "' . $serverDefinition . '" is invalid.',
+                    1_372_159_113_552
                 );
             }
-            if (false === isset($serverDefinition['protocol'])) {
+            if (!isset($serverDefinition['protocol'])) {
                 $serverDefinition['protocol'] = 'marker';
             }
             $definitions[] = [
                 'identifier' => $identifier,
-                'domain'     => $serverDefinition['domain'],
-                'protocol'   => $serverDefinition['protocol']
+                'domain' => $serverDefinition['domain'],
+                'protocol' => $serverDefinition['protocol'],
             ];
         }
         return $definitions;
     }
 
-    /**
-     * @return string
-     */
-    public function getServerProtocolMarker()
+    public function getServerProtocolMarker(): string
     {
         return $this->typoScriptConfiguration->getSetting('serverProtocolMarker', 'string');
     }

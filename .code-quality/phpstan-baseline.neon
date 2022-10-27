@@ -1,0 +1,26 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Cognitive complexity for \"Aoe\\\\Asdis\\\\Content\\\\Scraper\\\\Extractor\\\\XmlTagAttribute\\:\\:getAttributeFromTag\\(\\)\" is 9, keep it under 8$#"
+			count: 1
+			path: ../Classes/Content/Scraper/Extractor/XmlTagAttribute.php
+		-
+			message: "#^Cognitive complexity for \"Aoe\\\\Asdis\\\\System\\\\Configuration\\\\TypoScriptConfiguration\\:\\:getSetting\\(\\)\" is 9, keep it under 8$#"
+			count: 1
+			path: ../Classes/System/Configuration/TypoScriptConfiguration.php
+		-
+			message: "#^Comparison operation \"\\<\" between int\\<1, max\\> and 1 is always false\\.$#"
+			count: 2
+			path: ../Classes/System/Configuration/Provider.php
+		-
+			message: "#^Comparison operation \"\\<\" between int\\<1, max\\> and 1 is always false\\.$#"
+			count: 1
+			path: ../Classes/System/Configuration/TypoScriptConfiguration.php
+		-
+			message: "#^Result of \\|\\| is always false\\.$#"
+			count: 1
+			path: ../Classes/System/Configuration/TypoScriptConfiguration.php
+		-
+			message: "#^Call to an undefined static method TYPO3\\\\CMS\\\\Core\\\\Utility\\\\GeneralUtility\\:\\:sysLog\\(\\)\\.$#"
+			count: 1
+			path: ../Classes/System/Log/Logger.php

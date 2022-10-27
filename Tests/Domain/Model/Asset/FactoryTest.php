@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Domain\Model\Asset;
 
 use Aoe\Asdis\Domain\Model\Asset;
@@ -11,10 +12,7 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class FactoryTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
-    public function createAssetsFromPaths()
+    public function testCreateAssetsFromPaths()
     {
         $path = 'uploads/images/foo.jpg';
         $mask = '"';
@@ -38,26 +36,23 @@ class FactoryTest extends UnitTestCase
             ->expects($this->once())
             ->method('buildChain')
             ->will($this->returnValue(new Chain()));
-        
+
         $assetFactory->injectFilterChainFactory($filterChainFactory);
         $assetFactory->injectUriNormalizer(new Normalizer());
-        
+
         $assets = $assetFactory->createAssetsFromPaths([$path], [$mask]);
-        
-        $this->assertEquals(1, $assets->count());
+
+        $this->assertSame(1, $assets->count());
     }
 
-    /**
-     * @test
-     */
-    public function createAssetsFromPathsAndFilter()
+    public function testCreateAssetsFromPathsAndFilter()
     {
         $paths = [
             'uploads/images/foo.jpg',
             'fileadmin/images/bar.jpg',
             'uploads/images/blub.jpg',
         ];
-        $masks = ['"', '\'', '"'];
+        $masks = ['"', "'", '"'];
         $filteredPaths = [
             'uploads/images/foo.jpg',
             'uploads/images/blub.jpg',
@@ -76,22 +71,23 @@ class FactoryTest extends UnitTestCase
             ->expects($this->exactly(2))
             ->method('createAsset')
             ->will($this->returnValue(new Asset()));
-        
+
         $filterChain = $this->getMockBuilder(Chain::class)->setMethods(['filter'])->getMock();
-        $filterChain->expects($this->once())->method('filter')->will($this->returnValue($filteredPaths));
-        
+        $filterChain->expects($this->once())
+            ->method('filter')
+            ->will($this->returnValue($filteredPaths));
+
         $filterChainFactory = $this->getMockBuilder(ChainFactory::class)->setMethods(['buildChain'])->getMock();
         $filterChainFactory
             ->expects($this->once())
             ->method('buildChain')
             ->will($this->returnValue($filterChain));
-        
+
         $assetFactory->injectFilterChainFactory($filterChainFactory);
         $assetFactory->injectUriNormalizer(new Normalizer());
-        
-        $assets = $assetFactory->createAssetsFromPaths($paths, $masks);
-        
-        $this->assertEquals(2, $assets->count());
-    }
 
+        $assets = $assetFactory->createAssetsFromPaths($paths, $masks);
+
+        $this->assertSame(2, $assets->count());
+    }
 }

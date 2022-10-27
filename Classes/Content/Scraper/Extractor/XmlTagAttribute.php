@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Content\Scraper\Extractor;
 
 /**
@@ -36,17 +37,17 @@ class XmlTagAttribute
 
         $count = preg_match_all($pattern, $content, $matches, PREG_PATTERN_ORDER);
 
-        if ($count === false || $count === 0 || false === is_array($matches[2]) || sizeof($matches[2]) < 1) {
+        if ($count === false || $count === 0 || !is_array($matches[2]) || count($matches[2]) < 1) {
             return [
                 'paths' => [],
-                'masks' => []
+                'masks' => [],
             ];
         }
 
-        if (sizeof($requiredOtherAttributes) < 1) {
+        if (count($requiredOtherAttributes) < 1) {
             return [
                 'paths' => $matches[2],
-                'masks' => $matches[1]
+                'masks' => $matches[1],
             ];
         }
 
@@ -62,12 +63,12 @@ class XmlTagAttribute
             if ($containsAllRequiredAttributes) {
                 $paths[] = $match;
                 $masks[] = $matches[1][$mkey];
-             }
+            }
         }
 
         return [
             'paths' => $paths,
-            'masks' => $masks
+            'masks' => $masks,
         ];
     }
 }

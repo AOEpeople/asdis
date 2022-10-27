@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Api\Exception;
 
 class NotEnabledException extends \Exception

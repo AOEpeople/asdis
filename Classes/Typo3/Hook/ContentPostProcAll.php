@@ -1,23 +1,20 @@
 <?php
+
 namespace Aoe\Asdis\Typo3\Hook;
 
-use Aoe\Asdis\Typo3\Hook\AbstractHook;
+use Exception;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class ContentPostProcAll extends AbstractHook
 {
-    /**
-     * @param array $params
-     * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj
-     * @return void
-     */
-    public function process(&$params, \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj = null)
+    public function process(array &$params, TypoScriptFrontendController $pObj = null): void
     {
         if ($this->getConfigurationProvider()->isDefaultHookHandlingDisabled()) {
             return;
         }
-        
-        if (null === $pObj) {
-            if (isset($params['pObj']) && ($params['pObj'] instanceof \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController)) {
+
+        if ($pObj === null) {
+            if (isset($params['pObj']) && ($params['pObj'] instanceof TypoScriptFrontendController)) {
                 $pObj = $params['pObj'];
             } else {
                 $pObj = $GLOBALS['TSFE'];
@@ -27,20 +24,17 @@ class ContentPostProcAll extends AbstractHook
         try {
             $this->setPageObject($pObj);
             $this->scrapeAndReplace();
-        } catch(\Exception $e) {
-            $this->getLogger()->logException(__METHOD__, $e);
+        } catch (Exception $exception) {
+            $this->getLogger()
+                ->logException(__METHOD__, $exception);
         }
     }
 
     /**
      * Call main process hook function only if there are no INTincScripts to include.
      * This function is called as contentPostProc-all hook.
-     *
-     * @param array $params
-     * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj
-     * @return void
      */
-    public function processCache(&$params, \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj = null)
+    public function processCache(array &$params, TypoScriptFrontendController $pObj = null): void
     {
         if ($GLOBALS['TSFE']->isINTincScript()) {
             return;
@@ -51,16 +45,12 @@ class ContentPostProcAll extends AbstractHook
     /**
      * Call main process hook function only if there are INTincScripts to include.
      * This function is called as contentPostProc-output hook.
-     * @param array $params
-     * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj
-     * @return void
      */
-    public function processNoCache(&$params, \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj = null)
+    public function processNoCache(array &$params, TypoScriptFrontendController $pObj = null): void
     {
         if (!$GLOBALS['TSFE']->isINTincScript()) {
             return;
         }
         $this->process($params, $pObj);
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Domain\Model\DistributionAlgorithm;
 
 use Aoe\Asdis\Domain\Model\Asset;
@@ -10,23 +11,14 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class HashBasedGroupsTest extends UnitTestCase
 {
-    /**
-     * @var HashBasedGroups
-     */
-    private $algorithm;
+    private HashBasedGroups $algorithm;
 
-    /**
-     * (non-PHPdoc)
-     */
     protected function setUp(): void
     {
         $this->algorithm = new HashBasedGroups();
     }
 
-    /**
-     * @test
-     */
-    public function distribute()
+    public function testDistribute()
     {
         $assets = new AssetCollection();
         $asset1 = new Asset();
@@ -50,9 +42,8 @@ class HashBasedGroupsTest extends UnitTestCase
 
         $this->algorithm->distribute($assets, $servers);
 
-        $this->assertEquals('Aoe\Asdis\Domain\Model\Server', get_class($asset1->getServer()));
-        $this->assertEquals('Aoe\Asdis\Domain\Model\Server', get_class($asset2->getServer()));
-        $this->assertEquals('Aoe\Asdis\Domain\Model\Server', get_class($asset3->getServer()));
+        $this->assertSame(Server::class, $asset1->getServer() !== null ? get_class($asset1->getServer()) : self::class);
+        $this->assertSame(Server::class, $asset2->getServer() !== null ? get_class($asset2->getServer()) : self::class);
+        $this->assertSame(Server::class, $asset3->getServer() !== null ? get_class($asset3->getServer()) : self::class);
     }
 }
-

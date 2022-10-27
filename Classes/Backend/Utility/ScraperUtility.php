@@ -1,5 +1,22 @@
 <?php
+
 namespace Aoe\Asdis\Backend\Utility;
+
+use Aoe\Asdis\Content\Scraper\Css\Url;
+use Aoe\Asdis\Content\Scraper\Html\AppleTouchIcon;
+use Aoe\Asdis\Content\Scraper\Html\Css3Image;
+use Aoe\Asdis\Content\Scraper\Html\CssAttribute;
+use Aoe\Asdis\Content\Scraper\Html\CssFile;
+use Aoe\Asdis\Content\Scraper\Html\CssInline;
+use Aoe\Asdis\Content\Scraper\Html\DataSrc;
+use Aoe\Asdis\Content\Scraper\Html\Embed;
+use Aoe\Asdis\Content\Scraper\Html\Favicon;
+use Aoe\Asdis\Content\Scraper\Html\Image;
+use Aoe\Asdis\Content\Scraper\Html\InputImage;
+use Aoe\Asdis\Content\Scraper\Html\MetaMsApplication;
+use Aoe\Asdis\Content\Scraper\Html\OpenGraphImage;
+use Aoe\Asdis\Content\Scraper\Html\Script;
+use Aoe\Asdis\Content\Scraper\Html\Srcset;
 
 /***************************************************************
  *  Copyright notice
@@ -29,87 +46,83 @@ class ScraperUtility
 {
     /**
      * Register Scraper
-     *
-     * @param $extensionPath string
-     *
-     * @return void
      */
-    public static function registerScrapers($extensionPath)
+    public static function registerScrapers(string $extensionPath): void
     {
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'cssUrl',
-            'class' => 'Aoe\Asdis\Content\Scraper\Css\Url',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Css/Url.php'
+            'key' => 'cssUrl',
+            'class' => Url::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Css/Url.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlCssFile',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\CssFile',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/CssFile.php'
+            'key' => 'htmlCssFile',
+            'class' => CssFile::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/CssFile.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlAppleTouchIcon',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\AppleTouchIcon',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/AppleTouchIcon.php'
+            'key' => 'htmlAppleTouchIcon',
+            'class' => AppleTouchIcon::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/AppleTouchIcon.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlCssAttribute',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\CssAttribute',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/CssAttribute.php'
+            'key' => 'htmlCssAttribute',
+            'class' => CssAttribute::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/CssAttribute.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlCssInline',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\CssInline',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/CssInline.php'
+            'key' => 'htmlCssInline',
+            'class' => CssInline::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/CssInline.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlEmbed',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\Embed',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/Embed.php'
+            'key' => 'htmlEmbed',
+            'class' => Embed::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/Embed.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlFavicon',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\Favicon',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/Favicon.php'
+            'key' => 'htmlFavicon',
+            'class' => Favicon::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/Favicon.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlImage',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\Image',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/Image.php'
+            'key' => 'htmlImage',
+            'class' => Image::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/Image.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlInputImage',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\InputImage',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/InputImage.php'
+            'key' => 'htmlInputImage',
+            'class' => InputImage::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/InputImage.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlOpenGraphImage',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\OpenGraphImage',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/OpenGraphImage.php'
+            'key' => 'htmlOpenGraphImage',
+            'class' => OpenGraphImage::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/OpenGraphImage.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlScript',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\Script',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/Script.php'
+            'key' => 'htmlScript',
+            'class' => Script::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/Script.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlCss3Image',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\Css3Image',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/Css3Image.php'
+            'key' => 'htmlCss3Image',
+            'class' => Css3Image::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/Css3Image.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlMetaMsApplication',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\MetaMsApplication',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/MetaMsApplication.php'
+            'key' => 'htmlMetaMsApplication',
+            'class' => MetaMsApplication::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/MetaMsApplication.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlDataSrc',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\DataSrc',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/DataSrc.php'
+            'key' => 'htmlDataSrc',
+            'class' => DataSrc::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/DataSrc.php',
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
-            'key'   => 'htmlSrcset',
-            'class' => 'Aoe\Asdis\Content\Scraper\Html\Srcset',
-            'file'  => $extensionPath . 'Classes/Content/Scraper/Html/Srcset.php'
+            'key' => 'htmlSrcset',
+            'class' => Srcset::class,
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/Srcset.php',
         ];
     }
 }

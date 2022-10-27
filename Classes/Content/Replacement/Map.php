@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Content\Replacement;
 
 /**
@@ -6,38 +7,22 @@ namespace Aoe\Asdis\Content\Replacement;
  */
 class Map
 {
-    /**
-     * @var array
-     */
-    private $sources = [];
+    private array $sources = [];
 
-    /**
-     * @var array
-     */
-    private $targets = [];
+    private array $targets = [];
 
-    /**
-     * @param string $source
-     * @param string $target
-     */
-    public function addMapping($source, $target)
+    public function addMapping(string $source, string $target): void
     {
         $this->sources[] = $source;
         $this->targets[] = $target;
     }
 
-    /**
-     * @return array
-     */
-    public function getSources()
+    public function getSources(): array
     {
         return $this->sources;
     }
 
-    /**
-     * @return array
-     */
-    public function getTargets()
+    public function getTargets(): array
     {
         return $this->targets;
     }

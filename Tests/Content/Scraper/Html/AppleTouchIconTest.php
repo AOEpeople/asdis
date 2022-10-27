@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
@@ -6,36 +7,21 @@ use Aoe\Asdis\Content\Scraper\Html\AppleTouchIcon;
 use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AppleTouchIconTest extends UnitTestCase
 {
-    /**
-     * @var AppleTouchIcon
-     */
-    private $scraper;
-
-    /**
-     * (non-PHPdoc)
-     */
-    protected function setUp(): void
-    {
-        $this->scraper = new AppleTouchIcon();
-    }
-
-    /**
-     * @test
-     */
-    public function scrape()
+    public function testScrape()
     {
         $content = '<link href="uploads/images/foo.gif" rel="apple-touch-icon-precomposed" /><link href="foo/bar/baz.gif" />';
-        
+
         $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
         $assetFactory
             ->expects($this->exactly(2))
             ->method('createAssetsFromPaths')
-            ->with(array('uploads/images/foo.gif'))
+            ->with(['uploads/images/foo.gif'])
             ->will($this->returnValue(new Collection()));
-        
+
         $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
         $attributeExtractor
             ->expects($this->exactly(2))
@@ -46,10 +32,8 @@ class AppleTouchIconTest extends UnitTestCase
                     'masks' => ['"'],
                 ]
             ));
-        
-        $this->scraper->injectAssetFactory($assetFactory);
-        $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
-        $this->scraper->scrape($content);
+
+        $scraper = GeneralUtility::makeInstance(AppleTouchIcon::class, $attributeExtractor, $assetFactory);
+        $scraper->scrape($content);
     }
 }
-

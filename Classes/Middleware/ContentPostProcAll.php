@@ -1,36 +1,42 @@
 <?php
+
 namespace Aoe\Asdis\Middleware;
 
 use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Page;
 use Aoe\Asdis\System\Configuration\Provider;
 use Aoe\Asdis\System\Log\Logger;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use Exception;
 
 class ContentPostProcAll implements MiddlewareInterface
 {
-    /**
-     * @var \Aoe\Asdis\Domain\Model\Page
-     */
-    private $page;
+    private ?Page $page = null;
 
-    /**
-     * @param array $params
-     * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj
-     * @return void
-     */
+    private Provider $provider;
+
+    private Logger $logger;
+
+    public function __construct(Provider $provider, Logger $logger)
+    {
+        $this->provider = $provider;
+        $this->logger = $logger;
+    }
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);
 
-        if ($this->getConfigurationProvider()->isReplacementEnabled() === false || $this->getConfigurationProvider()->isDefaultHookHandlingDisabled()) {
+        if (!$this->provider->isReplacementEnabled()) {
+            return $response;
+        }
+        if ($this->provider->isDefaultHookHandlingDisabled()) {
             return $response;
         }
 
@@ -38,67 +44,37 @@ class ContentPostProcAll implements MiddlewareInterface
             $this->setPageObject($GLOBALS['TSFE']);
             $this->scrapeAndReplace();
             $response = new HtmlResponse($this->page->getPageObject()->content);
-        } catch(\Exception $e) {
-            $this->getLogger()->logException(__METHOD__, $e);
+        } catch (Exception $exception) {
+            $this->logger
+                ->logException(__METHOD__, $exception);
         }
 
         return $response;
     }
 
-    /**
-	 * @return Provider
-	 */
-	protected function getConfigurationProvider()
-	{
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        return $objectManager->get(Provider::class);
-	}
-
-    /**
-	 * @return Logger
-	 */
-	protected function getLogger()
-	{
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        return $objectManager->get(Logger::class);
-	}
-
-    /**
-     * @return void
-     */
-    protected function scrapeAssets()
+    protected function scrapeAssets(): void
     {
         $this->page->scrapeAssets();
     }
 
-    /**
-     * @return void
-     */
-    protected function replaceAssets()
+    protected function replaceAssets(): void
     {
         $this->page->replaceAssets();
     }
 
     /**
      * Scrapes and replaces the assets of the current page.
-     *
-     * @return void
      */
-    protected function scrapeAndReplace()
+    protected function scrapeAndReplace(): void
     {
         $this->scrapeAssets();
         $this->replaceAssets();
     }
 
-    /**
-     * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj
-     */
-    protected function setPageObject(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $pObj)
+    protected function setPageObject(TypoScriptFrontendController $pObj): void
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        /** @var \Aoe\Asdis\Domain\Model\Page $page */
-        $page = $objectManager->get(Page::class);
-        $page->setAssets($objectManager->get(Collection::class));
+        $page = GeneralUtility::makeInstance(Page::class);
+        $page->setAssets(GeneralUtility::makeInstance(Collection::class));
         $page->setPageObject($pObj);
         $this->page = $page;
     }

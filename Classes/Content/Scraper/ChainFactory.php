@@ -1,9 +1,9 @@
 <?php
+
 namespace Aoe\Asdis\Content\Scraper;
 
-use Aoe\Asdis\Content\Scraper\Chain;
-use Aoe\Asdis\Content\Scraper\ScraperInterface;
 use Aoe\Asdis\System\Factory\AbstractDeclarationBasedFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Scraper chain factory.
@@ -11,45 +11,37 @@ use Aoe\Asdis\System\Factory\AbstractDeclarationBasedFactory;
 class ChainFactory extends AbstractDeclarationBasedFactory
 {
     /**
-     * @return \Aoe\Asdis\Content\Scraper\Chain
+     * @return Chain
      */
     public function buildChain()
     {
         $this->initialize();
-        /** @var \Aoe\Asdis\Content\Scraper\Chain $chain */
-        $chain = $this->objectManager->get(Chain::class);
-        foreach($this->configurationProvider->getScraperKeys() as $scraperKey) {
+        $chain = GeneralUtility::makeInstance(Chain::class);
+        foreach ($this->configurationProvider->getScraperKeys() as $scraperKey) {
             $chain->append($this->buildScraper($scraperKey));
         }
         return $chain;
     }
 
-    /**
-     * @return void
-     */
-    private function initialize()
+    protected function getScraperDeclarations(): array
     {
-        $this->setDeclarations($this->getScraperDeclarations());
-        $this->setClassImplements(['Aoe\Asdis\Content\Scraper\ScraperInterface']);
-    }
-
-    /**
-     * @param string $scraperKey
-     * @return \Aoe\Asdis\Content\Scraper\ScraperInterface
-     */
-    private function buildScraper($scraperKey)
-    {
-        return $this->buildObjectFromKey($scraperKey);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getScraperDeclarations()
-    {
-        if (false === isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'])) {
-            return array();
+        if (!isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'])) {
+            return [];
         }
         return $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'];
+    }
+
+    private function initialize(): void
+    {
+        $this->setDeclarations($this->getScraperDeclarations());
+        $this->setClassImplements([ScraperInterface::class]);
+    }
+
+    /**
+     * @return ScraperInterface
+     */
+    private function buildScraper(string $scraperKey)
+    {
+        return $this->buildObjectFromKey($scraperKey);
     }
 }

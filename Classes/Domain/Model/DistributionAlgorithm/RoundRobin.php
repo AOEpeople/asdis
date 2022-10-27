@@ -1,8 +1,10 @@
 <?php
+
 namespace Aoe\Asdis\Domain\Model\DistributionAlgorithm;
 
+use Aoe\Asdis\Domain\Model\Asset;
 use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
-use Aoe\Asdis\Domain\Model\DistributionAlgorithm\DistributionAlgorithmInterface;
+use Aoe\Asdis\Domain\Model\Server;
 use Aoe\Asdis\Domain\Model\Server\Collection as ServerCollection;
 
 /**
@@ -10,38 +12,28 @@ use Aoe\Asdis\Domain\Model\Server\Collection as ServerCollection;
  */
 class RoundRobin implements DistributionAlgorithmInterface
 {
-    /**
-     * @var \Aoe\Asdis\Domain\Model\Server\Collection
-     */
-    private $servers;
+    private ?ServerCollection $servers = null;
 
     /**
      * Distributes the given assets to the given servers.
-     *
-     * @param \Aoe\Asdis\Domain\Model\Asset\Collection $assets
-     * @param \Aoe\Asdis\Domain\Model\Server\Collection $servers
-     * @return void
      */
-    public function distribute(AssetCollection $assets, ServerCollection $servers)
+    public function distribute(AssetCollection $assets, ServerCollection $servers): void
     {
         if ($servers->count() < 1) {
             return;
         }
         $this->servers = $servers;
-        foreach($assets as $asset) {
-            /** @var \Aoe\Asdis\Domain\Model\Asset $asset */
+        foreach ($assets as $asset) {
+            /** @var Asset $asset */
             $asset->setServer($this->getNextServer());
         }
     }
 
-    /**
-     * @return \Aoe\Asdis\Domain\Model\Server
-     */
-    private function getNextServer()
+    private function getNextServer(): Server
     {
         $server = $this->servers->current();
         $this->servers->next();
-        if (false === $this->servers->valid()) {
+        if (!$this->servers->valid()) {
             $this->servers->rewind();
         }
         return $server;

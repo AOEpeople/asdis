@@ -1,14 +1,13 @@
 <?php
+
 namespace Aoe\Asdis\Content\Scraper;
+
+use Aoe\Asdis\Domain\Model\Asset\Collection;
 
 /**
  * Scraper interface.
  */
 interface ScraperInterface
 {
-    /**
-     * @param string $content
-     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
-     */
-    public function scrape($content);
+    public function scrape(string $content): ?Collection;
 }

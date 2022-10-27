@@ -1,7 +1,6 @@
 <?php
-namespace Aoe\Asdis\System\Uri\Filter;
 
-use Aoe\Asdis\System\Uri\Filter\FilterInterface;
+namespace Aoe\Asdis\System\Uri\Filter;
 
 /**
  * Filters paths that start with "//".
@@ -12,11 +11,11 @@ class WildcardProtocol implements FilterInterface
      * @param array $paths Array of paths.
      * @return array Valid paths.
      */
-    public function filter(array $paths)
+    public function filter(array $paths): array
     {
-        $filteredPaths = array();
+        $filteredPaths = [];
         foreach ($paths as $path) {
-            if (strpos($path, '//') === 0) {
+            if (str_starts_with($path, '//')) {
                 continue;
             }
             $filteredPaths[] = $path;

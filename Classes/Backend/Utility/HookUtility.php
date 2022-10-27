@@ -1,5 +1,8 @@
 <?php
+
 namespace Aoe\Asdis\Backend\Utility;
+
+use Aoe\Asdis\Typo3\Hook\ContentPostProcAll;
 
 /***************************************************************
  *  Copyright notice
@@ -29,22 +32,20 @@ class HookUtility
 {
     /**
      * Register hooks
-     *
-     * @return void
      */
-    public static function registerHooks()
+    public static function registerHooks(): void
     {
         $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['asdis']);
         switch ($extConf['hook']) {
             case 'contentPostProc-all':
-                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = \Aoe\Asdis\Typo3\Hook\ContentPostProcAll::class . '->process';
+                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = ContentPostProcAll::class . '->process';
                 break;
             case 'contentPostProc-output':
-                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = \Aoe\Asdis\Typo3\Hook\ContentPostProcAll::class .'->process';
+                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = ContentPostProcAll::class . '->process';
                 break;
             case 'contentPostProc-all_and_output':
-                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = \Aoe\Asdis\Typo3\Hook\ContentPostProcAll::class .'->processCache';
-                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = \Aoe\Asdis\Typo3\Hook\ContentPostProcAll::class .'->processNoCache';
+                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = ContentPostProcAll::class . '->processCache';
+                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = ContentPostProcAll::class . '->processNoCache';
                 break;
         }
         unset($extConf);

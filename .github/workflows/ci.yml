@@ -10,9 +10,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        typo3: [ ^8.7, ^9.5, ^10.4 ]
-        php: [ '7.2', '7.3', '7.4' ]
+        typo3: [ ^8.7, ^9.5, ^10.4, ^11.5 ]
+        php: [ '7.4' ]
         experimental: [false]
+        include:
+          - typo3: ^11.5
+            php: '8.0'
+            experimental: false
 
     continue-on-error: ${{ matrix.experimental }}
 
@@ -29,9 +33,10 @@ jobs:
           php-version: ${{ matrix.php }}
           tools: composer:v2
 
-      - name: Environment Check
+      - name: Environment Check and fixed composer version
         run: |
           php --version
+          composer self-update --2.2
           composer --version
 
       - name: Validate composer.json and composer.lock
@@ -52,8 +57,8 @@ jobs:
           export "UNIT_XML"=.Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml
           .Build/bin/phpunit --colors -c $UNIT_XML Tests
 
-      - name: Unit Tests with coverage
-        if: matrix.typo3 == '^10.4' && matrix.php == '7.4'
+      - name: Unit Tests with coverage without 8.0
+        if: matrix.typo3 == '^11.5' && matrix.php == '7.4'
         run: |
           export "UNIT_XML"=.Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml
           .Build/bin/phpunit --whitelist Classes --coverage-clover=unittest-coverage.clover --colors -c $UNIT_XML Tests

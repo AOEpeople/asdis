@@ -1,7 +1,6 @@
 <?php
-namespace Aoe\Asdis\System\Uri\Filter;
 
-use Aoe\Asdis\System\Uri\Filter\FilterInterface;
+namespace Aoe\Asdis\System\Uri\Filter;
 
 /**
  * Chain of filters.
@@ -18,7 +17,7 @@ class Chain extends \ArrayIterator implements FilterInterface
     }
 
     /**
-     * @param \Aoe\Asdis\System\Uri\Filter\FilterInterface $filter
+     * @param FilterInterface $filter
      */
     public function append($filter)
     {
@@ -29,16 +28,15 @@ class Chain extends \ArrayIterator implements FilterInterface
      * @param array $paths Array of paths.
      * @return array Valid paths.
      */
-    public function filter(array $paths)
+    public function filter(array $paths): array
     {
         if ($this->count() < 1) {
             return $paths;
         }
-        foreach($this as $filter) {
-            /** @var \Aoe\Asdis\System\Uri\Filter\FilterInterface $filter */
+        foreach ($this as $filter) {
+            /** @var FilterInterface $filter */
             $paths = $filter->filter($paths);
         }
         return $paths;
     }
-
 }

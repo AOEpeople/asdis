@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\System\Configuration;
 
 use Aoe\Asdis\System\Configuration\Exception\InvalidTypoScriptSetting;
@@ -20,14 +21,13 @@ class TypoScriptConfigurationTest extends UnitTestCase
     {
         $this->typoScriptConfiguration = $this->getMockBuilder(TypoScriptConfiguration::class)
             ->setMethods(['getTypoScriptConfigurationArray'])
-            ->getMock();		
+            ->getMock();
     }
 
     /**
      * Tests Aoe\Asdis\System\Configuration\TypoScriptConfiguration->getSetting()
-     * @test
      */
-    public function getSetting()
+    public function testGetSetting()
     {
         $this->expectException(TypoScriptSettingNotExists::class);
 
@@ -36,10 +36,9 @@ class TypoScriptConfigurationTest extends UnitTestCase
 
     /**
      * Tests Aoe\Asdis\System\Configuration\TypoScriptConfiguration->getSetting()
-     * @test
      * @doesNotPerformAssertions
      */
-    public function getSettingsWithConfig()
+    public function testGetSettingsWithConfig()
     {
         $config = [
             'logger.' => [
@@ -47,7 +46,6 @@ class TypoScriptConfigurationTest extends UnitTestCase
             ],
         ];
         $this->typoScriptConfiguration
-            ->expects($this->any())
             ->method('getTypoScriptConfigurationArray')
             ->will($this->returnValue($config));
 
@@ -56,10 +54,9 @@ class TypoScriptConfigurationTest extends UnitTestCase
 
     /**
      * Tests Aoe\Asdis\System\Configuration\TypoScriptConfiguration->getSetting()
-     * @test
      * @doesNotPerformAssertions
      */
-    public function getSettingsWithSubtypeConfig()
+    public function testGetSettingsWithSubtypeConfig()
     {
         $config = [
             'logger.' => [
@@ -69,7 +66,6 @@ class TypoScriptConfigurationTest extends UnitTestCase
             ],
         ];
         $this->typoScriptConfiguration
-            ->expects($this->any())
             ->method('getTypoScriptConfigurationArray')
             ->will($this->returnValue($config));
 
@@ -78,9 +74,8 @@ class TypoScriptConfigurationTest extends UnitTestCase
 
     /**
      * Tests Aoe\Asdis\System\Configuration\TypoScriptConfiguration->getSetting()
-     * @test
      */
-    public function getSettingsWithInvalidConfig()
+    public function testGetSettingsWithInvalidConfig()
     {
         $this->expectException(InvalidTypoScriptSetting::class);
 
@@ -90,10 +85,9 @@ class TypoScriptConfigurationTest extends UnitTestCase
             ],
         ];
         $this->typoScriptConfiguration
-            ->expects($this->any())
             ->method('getTypoScriptConfigurationArray')
             ->will($this->returnValue($config));
-            
+
         $this->typoScriptConfiguration->getSetting('logger.severity', 'array');
     }
 }

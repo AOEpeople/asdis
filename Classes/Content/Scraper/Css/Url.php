@@ -1,7 +1,9 @@
 <?php
+
 namespace Aoe\Asdis\Content\Scraper\Css;
 
 use Aoe\Asdis\Content\Scraper\ScraperInterface;
+use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 
 /**
@@ -9,24 +11,14 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
  */
 class Url implements ScraperInterface
 {
-    /**
-     * @var \Aoe\Asdis\Domain\Model\Asset\Factory
-     */
-    private $assetFactory;
+    private ?Factory $assetFactory = null;
 
-    /**
-     * @param \Aoe\Asdis\Domain\Model\Asset\Factory $assetFactory
-     */
-    public function injectAssetFactory(Factory $assetFactory)
+    public function injectAssetFactory(Factory $assetFactory): void
     {
         $this->assetFactory = $assetFactory;
     }
 
-    /**
-     * @param $content
-     * @return \Aoe\Asdis\Domain\Model\Asset\Collection
-     */
-    public function scrape($content)
+    public function scrape(string $content): ?Collection
     {
         $urls = $this->extractUrlPaths($content);
         return $this->assetFactory->createAssetsFromPaths($urls['paths'], $urls['masks']);
@@ -41,8 +33,8 @@ class Url implements ScraperInterface
      */
     private function extractUrlPaths($cssContent)
     {
-        $paths   = [];
-        $masks   = [];
+        $paths = [];
+        $masks = [];
         $matches = [];
 
         preg_match_all(
@@ -52,15 +44,15 @@ class Url implements ScraperInterface
             PREG_PATTERN_ORDER
         );
 
-        if (false === (is_array($matches) && sizeof($matches) > 1 && is_array($matches[2]))) {
+        if (!(is_array($matches) && count($matches) > 1 && is_array($matches[2]))) {
             return [
                 'paths' => $paths,
-                'masks' => $masks
+                'masks' => $masks,
             ];
         }
 
         foreach ($matches[2] as $mkey => $path) {
-            if (strpos($path, ',') !== false) {
+            if (str_contains($path, ',')) {
                 continue;
             }
             $paths[] = $path;
@@ -69,7 +61,7 @@ class Url implements ScraperInterface
 
         return [
             'paths' => $paths,
-            'masks' => $masks
+            'masks' => $masks,
         ];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Aoe\Asdis\Tests\Content\Scraper;
 
 use Aoe\Asdis\Content\Scraper\Chain;
@@ -9,36 +10,41 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class ChainTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
-    public function append()
+    public function testAppend()
     {
         $chain = new Chain();
-        $scraper1 = new Image();
-        $scraper2 = new Script();
+        $scraper1 = $this->getMockBuilder(Image::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $scraper2 = $this->getMockBuilder(Script::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $chain->append($scraper1);
         $chain->append($scraper2);
 
-        $this->assertEquals(2, $chain->count());
+        $this->assertSame(2, $chain->count());
     }
 
-    /**
-     * @test
-     */
-    public function scrape()
+    public function testScrape()
     {
-        $chain    = new Chain();
-        $scraper1 = $this->getMockBuilder(Image::class)->getMock();
-        $scraper2 = $this->getMockBuilder(Script::class)->getMock();
+        $chain = new Chain();
+        $scraper1 = $this->getMockBuilder(Image::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $scraper2 = $this->getMockBuilder(Script::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $scraper1->expects($this->once())->method('scrape')->will($this->returnValue(new Collection()));
-        $scraper2->expects($this->once())->method('scrape')->will($this->returnValue(new Collection()));
-        
+        $scraper1->expects($this->once())
+            ->method('scrape')
+            ->will($this->returnValue(new Collection()));
+        $scraper2->expects($this->once())
+            ->method('scrape')
+            ->will($this->returnValue(new Collection()));
+
         $chain->append($scraper1);
         $chain->append($scraper2);
         $chain->scrape('FOO');
     }
 }
-

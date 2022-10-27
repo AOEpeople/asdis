@@ -1,14 +1,14 @@
 <?php
+
 namespace Aoe\Asdis\Api;
 
 use Aoe\Asdis\Api\Exception\NotEnabledException;
-use Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory as AlgorithmFactory;
+use Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory;
 use Aoe\Asdis\Domain\Model\Asset;
 use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
 use Aoe\Asdis\Domain\Model\Page;
 use Aoe\Asdis\Domain\Model\Server;
 use Aoe\Asdis\Domain\Model\Server\Collection as ServerCollection;
-use Aoe\Asdis\Domain\Model\Server\Factory as ServerFactory;
 use Aoe\Asdis\Domain\Repository\ServerRepository;
 use Aoe\Asdis\System\Configuration\Exception\TypoScriptSettingNotExists;
 use Aoe\Asdis\System\Configuration\Provider;
@@ -16,66 +16,31 @@ use Aoe\Asdis\System\Uri\Normalizer;
 
 class Url
 {
-    /**
-     * @var \Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory
-     */
-    private $distributionAlgorithmFactory;
+    private Factory $distributionAlgorithmFactory;
 
-    /**
-     * @var \Aoe\Asdis\Domain\Repository\ServerRepository
-     */
-    private $serverRepository;
+    private ServerRepository $serverRepository;
 
-    /**
-     * @var \Aoe\Asdis\System\Configuration\Provider
-     */
-    private $configurationProvider;
+    private Provider $configurationProvider;
 
-    /**
-     * @var \Aoe\Asdis\System\Uri\Normalizer
-     */
-    private $uriNormalizer;
+    private Normalizer $uriNormalizer;
 
-    /**
-     * @var \Aoe\Asdis\Domain\Model\Page
-     */
-    private $page;
+    private Page $page;
 
-    /**
-     * @var \Aoe\Asdis\Domain\Model\Server\Factory
-     */
-    private $serverFactory;
-
-    /**
-     * @param \Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory $distributionAlgorithmFactory
-     * @param \Aoe\Asdis\Domain\Repository\ServerRepository $serverRepository
-     * @param \Aoe\Asdis\System\Configuration\Provider $configurationProvider
-     * @param \Aoe\Asdis\System\Uri\Normalizer $uriNormalizer
-     * @param \Aoe\Asdis\Domain\Model\Page $page
-     * @param \Aoe\Asdis\Domain\Model\Server\Factory $serverFactory
-     */
     public function __construct(
-        AlgorithmFactory $distributionAlgorithmFactory,
+        Factory $distributionAlgorithmFactory,
         ServerRepository $serverRepository,
         Provider $configurationProvider,
         Normalizer $uriNormalizer,
-        Page $page,
-        ServerFactory $serverFactory
+        Page $page
     ) {
         $this->distributionAlgorithmFactory = $distributionAlgorithmFactory;
         $this->serverRepository = $serverRepository;
         $this->configurationProvider = $configurationProvider;
         $this->uriNormalizer = $uriNormalizer;
         $this->page = $page;
-        $this->serverFactory = $serverFactory;
     }
 
-
-    /**
-     * @param string $path
-     * @return string
-     */
-    public function getDistributedUrlForPath($path)
+    public function getDistributedUrlForPath(string $path): ?string
     {
         if (empty($path)) {
             return null;
@@ -91,10 +56,9 @@ class Url
     }
 
     /**
-     * @param \Aoe\Asdis\Domain\Model\Asset $asset
-     * @throws \Aoe\Asdis\Api\Exception\NotEnabledException
+     * @throws NotEnabledException
      */
-    private function distributeAsset(Asset $asset)
+    private function distributeAsset(Asset $asset): void
     {
         try {
             if ($this->configurationProvider->isReplacementEnabled()) {
@@ -104,15 +68,15 @@ class Url
                     ->buildDistributionAlgorithmFromKey($this->configurationProvider->getDistributionAlgorithmKey());
                 $distributionAlgorithm->distribute($collection, $this->getServers());
             } else {
-                throw new NotEnabledException(1452171538);
+                throw new NotEnabledException(1_452_171_538);
             }
-        } catch (TypoScriptSettingNotExists $e) {
-            throw new NotEnabledException(1452171530, $e);
+        } catch (TypoScriptSettingNotExists $typoScriptSettingNotExists) {
+            throw new NotEnabledException(1_452_171_530, $typoScriptSettingNotExists);
         }
     }
 
     /**
-     * @return \Aoe\Asdis\Domain\Model\Server\Collection
+     * @return ServerCollection
      */
     private function getServers()
     {
@@ -121,11 +85,7 @@ class Url
         return $servers;
     }
 
-    /**
-     * @param \Aoe\Asdis\Domain\Model\Server\Collection $servers
-     * @return void
-     */
-    private function forceSSL(ServerCollection $servers)
+    private function forceSSL(ServerCollection $servers): void
     {
         foreach ($servers as $server) {
             /** @var Server $server */

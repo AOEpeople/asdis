@@ -1,0 +1,56 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Aoe\Asdis\:
+    resource: '../Classes/*'
+
+  Aoe\Asdis\Domain\Model\Page:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\AbstractHtmlScraper:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\AppleTouchIcon:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\Css3Image:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\CssAttribute:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\CssFile:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\CssInline:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\DataSrc:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\Embed:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\Favicon:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\Image:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\InputImage:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\MetaMsApplication:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\OpenGraphImage:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\Script:
+    public: true
+
+  Aoe\Asdis\Content\Scraper\Html\Srcset:
+    public: true
