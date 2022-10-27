@@ -30,6 +30,10 @@ class Page
 
     private ?Processor $replacementProcessor = null;
 
+    public function __construct(Provider $configurationProvider) {
+        $this->configurationProvider = $configurationProvider;
+    }
+
     public function injectScraperChainFactory(ChainFactory $scraperChainFactory): void
     {
         $this->scraperChainFactory = $scraperChainFactory;
@@ -45,10 +49,12 @@ class Page
         $this->serverRepository = $serverRepository;
     }
 
+/*
     public function injectConfigurationProvider(Provider $configurationProvider): void
     {
         $this->configurationProvider = $configurationProvider;
     }
+    */
 
     public function injectReplacementProcessor(Processor $replacementProcessor): void
     {

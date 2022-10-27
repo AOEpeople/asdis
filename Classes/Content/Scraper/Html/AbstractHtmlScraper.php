@@ -14,6 +14,12 @@ abstract class AbstractHtmlScraper
     private ?XmlTagAttribute $xmlTagAttributeExtractor = null;
     private ?Factory $assetFactory = null;
 
+    public function __construct(XmlTagAttribute $xmlTagAttributeExtractor, Factory $assetFactory) {
+        $this->xmlTagAttributeExtractor = $xmlTagAttributeExtractor;
+        $this->assetFactory = $assetFactory;
+    }
+
+    /*
     public function injectXmlTagAttributeExtractor(XmlTagAttribute $xmlTagAttributeExtractor): void
     {
         $this->xmlTagAttributeExtractor = $xmlTagAttributeExtractor;
@@ -23,6 +29,7 @@ abstract class AbstractHtmlScraper
     {
         $this->assetFactory = $assetFactory;
     }
+    */
 
     protected function getAssets(string $tagName, string $attributeName, string $content, array $requiredOtherAttributes = []): ?Collection
     {

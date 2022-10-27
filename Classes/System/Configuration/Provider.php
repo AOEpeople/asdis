@@ -11,10 +11,17 @@ class Provider
 {
     private ?TypoScriptConfiguration $typoScriptConfiguration = null;
 
+    public function __construct(TypoScriptConfiguration $typoScriptConfiguration)
+    {
+        $this->typoScriptConfiguration = $typoScriptConfiguration;
+    }
+
+    /*
     public function injectTypoScriptConfiguration(TypoScriptConfiguration $typoScriptConfiguration): void
     {
         $this->typoScriptConfiguration = $typoScriptConfiguration;
     }
+    */
 
     /**
      * Tells if the assets on the current page should be replaced.

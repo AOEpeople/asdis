@@ -19,14 +19,23 @@ class ContentPostProcAll implements MiddlewareInterface
 {
     private ?Page $page = null;
 
+    private Provider $provider;
+
+    private Logger $logger;
+
+    public function __construct(Provider $provider, Logger $logger) {
+        $this->provider = $provider;
+        $this->logger = $logger;
+    }
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);
 
-        if (!$this->getConfigurationProvider()->isReplacementEnabled()) {
+        if (!$this->provider->isReplacementEnabled()) {
             return $response;
         }
-        if ($this->getConfigurationProvider()->isDefaultHookHandlingDisabled()) {
+        if ($this->provider->isDefaultHookHandlingDisabled()) {
             return $response;
         }
 
@@ -35,21 +44,11 @@ class ContentPostProcAll implements MiddlewareInterface
             $this->scrapeAndReplace();
             $response = new HtmlResponse($this->page->getPageObject()->content);
         } catch (Exception $exception) {
-            $this->getLogger()
+            $this->logger
                 ->logException(__METHOD__, $exception);
         }
 
         return $response;
-    }
-
-    protected function getConfigurationProvider(): Provider
-    {
-        return GeneralUtility::makeInstance(Provider::class);
-    }
-
-    protected function getLogger(): Logger
-    {
-        return GeneralUtility::makeInstance(Logger::class);
     }
 
     protected function scrapeAssets(): void
@@ -73,7 +72,6 @@ class ContentPostProcAll implements MiddlewareInterface
 
     protected function setPageObject(TypoScriptFrontendController $pObj): void
     {
-        /** @var Page $page */
         $page = GeneralUtility::makeInstance(Page::class);
         $page->setAssets(GeneralUtility::makeInstance(Collection::class));
         $page->setPageObject($pObj);
