@@ -24,19 +24,23 @@ class ServerRepositoryTest extends UnitTestCase
      */
     public function testFindAllByPage()
     {
-        $page = new Page();
         $server = [
             'identifier' => uniqid(),
             'domain' => 'example.com',
             'protocol' => 'http',
         ];
+
         $servers = [$server];
-        $config = $this->getMockBuilder(Provider::class)->getMock();
-        $config
+        $providerMock = $this->getMockBuilder(Provider::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $providerMock
             ->method('getServerDefinitions')
             ->will($this->returnValue($servers));
 
-        $this->serverRepository->injectConfigurationProvider($config);
+        $page = new Page($providerMock);
+
+        $this->serverRepository->injectConfigurationProvider($providerMock);
 
         $factory = $this->getMockBuilder(Factory::class)->getMock();
         $factory

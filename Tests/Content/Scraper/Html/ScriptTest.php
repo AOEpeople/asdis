@@ -6,16 +6,10 @@ use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
 use Aoe\Asdis\Content\Scraper\Html\Script;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ScriptTest extends UnitTestCase
 {
-    private Script $scraper;
-
-    protected function setUp(): void
-    {
-        $this->scraper = new Script();
-    }
-
     public function testScrape()
     {
         $content = '<script type="text/javascript" src="typo3temp/js/main.js" />';
@@ -37,8 +31,7 @@ class ScriptTest extends UnitTestCase
                 ]
             ));
 
-        $this->scraper->injectAssetFactory($assetFactory);
-        $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
+        $this->scraper = GeneralUtility::makeInstance(Script::class, $attributeExtractor, $assetFactory);
         $this->scraper->scrape($content);
     }
 }

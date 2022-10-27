@@ -18,6 +18,7 @@ class FactoryTest extends UnitTestCase
         $protocol = Server::PROTOCOL_MARKER;
 
         $configurationProvider = $this->getMockBuilder(Provider::class)
+            ->disableOriginalConstructor()
             ->setMethods(['getServerProtocolMarker'])
             ->getMock();
 

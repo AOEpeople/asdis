@@ -2,9 +2,11 @@
 
 namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
+use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
 use Aoe\Asdis\Content\Scraper\Html\Srcset;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class SrcsetTest extends UnitTestCase
 {
@@ -12,7 +14,10 @@ class SrcsetTest extends UnitTestCase
 
     protected function setUp(): void
     {
-        $this->srcset = new Srcset();
+        $xmlTagAttributeExtractor = new XmlTagAttribute();
+        $factory = new Factory();
+
+        $this->srcset = GeneralUtility::makeInstance(Srcset::class, $xmlTagAttributeExtractor, $factory);
     }
 
     /**

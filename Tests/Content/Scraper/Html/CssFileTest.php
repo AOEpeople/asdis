@@ -7,16 +7,10 @@ use Aoe\Asdis\Content\Scraper\Html\CssFile;
 use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CssFileTest extends UnitTestCase
 {
-    private CssFile $scraper;
-
-    protected function setUp(): void
-    {
-        $this->scraper = new CssFile();
-    }
-
     public function testScrape()
     {
         $content = '<link href="typo3temp/foo.css" rel="stylesheet" />';
@@ -39,8 +33,7 @@ class CssFileTest extends UnitTestCase
                 ]
             ));
 
-        $this->scraper->injectAssetFactory($assetFactory);
-        $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
-        $this->scraper->scrape($content);
+        $scraper = GeneralUtility::makeInstance(CssFile::class, $attributeExtractor, $assetFactory);
+        $scraper->scrape($content);
     }
 }

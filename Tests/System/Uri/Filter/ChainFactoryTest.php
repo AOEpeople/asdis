@@ -27,7 +27,10 @@ class ChainFactoryTest extends UnitTestCase
             ],
         ];
 
-        $conf = $this->getMockBuilder(Provider::class)->setMethods(['getFilterKeys'])->getMock();
+        $conf = $this->getMockBuilder(Provider::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getFilterKeys'])
+            ->getMock();
         $conf->expects($this->once())
             ->method('getFilterKeys')
             ->will(

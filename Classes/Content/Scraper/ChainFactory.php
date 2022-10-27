@@ -16,7 +16,6 @@ class ChainFactory extends AbstractDeclarationBasedFactory
     public function buildChain()
     {
         $this->initialize();
-        /** @var Chain $chain */
         $chain = GeneralUtility::makeInstance(Chain::class);
         foreach ($this->configurationProvider->getScraperKeys() as $scraperKey) {
             $chain->append($this->buildScraper($scraperKey));

@@ -8,25 +8,20 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 class PageTest extends UnitTestCase
 {
-    private Page $page;
-
-    protected function setUp(): void
-    {
-        $this->page = new Page();
-    }
-
     /**
      * Tests Page->scrapeAssets()
      */
     public function testScrapeAssets()
     {
-        $config = $this->getMockBuilder(Provider::class)->getMock();
+        $config = $this->getMockBuilder(Provider::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $config
             ->method('isReplacementEnabled')
             ->will($this->returnValue(false));
 
-        $this->page->injectConfigurationProvider($config);
+        $page = new Page($config);
 
-        $this->assertNull($this->page->scrapeAssets());
+        $this->assertNull($page->scrapeAssets());
     }
 }

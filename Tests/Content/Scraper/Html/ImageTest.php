@@ -7,16 +7,10 @@ use Aoe\Asdis\Content\Scraper\Html\Image;
 use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ImageTest extends UnitTestCase
 {
-    private Image $imageScraper;
-
-    protected function setUp(): void
-    {
-        $this->imageScraper = new Image();
-    }
-
     public function testScrape()
     {
         $content = '<image src="uploads/images/foo.gif" />';
@@ -39,8 +33,7 @@ class ImageTest extends UnitTestCase
                 ]
             ));
 
-        $this->imageScraper->injectAssetFactory($assetFactory);
-        $this->imageScraper->injectXmlTagAttributeExtractor($attributeExtractor);
-        $this->imageScraper->scrape($content);
+        $scraper = GeneralUtility::makeInstance(Image::class, $attributeExtractor, $assetFactory);
+        $scraper->scrape($content);
     }
 }

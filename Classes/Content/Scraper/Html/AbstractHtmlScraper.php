@@ -14,7 +14,8 @@ abstract class AbstractHtmlScraper
     private ?XmlTagAttribute $xmlTagAttributeExtractor = null;
     private ?Factory $assetFactory = null;
 
-    public function __construct(XmlTagAttribute $xmlTagAttributeExtractor, Factory $assetFactory) {
+    public function __construct(XmlTagAttribute $xmlTagAttributeExtractor, Factory $assetFactory)
+    {
         $this->xmlTagAttributeExtractor = $xmlTagAttributeExtractor;
         $this->assetFactory = $assetFactory;
     }

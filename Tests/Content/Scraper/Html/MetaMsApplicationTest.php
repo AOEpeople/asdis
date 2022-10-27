@@ -7,16 +7,10 @@ use Aoe\Asdis\Content\Scraper\Html\MetaMsApplication;
 use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class MetaMsApplicationTest extends UnitTestCase
 {
-    private MetaMsApplication $scraper;
-
-    protected function setUp(): void
-    {
-        $this->scraper = new MetaMsApplication();
-    }
-
     public function testScrape()
     {
         $content = '<meta name="msapplication-TileImage" content="/uploads/images/mstile-144x144.png" />';
@@ -39,8 +33,7 @@ class MetaMsApplicationTest extends UnitTestCase
                 ]
             ));
 
-        $this->scraper->injectAssetFactory($assetFactory);
-        $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
-        $this->scraper->scrape($content);
+        $scraper = GeneralUtility::makeInstance(MetaMsApplication::class, $attributeExtractor, $assetFactory);
+        $scraper->scrape($content);
     }
 }

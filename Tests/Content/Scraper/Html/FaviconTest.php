@@ -7,16 +7,10 @@ use Aoe\Asdis\Content\Scraper\Html\Favicon;
 use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class FaviconTest extends UnitTestCase
 {
-    private Favicon $scraper;
-
-    protected function setUp(): void
-    {
-        $this->scraper = new Favicon();
-    }
-
     public function testScrape()
     {
         $content = '<link href="typo3temp/favicon.ico" rel="icon" />';
@@ -39,8 +33,7 @@ class FaviconTest extends UnitTestCase
                 ],
             ));
 
-        $this->scraper->injectAssetFactory($assetFactory);
-        $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
-        $this->scraper->scrape($content);
+        $scraper = GeneralUtility::makeInstance(Favicon::class, $attributeExtractor, $assetFactory);
+        $scraper->scrape($content);
     }
 }

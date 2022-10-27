@@ -6,16 +6,10 @@ use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
 use Aoe\Asdis\Content\Scraper\Html\Embed;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class EmbedTest extends UnitTestCase
 {
-    private Embed $scraper;
-
-    protected function setUp(): void
-    {
-        $this->scraper = new Embed();
-    }
-
     public function testScrape()
     {
         $content = '<embed src="typo3temp/flash.swf" />';
@@ -37,8 +31,7 @@ class EmbedTest extends UnitTestCase
                 ],
             ));
 
-        $this->scraper->injectAssetFactory($assetFactory);
-        $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
-        $this->scraper->scrape($content);
+        $scraper = GeneralUtility::makeInstance(Embed::class, $attributeExtractor, $assetFactory);
+        $scraper->scrape($content);
     }
 }

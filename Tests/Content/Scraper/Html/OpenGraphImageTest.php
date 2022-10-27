@@ -6,16 +6,10 @@ use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
 use Aoe\Asdis\Content\Scraper\Html\OpenGraphImage;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class OpenGraphImageTest extends UnitTestCase
 {
-    private OpenGraphImage $scraper;
-
-    protected function setUp(): void
-    {
-        $this->scraper = new OpenGraphImage();
-    }
-
     public function testScrape()
     {
         $content = '<meta property="og:image" content="uploads/images/foo.gif" />';
@@ -37,8 +31,7 @@ class OpenGraphImageTest extends UnitTestCase
                 ]
             ));
 
-        $this->scraper->injectAssetFactory($assetFactory);
-        $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
-        $this->scraper->scrape($content);
+        $scraper = GeneralUtility::makeInstance(OpenGraphImage::class, $attributeExtractor, $assetFactory);
+        $scraper->scrape($content);
     }
 }

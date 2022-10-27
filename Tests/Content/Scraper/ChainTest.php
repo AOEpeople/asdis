@@ -13,8 +13,12 @@ class ChainTest extends UnitTestCase
     public function testAppend()
     {
         $chain = new Chain();
-        $scraper1 = new Image();
-        $scraper2 = new Script();
+        $scraper1 = $this->getMockBuilder(Image::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $scraper2 = $this->getMockBuilder(Script::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $chain->append($scraper1);
         $chain->append($scraper2);
@@ -25,8 +29,12 @@ class ChainTest extends UnitTestCase
     public function testScrape()
     {
         $chain = new Chain();
-        $scraper1 = $this->getMockBuilder(Image::class)->getMock();
-        $scraper2 = $this->getMockBuilder(Script::class)->getMock();
+        $scraper1 = $this->getMockBuilder(Image::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $scraper2 = $this->getMockBuilder(Script::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $scraper1->expects($this->once())
             ->method('scrape')

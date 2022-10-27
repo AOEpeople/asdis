@@ -2,9 +2,11 @@
 
 namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
+use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
 use Aoe\Asdis\Content\Scraper\Html\Css3Image;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class Css3ImageTest extends UnitTestCase
 {
@@ -12,7 +14,10 @@ class Css3ImageTest extends UnitTestCase
 
     protected function setUp(): void
     {
-        $this->css3Image = new Css3Image();
+        $xmlTagAttributeExtractor = new XmlTagAttribute();
+        $factory = new Factory();
+
+        $this->css3Image = GeneralUtility::makeInstance(Css3Image::class, $xmlTagAttributeExtractor, $factory);
     }
 
     /**
@@ -37,6 +42,7 @@ class Css3ImageTest extends UnitTestCase
         ]);
 
         $this->css3Image->injectAssetFactory($assetFactory);
+
         $this->css3Image->scrape(
             '<div data-src-desktop="//my-domain.local/fileadmin/550px.jpg"></div>' .
             '<div data-src-phone="//my-domain.local/fileadmin/250px.jpg"></div>' .

@@ -23,7 +23,8 @@ class ContentPostProcAll implements MiddlewareInterface
 
     private Logger $logger;
 
-    public function __construct(Provider $provider, Logger $logger) {
+    public function __construct(Provider $provider, Logger $logger)
+    {
         $this->provider = $provider;
         $this->logger = $logger;
     }

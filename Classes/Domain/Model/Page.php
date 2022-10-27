@@ -30,7 +30,8 @@ class Page
 
     private ?Processor $replacementProcessor = null;
 
-    public function __construct(Provider $configurationProvider) {
+    public function __construct(Provider $configurationProvider)
+    {
         $this->configurationProvider = $configurationProvider;
     }
 
@@ -48,13 +49,6 @@ class Page
     {
         $this->serverRepository = $serverRepository;
     }
-
-/*
-    public function injectConfigurationProvider(Provider $configurationProvider): void
-    {
-        $this->configurationProvider = $configurationProvider;
-    }
-    */
 
     public function injectReplacementProcessor(Processor $replacementProcessor): void
     {
