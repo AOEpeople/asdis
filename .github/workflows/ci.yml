@@ -58,7 +58,7 @@ jobs:
           .Build/bin/phpunit --colors -c $UNIT_XML Tests
 
       - name: Unit Tests with coverage without 8.0
-        if: matrix.typo3 == '^10.4' && matrix.php == '7.4'
+        if: matrix.typo3 == '^11.5' && matrix.php == '7.4'
         run: |
           export "UNIT_XML"=.Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml
           .Build/bin/phpunit --whitelist Classes --coverage-clover=unittest-coverage.clover --colors -c $UNIT_XML Tests
