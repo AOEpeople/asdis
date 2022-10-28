@@ -1,3 +1,5 @@
 # Build files
 .Build
 .idea
+/var
+composer.lock
