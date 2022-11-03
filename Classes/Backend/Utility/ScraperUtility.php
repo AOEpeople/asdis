@@ -11,6 +11,7 @@ use Aoe\Asdis\Content\Scraper\Html\CssInline;
 use Aoe\Asdis\Content\Scraper\Html\DataSrc;
 use Aoe\Asdis\Content\Scraper\Html\Embed;
 use Aoe\Asdis\Content\Scraper\Html\Favicon;
+use Aoe\Asdis\Content\Scraper\Html\FontFile;
 use Aoe\Asdis\Content\Scraper\Html\Image;
 use Aoe\Asdis\Content\Scraper\Html\InputImage;
 use Aoe\Asdis\Content\Scraper\Html\MetaMsApplication;
@@ -83,6 +84,11 @@ class ScraperUtility
             'key' => 'htmlFavicon',
             'class' => Favicon::class,
             'file' => $extensionPath . 'Classes/Content/Scraper/Html/Favicon.php',
+        ];
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
+            'key' => 'htmlFontFile',
+            'class' => 'Aoe\Asdis\Content\Scraper\Html\FontFile',
+            'file' => $extensionPath . 'Classes/Content/Scraper/Html/FontFile.php'
         ];
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'][] = [
             'key' => 'htmlImage',
