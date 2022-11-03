@@ -17,7 +17,7 @@ class FontFileTest extends UnitTestCase
 
         $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
         $assetFactory
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(6))
             ->method('createAssetsFromPaths')
             ->with(['typo3temp/foo.woff2'])
             ->will($this->returnValue(new Collection()));
