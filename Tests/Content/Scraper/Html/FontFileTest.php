@@ -24,7 +24,7 @@ class FontFileTest extends UnitTestCase
 
         $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
         $attributeExtractor
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(6))
             ->method('getAttributeFromTag')
             ->will($this->returnValue(
                 [
