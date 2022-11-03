@@ -20,7 +20,7 @@ class FontFileTest extends UnitTestCase
      */
     protected function setUp(): void
     {
-        $this->scraper = new CssFile();
+        $this->scraper = new FontFile();
     }
 
     /**
