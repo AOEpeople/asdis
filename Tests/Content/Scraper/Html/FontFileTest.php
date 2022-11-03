@@ -7,36 +7,21 @@ use Aoe\Asdis\Content\Scraper\Html\FontFile;
 use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class FontFileTest extends UnitTestCase
 {
-    /**
-     * @var FontFile
-     */
-    private $scraper;
-
-    /**
-     * (non-PHPdoc)
-     */
-    protected function setUp(): void
-    {
-        $this->scraper = new FontFile();
-    }
-
-    /**
-     * @test
-     */
-    public function scrape()
+    public function testScrape()
     {
         $content = '<link rel="preload" href="/typo3temp/foo.woff2" as="font" type="font/woff2" />';
-        
+
         $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
         $assetFactory
             ->expects($this->exactly(2))
             ->method('createAssetsFromPaths')
-            ->with(array('typo3temp/foo.woff2'))
+            ->with(['typo3temp/foo.woff2'])
             ->will($this->returnValue(new Collection()));
-        
+
         $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
         $attributeExtractor
             ->expects($this->exactly(2))
@@ -47,10 +32,9 @@ class FontFileTest extends UnitTestCase
                     'masks' => ['"'],
                 ]
             ));
-        
-        $this->scraper->injectAssetFactory($assetFactory);
-        $this->scraper->injectXmlTagAttributeExtractor($attributeExtractor);
-        $this->scraper->scrape($content);
+
+        $scraper = GeneralUtility::makeInstance(FontFile::class, $attributeExtractor, $assetFactory);
+        $scraper->scrape($content);
     }
 }
 
