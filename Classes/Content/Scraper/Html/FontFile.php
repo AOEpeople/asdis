@@ -12,8 +12,7 @@ class FontFile extends AbstractHtmlScraper implements ScraperInterface
 {
     public function scrape(string $content): ?Collection
     {
-        return
-            $this->getAssets('link', 'href', $content, ['type' => 'font/woff'])
+        return $this->getAssets('link', 'href', $content, ['type' => 'font/woff'])
                 ->merge($this->getAssets('link', 'href', $content, ['type' => 'font/woff2']))
                 ->merge($this->getAssets('link', 'href', $content, ['type' => 'font/ttf']))
                 ->merge($this->getAssets('link', 'href', $content, ['type' => 'font/otf']))

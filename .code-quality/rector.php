@@ -86,22 +86,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ChangeReadOnlyVariableWithDefaultValueToConstantRector::class,
             ChangeReadOnlyPropertyWithDefaultValueToConstantRector::class,
             ChangeGlobalVariablesToPropertiesRector::class,
-            /*
-            RecastingRemovalRector::class,
-
-            ReturnBinaryAndToEarlyReturnRector::class,
-            MakeBoolPropertyRespectIsHasWasMethodNamingRector::class,
-            MoveOutMethodCallInsideIfConditionRector::class,
-            ReturnArrayClassMethodToYieldRector::class,
-            ReturnFluentChainMethodCallToNormalMethodCallRector::class,
-            IssetOnPropertyObjectToPropertyExistsRector::class,
-            FlipTypeControlToUseExclusiveTypeRector::class,
-            RepeatedLiteralToClassConstantRector::class,
-            RenameVariableToMatchNewTypeRector::class,
-            AddLiteralSeparatorToNumberRector::class,
-            RenameForeachValueVariableToMatchMethodCallReturnTypeRector::class,
-            PrivatizeLocalPropertyToPrivatePropertyRector::class,
-            */
 
             AddSeeTestAnnotationRector::class,
             ChangeSwitchToMatchRector::class,

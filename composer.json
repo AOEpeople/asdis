@@ -23,9 +23,6 @@
   },
   "require-dev": {
     "nimut/testing-framework": "*",
-    "phpunit/phpcov": "*",
-    "squizlabs/php_codesniffer": "*",
-    "sebastian/phpcpd": "*",
     "phpmd/phpmd": "*",
     "phpcompatibility/php-compatibility": "^9.3",
     "phpstan/phpstan": "0.12.88",

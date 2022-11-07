@@ -37,4 +37,3 @@ class FontFileTest extends UnitTestCase
         $scraper->scrape($content);
     }
 }
-
