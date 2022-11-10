@@ -37,6 +37,9 @@ services:
   Aoe\Asdis\Content\Scraper\Html\Favicon:
     public: true
 
+  Aoe\Asdis\Content\Scraper\Html\FontFile:
+    public: true
+
   Aoe\Asdis\Content\Scraper\Html\Image:
     public: true
 
