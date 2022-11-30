@@ -3,9 +3,11 @@
 namespace Aoe\Asdis\System\Configuration;
 
 use Aoe\Asdis\System\Configuration\Exception\InvalidTypoScriptSetting;
+use Aoe\Asdis\System\Configuration\Exception\SiteNotFoundException;
 use Aoe\Asdis\System\Configuration\Exception\TypoScriptSettingNotExists;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
@@ -66,8 +68,8 @@ class TypoScriptConfiguration implements SingletonInterface
             return $GLOBALS['TSFE']->tmpl->setup['config.']['tx_asdis.'];
         }
 
-        /** @var Site $site */
-        $site = $GLOBALS['TYPO3_REQUEST']->getAttribute('site');
+        $site = $this->getCurrentSite();
+
         /** @var RootlineUtility $rootlineUtility */
         $rootlineUtility = GeneralUtility::makeInstance(RootlineUtility::class, $site->getRootPageId());
         $rootline = $rootlineUtility->get();
@@ -78,5 +80,24 @@ class TypoScriptConfiguration implements SingletonInterface
         $templateService->generateConfig();
 
         return $templateService->setup['config.']['tx_asdis.'];
+    }
+
+    /**
+     * @return Site
+     */
+    protected function getCurrentSite()
+    {
+        if ($GLOBALS['TYPO3_REQUEST'] === null) {
+            $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
+            $requestUrl = GeneralUtility::getIndpEnv('HTTP_HOST');
+            $allSites = $siteFinder->getAllSites();
+            foreach ($allSites as $site) {
+                if ($site->getBase()->getHost() === $requestUrl) {
+                    return $site;
+                }
+            }
+            throw new SiteNotFoundException();
+        }
+        return $GLOBALS['TYPO3_REQUEST']->getAttribute('site');
     }
 }
