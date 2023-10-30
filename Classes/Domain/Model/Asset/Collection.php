@@ -28,7 +28,10 @@ class Collection extends \ArrayIterator
     public function append($asset)
     {
         $elementHash = $asset->getHash();
-        if (in_array($elementHash, $this->elementHashes)) {
+        $found = array_search($elementHash, $this->elementHashes);
+
+        // Check if hash exists and if mask is equal
+        if (false !== $found && $asset->getMask() === $this[$found]->getMask()) {
             return;
         }
         $this->elementHashes[] = $elementHash;
