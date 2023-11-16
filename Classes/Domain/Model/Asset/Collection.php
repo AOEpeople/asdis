@@ -34,6 +34,12 @@ class Collection extends \ArrayIterator
         if (false !== $found && $asset->getMask() === $this[$found]->getMask()) {
             return;
         }
+
+        if (false !== $found && $asset->getMask() === '' && $this[$found]->getMask() !== '') {
+            $this[$found]->setMask('');
+            return;
+        }
+
         $this->elementHashes[] = $elementHash;
         parent::append($asset);
     }
