@@ -3,11 +3,12 @@
 namespace Aoe\Asdis\Content\Scraper;
 
 use Aoe\Asdis\Domain\Model\Asset\Collection;
+use ArrayIterator;
 
 /**
  * Scraper which chains other scrapers.
  */
-class Chain extends \ArrayIterator implements ScraperInterface
+class Chain extends ArrayIterator implements ScraperInterface
 {
     /**
      * Needs to be called due to an extbase bug.
@@ -19,20 +20,20 @@ class Chain extends \ArrayIterator implements ScraperInterface
     }
 
     /**
-     * @param ScraperInterface $scraper
+     * @param ScraperInterface $value
      */
-    public function append($scraper)
+    public function append($value): void
     {
-        parent::append($scraper);
+        parent::append($value);
     }
 
     public function scrape(string $content): Collection
     {
-        $assetCollection = new Collection();
+        $assetColection = new Collection();
         foreach ($this as $scraper) {
             /** @var ScraperInterface $scraper */
-            $assetCollection->merge($scraper->scrape($content));
+            $assetColection->merge($scraper->scrape($content));
         }
-        return $assetCollection;
+        return $assetColection;
     }
 }

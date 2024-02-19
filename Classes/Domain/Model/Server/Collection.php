@@ -3,11 +3,12 @@
 namespace Aoe\Asdis\Domain\Model\Server;
 
 use Aoe\Asdis\Domain\Model\Server;
+use ArrayIterator;
 
 /**
  * Collection which contains server objects.
  */
-class Collection extends \ArrayIterator
+class Collection extends ArrayIterator
 {
     /**
      * Needs to be called due to an extbase bug.
@@ -21,7 +22,7 @@ class Collection extends \ArrayIterator
     /**
      * @param Server $server
      */
-    public function append($server)
+    public function append($server): void
     {
         parent::append($server);
     }

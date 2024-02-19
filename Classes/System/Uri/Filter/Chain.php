@@ -2,10 +2,12 @@
 
 namespace Aoe\Asdis\System\Uri\Filter;
 
+use ArrayIterator;
+
 /**
  * Chain of filters.
  */
-class Chain extends \ArrayIterator implements FilterInterface
+class Chain extends ArrayIterator implements FilterInterface
 {
     /**
      * Needs to be called due to an extbase bug.
@@ -19,7 +21,7 @@ class Chain extends \ArrayIterator implements FilterInterface
     /**
      * @param FilterInterface $filter
      */
-    public function append($filter)
+    public function append($filter): void
     {
         parent::append($filter);
     }

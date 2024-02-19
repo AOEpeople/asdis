@@ -5,11 +5,12 @@ namespace Aoe\Asdis\Domain\Model\Asset;
 use Aoe\Asdis\Content\Replacement\Map;
 use Aoe\Asdis\Domain\Model\Asset;
 use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
+use ArrayIterator;
 
 /**
  * Collection which contains asset objects.
  */
-class Collection extends \ArrayIterator
+class Collection extends ArrayIterator
 {
     private array $elementHashes = [];
 
@@ -25,7 +26,7 @@ class Collection extends \ArrayIterator
     /**
      * @param Asset $asset
      */
-    public function append($asset)
+    public function append($asset): void
     {
         $elementHash = $asset->getHash();
         $found = array_search($elementHash, $this->elementHashes);
