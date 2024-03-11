@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Core\Http\Stream;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use Exception;
@@ -43,7 +43,11 @@ class ContentPostProcAll implements MiddlewareInterface
         try {
             $this->setPageObject($GLOBALS['TSFE']);
             $this->scrapeAndReplace();
-            $response = new HtmlResponse($this->page->getPageObject()->content);
+
+            $body = new Stream('php://temp', 'rw');
+            $body->write($this->page->getPageObject()->content);
+
+            $response->withBody($body);
         } catch (Exception $exception) {
             $this->logger
                 ->logException(__METHOD__, $exception);
