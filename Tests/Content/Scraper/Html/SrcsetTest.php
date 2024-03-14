@@ -39,14 +39,19 @@ class SrcsetTest extends UnitTestCase
             '//my-domain.local/fileadmin/d.png',
         ]);
 
-        $this->srcset->injectAssetFactory($assetFactory);
-        $this->srcset->scrape(
-            '<picture>
-                <source media="(min-width: 250px)" srcset="//my-domain.local/fileadmin/a.webp, //my-domain.local/fileadmin/b.webp 2x" type="image/webp">
-                <source media="(min-width: 250px)" srcset="//my-domain.local/fileadmin/c.png, //my-domain.local/fileadmin/d.png 2x">
+        // We use line-endings to test, if the scrapper can handle that
+        $htmlCode = <<< EOT
+<picture>
+                <source media="(min-width: 250px)" srcset="//my-domain.local/fileadmin/a.webp,
+                //my-domain.local/fileadmin/b.webp 2x" type="image/webp">
+                <source media="(min-width: 250px)" srcset="//my-domain.local/fileadmin/c.png,
+                //my-domain.local/fileadmin/d.png 2x">
                 <img src="//my-domain.local/fileadmin/e.png" width="464" height="261">
-            </picture>'
-        );
+            </picture>
+EOT;
+
+        $this->srcset->injectAssetFactory($assetFactory);
+        $this->srcset->scrape($htmlCode);
     }
 
     /**
@@ -69,9 +74,22 @@ class SrcsetTest extends UnitTestCase
             '//my-domain.local/fileadmin/e.webp',
         ]);
 
+        // We use line-endings to test, if the scrapper can handle that
+        $htmlCode = <<< EOT
+<link
+    rel="preload"
+    as="image"
+    href="//my-domain.local/fileadmin/a.webp"
+    type="image/webp"
+    imagesizes="1100w"
+    imagesrcset="//my-domain.local/fileadmin/a.webp 1100w,
+                 //my-domain.local/fileadmin/b.webp 870w,
+                 //my-domain.local/fileadmin/c.webp 991w,
+                 //my-domain.local/fileadmin/d.webp 767w,
+                 //my-domain.local/fileadmin/e.webp 576w">
+EOT;
+
         $this->srcset->injectAssetFactory($assetFactory);
-        $this->srcset->scrape(
-            '<link rel="preload" as="image" href="//my-domain.local/fileadmin/a.webp" type="image/webp" imagesizes="1100w" imagesrcset="//my-domain.local/fileadmin/a.webp 1100w, //my-domain.local/fileadmin/b.webp 870w, //my-domain.local/fileadmin/c.webp 991w, //my-domain.local/fileadmin/d.webp 767w, //my-domain.local/fileadmin/e.webp 576w">'
-        );
+        $this->srcset->scrape($htmlCode);
     }
 }

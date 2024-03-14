@@ -24,7 +24,7 @@ class Srcset extends AbstractHtmlScraper implements ScraperInterface
         $masks = [];
         $matches = [];
         preg_match_all(
-            '/srcset=*\s?=\s?([\'"])(.*?)([\'"])/i',
+            '/srcset=*\s?=\s?([\'"])(.*?)([\'"])/is',
             $content,
             $matches
         );
