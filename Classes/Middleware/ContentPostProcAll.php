@@ -42,15 +42,14 @@ class ContentPostProcAll implements MiddlewareInterface
             return $response;
         }
 
+        $header = $response->getHeaders();
+        $status = $response->getStatusCode();
+
         try {
             $this->setPageObject($GLOBALS['TSFE']);
             $this->scrapeAndReplace();
 
-            //  replace response content instead init new response doesn't work well in some cases -we must do some more testing
-            //$body = new Stream('php://temp', 'rw');
-            //$body->write($this->page->getPageObject()->content);
-            //$response->withBody($body);
-            $response = new HtmlResponse($this->page->getPageObject()->content);
+            $response = new HtmlResponse($this->page->getPageObject()->content, $status, $header);
         } catch (Exception $exception) {
             $this->logger
                 ->logException(__METHOD__, $exception);
