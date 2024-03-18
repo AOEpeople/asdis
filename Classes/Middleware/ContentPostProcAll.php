@@ -49,6 +49,7 @@ class ContentPostProcAll implements MiddlewareInterface
             $this->setPageObject($GLOBALS['TSFE']);
             $this->scrapeAndReplace();
 
+            $header['Content-Length'] = strlen($this->page->getPageObject()->content);
             $response = new HtmlResponse($this->page->getPageObject()->content, $status, $header);
         } catch (Exception $exception) {
             $this->logger
