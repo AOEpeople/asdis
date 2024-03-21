@@ -14,12 +14,12 @@
     "source": "https://github.com/AOEpeople/asdis"
   },
   "require": {
-    "php": "^7.4 | ^8.0 | ^8.2 | ^8.3",
-    "typo3/cms-core": "^8.7 || ^9.5 || ^10.4.14 || ^11.5",
-    "typo3/cms-extbase": "^8.7 || ^9.5 || ^10.4.14 || ^11.5",
-    "typo3/cms-backend": "^8.7 || ^9.5 || ^10.4.14 || ^11.5",
-    "typo3/cms-reports": "^8.7 || ^9.5 || ^10.4.14 || ^11.5",
-    "typo3/cms-frontend": "^8.7 || ^9.5 || ^10.4.14 || ^11.5"
+    "php": "^8.0 | ^8.2 | ^8.3",
+    "typo3/cms-core": "^11.5",
+    "typo3/cms-extbase": "^11.5",
+    "typo3/cms-backend": "^11.5",
+    "typo3/cms-reports": "^11.5",
+    "typo3/cms-frontend": "^11.5"
   },
   "require-dev": {
     "typo3/testing-framework": "^7.0",
@@ -81,7 +81,6 @@
       "[ -e ./.Build/vendor/symplify/easy-coding-standard/vendor/squizlabs/php_codesniffer/bin/phpcs ] || composer install",
       "[ -d ./reports/php_checkstyle ] || mkdir -p reports/php_checkstyle/",
       "./.code-quality/configure-checkstyle.sh",
-      "./.Build/vendor/symplify/easy-coding-standard/vendor/squizlabs/php_codesniffer/bin/phpcs -d memory_limit=1G --standard=PHPCompatibility --colors --ignore=*/.Build/* -p . --runtime-set testVersion 7.4",
       "./.Build/vendor/symplify/easy-coding-standard/vendor/squizlabs/php_codesniffer/bin/phpcs -d memory_limit=1G --standard=PHPCompatibility --colors --ignore=*/.Build/* -p . --runtime-set testVersion 8.0",
       "./.Build/vendor/symplify/easy-coding-standard/vendor/squizlabs/php_codesniffer/bin/phpcs -d memory_limit=1G --standard=PHPCompatibility --colors --ignore=*/.Build/* -p . --runtime-set testVersion 8.3"
     ],
