@@ -3,7 +3,7 @@
 namespace Aoe\Asdis\Tests\System\Uri\Filter;
 
 use Aoe\Asdis\System\Uri\Filter\WildcardProtocol;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class WildcardProtocolTest extends UnitTestCase
 {
@@ -14,7 +14,7 @@ class WildcardProtocolTest extends UnitTestCase
         $this->filter = new WildcardProtocol();
     }
 
-    public function testFilter()
+    public function testFilter(): void
     {
         $paths = [
             '//typo3temp/pics/foo.gif',
@@ -28,7 +28,8 @@ class WildcardProtocolTest extends UnitTestCase
             // phpunit 8.x or lower
             $this->assertInternalType('array', $filteredPaths);
         }
-        $this->assertSame(1, count($filteredPaths));
+
+        $this->assertCount(1, $filteredPaths);
         $this->assertSame($paths[1], $filteredPaths[0]);
     }
 }

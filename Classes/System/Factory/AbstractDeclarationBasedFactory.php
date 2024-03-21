@@ -61,8 +61,6 @@ abstract class AbstractDeclarationBasedFactory
 
     /**
      * @return object
-     * @throws DeclarationNotFound
-     * @throws MissingImplementation
      */
     protected function buildObjectFromKey(string $key)
     {
@@ -73,6 +71,7 @@ abstract class AbstractDeclarationBasedFactory
             if (!isset($this->fallbackKey)) {
                 throw $declarationNotFound;
             }
+
             $declaration = $this->getDeclarationByKey($this->fallbackKey);
         }
 
@@ -92,12 +91,10 @@ abstract class AbstractDeclarationBasedFactory
                 );
             }
         }
+
         return $object;
     }
 
-    /**
-     * @throws InvalidDeclaration
-     */
     private function addDeclaration(array $declaration): void
     {
         if (
@@ -110,12 +107,12 @@ abstract class AbstractDeclarationBasedFactory
                 1_372_422_185_108
             );
         }
+
         $this->declarations[] = $declaration;
     }
 
     /**
      * @return mixed
-     * @throws DeclarationNotFound
      */
     private function getDeclarationByKey(string $key)
     {
@@ -124,6 +121,7 @@ abstract class AbstractDeclarationBasedFactory
                 return $declaration;
             }
         }
+
         throw new DeclarationNotFound($key, 1_372_422_430_920);
     }
 }

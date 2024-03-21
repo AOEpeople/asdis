@@ -4,7 +4,7 @@ namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
 use Aoe\Asdis\Content\Scraper\Css\Url;
 use Aoe\Asdis\Content\Scraper\Html\CssAttribute;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class CssAttributeTest extends UnitTestCase
 {
@@ -14,10 +14,11 @@ class CssAttributeTest extends UnitTestCase
     {
         $this->cssAttribute = new CssAttribute();
     }
+
     /**
      * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
      */
-    public function testScrape()
+    public function testScrape(): void
     {
         $url = $this->getMockBuilder(Url::class)->getMock();
         $url->expects($this->once())
@@ -27,10 +28,11 @@ class CssAttributeTest extends UnitTestCase
         $this->cssAttribute->injectCssUrlScraper($url);
         $this->cssAttribute->scrape('');
     }
+
     /**
      * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
      */
-    public function testScrapeWithCss()
+    public function testScrapeWithCss(): void
     {
         $url = $this->getMockBuilder(Url::class)->getMock();
         $url
@@ -42,7 +44,7 @@ class CssAttributeTest extends UnitTestCase
 
         $this->cssAttribute->injectCssUrlScraper($url);
 
-        $content = file_get_contents(dirname(__FILE__) . '/Fixtures/testPage.html');
+        $content = file_get_contents(__DIR__ . '/Fixtures/testPage.html');
 
         $this->cssAttribute->scrape($content);
     }

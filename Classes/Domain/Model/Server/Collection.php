@@ -7,6 +7,7 @@ use ArrayIterator;
 
 /**
  * Collection which contains server objects.
+ * @see \Aoe\Asdis\Tests\Domain\Model\Server\CollectionTest
  */
 class Collection extends ArrayIterator
 {

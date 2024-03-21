@@ -9,6 +9,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Factory for server objects.
+ * @see \Aoe\Asdis\Tests\Domain\Model\Server\FactoryTest
  */
 class Factory
 {

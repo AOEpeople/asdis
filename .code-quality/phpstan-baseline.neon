@@ -1,14 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Cognitive complexity for \"Aoe\\\\Asdis\\\\Content\\\\Scraper\\\\Extractor\\\\XmlTagAttribute\\:\\:getAttributeFromTag\\(\\)\" is 9, keep it under 8$#"
-			count: 1
-			path: ../Classes/Content/Scraper/Extractor/XmlTagAttribute.php
-		-
-			message: "#^Cognitive complexity for \"Aoe\\\\Asdis\\\\System\\\\Configuration\\\\TypoScriptConfiguration\\:\\:getSetting\\(\\)\" is 9, keep it under 8$#"
-			count: 1
-			path: ../Classes/System/Configuration/TypoScriptConfiguration.php
-		-
 			message: "#^Comparison operation \"\\<\" between int\\<1, max\\> and 1 is always false\\.$#"
 			count: 2
 			path: ../Classes/System/Configuration/Provider.php
@@ -24,3 +16,47 @@ parameters:
 			message: "#^Call to an undefined static method TYPO3\\\\CMS\\\\Core\\\\Utility\\\\GeneralUtility\\:\\:sysLog\\(\\)\\.$#"
 			count: 1
 			path: ../Classes/System/Log/Logger.php
+		-
+			message: "#^Relative file path \"tslib/class\\.tslib_fe\\.php\" is not allowed, use absolute one with __DIR__$#"
+			count: 4
+			path: ../Classes/Backend/Utility/HookUtility.php
+		-
+			message: "#^Use value object over return of values$#"
+			count: 2
+			path: ../Classes/Content/Scraper/Css/Url.php
+		-
+			message: "#^Use value object over return of values$#"
+			count: 3
+			path: ../Classes/Content/Scraper/Extractor/XmlTagAttribute.php
+		-
+			message: "#^Anonymous variable in a `\\$GLOBALS\\['TYPO3_REQUEST'\\]\\-\\>\\.\\.\\.\\(\\)` method call can lead to false dead methods\\. Make sure the variable type is known$#"
+			count: 1
+			path: ../Classes/System/Configuration/TypoScriptConfiguration.php
+
+		-
+			message: "#^Anonymous variable in a `\\$site\\-\\>getBase\\(\\)\\-\\>\\.\\.\\.\\(\\)` method call can lead to false dead methods\\. Make sure the variable type is known$#"
+			count: 1
+			path: ../Classes/System/Configuration/TypoScriptConfiguration.php
+
+		-
+			message: "#^Anonymous variables in a \"\\$GLOBALS\\['TSFE'\\]\\-\\>\\.\\.\\.\" property fetch can lead to false dead property\\. Make sure the variable type is known$#"
+			count: 1
+			path: ../Classes/System/Configuration/TypoScriptConfiguration.php
+
+		-
+			message: "#^Anonymous variables in a \"\\$GLOBALS\\['TSFE'\\]\\-\\>tmpl\\-\\>\\.\\.\\.\" property fetch can lead to false dead property\\. Make sure the variable type is known$#"
+			count: 1
+			path: ../Classes/System/Configuration/TypoScriptConfiguration.php
+
+		-
+			message: "#^Anonymous variable in a `\\$GLOBALS\\['TSFE'\\]\\-\\>\\.\\.\\.\\(\\)` method call can lead to false dead methods\\. Make sure the variable type is known$#"
+			count: 2
+			path: ../Classes/Typo3/Hook/ContentPostProcAll.php
+		-
+			message: "#^Anonymous variable in a `\\$this\\[\\$found\\]\\-\\>\\.\\.\\.\\(\\)` method call can lead to false dead methods\\. Make sure the variable type is known$#"
+			count: 3
+			path: ../Classes/Domain/Model/Asset/Collection.php
+		-
+			message: "#^On passing a constant, the method should have an enum type\\. See https\\://phpstan\\.org/writing\\-php\\-code/phpdoc\\-types\\#literals\\-and\\-constants$#"
+			count: 1
+			path: ../Classes/Api/Url.php

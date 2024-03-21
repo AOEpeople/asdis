@@ -4,6 +4,7 @@ namespace Aoe\Asdis\System\Uri\Filter;
 
 /**
  * Filters paths which are too short.
+ * @see \Aoe\Asdis\Tests\System\Uri\Filter\TooShortTest
  */
 class TooShort implements FilterInterface
 {
@@ -23,8 +24,10 @@ class TooShort implements FilterInterface
             if (strlen($path) < self::MIN_LENGTH) {
                 continue;
             }
+
             $filteredPaths[] = $path;
         }
+
         return $filteredPaths;
     }
 }

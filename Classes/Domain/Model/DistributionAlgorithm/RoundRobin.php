@@ -9,6 +9,7 @@ use Aoe\Asdis\Domain\Model\Server\Collection as ServerCollection;
 
 /**
  * RoundRobin implementation of a distribution algorithm.
+ * @see \Aoe\Asdis\Tests\Domain\Model\DistributionAlgorithm\RoundRobinTest
  */
 class RoundRobin implements DistributionAlgorithmInterface
 {
@@ -22,6 +23,7 @@ class RoundRobin implements DistributionAlgorithmInterface
         if ($servers->count() < 1) {
             return;
         }
+
         $this->servers = $servers;
         foreach ($assets as $asset) {
             /** @var Asset $asset */
@@ -36,6 +38,7 @@ class RoundRobin implements DistributionAlgorithmInterface
         if (!$this->servers->valid()) {
             $this->servers->rewind();
         }
+
         return $server;
     }
 }

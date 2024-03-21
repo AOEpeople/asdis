@@ -5,11 +5,11 @@ namespace Aoe\Asdis\Tests\Domain\Model\DistributionAlgorithm;
 use Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory;
 use Aoe\Asdis\Domain\Model\DistributionAlgorithm\HashBasedGroups;
 use Aoe\Asdis\Domain\Model\DistributionAlgorithm\RoundRobin;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class FactoryTest extends UnitTestCase
 {
-    public function testBuildDistributionAlgorithmFromKey()
+    public function testBuildDistributionAlgorithmFromKey(): void
     {
         global $asdisBaseDir;
 
@@ -26,12 +26,12 @@ class FactoryTest extends UnitTestCase
             ],
         ];
         //TODO? , [], '', true
-        $factory = $this->getMockBuilder(Factory::class)->setMethods(['getDeclarations'])->getMock();
+        $factory = $this->getMockBuilder(Factory::class)->onlyMethods(['getDeclarations'])->getMock();
         $factory->expects($this->once())
             ->method('getDeclarations')
-            ->will($this->returnValue($declarations));
+            ->willReturn($declarations);
 
         $algorithm = $factory->buildDistributionAlgorithmFromKey('hashBasedGroups');
-        $this->assertSame(HashBasedGroups::class, get_class($algorithm));
+        $this->assertInstanceOf(HashBasedGroups::class, $algorithm);
     }
 }

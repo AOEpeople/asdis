@@ -5,12 +5,12 @@ namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
 use Aoe\Asdis\Content\Scraper\Html\InputImage;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class InputImageTest extends UnitTestCase
 {
-    public function testScrape()
+    public function testScrape(): void
     {
         $content = '<input type="image" src="uploads/images/foo.gif" />';
 
@@ -23,13 +23,18 @@ class InputImageTest extends UnitTestCase
         $attributeExtractor
             ->expects($this->once())
             ->method('getAttributeFromTag')
-            ->with('input', 'src', $content, ['type' => 'image'])
-            ->will($this->returnValue(
+            ->with(
+                'input',
+                'src',
+                $content,
                 [
-                    'paths' => ['uploads/images/foo.gif'],
-                    'masks' => ['"'],
+                    'type' => 'image',
                 ]
-            ));
+            )
+            ->willReturn([
+                'paths' => ['uploads/images/foo.gif'],
+                'masks' => ['"'],
+            ]);
 
         $scraper = GeneralUtility::makeInstance(InputImage::class, $attributeExtractor, $assetFactory);
         $scraper->scrape($content);

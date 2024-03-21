@@ -8,6 +8,7 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
 
 /**
  * Scrapes assets from all tags by using data-src attributes.
+ * @see \Aoe\Asdis\Tests\Content\Scraper\Html\Css3ImageTest
  */
 class Css3Image extends AbstractHtmlScraper implements ScraperInterface
 {
@@ -32,6 +33,7 @@ class Css3Image extends AbstractHtmlScraper implements ScraperInterface
             $paths = $matches[2];
             $masks = $matches[1];
         }
+
         return $this->assetFactory->createAssetsFromPaths($paths, $masks);
     }
 }

@@ -2,4 +2,5 @@
 .Build
 .idea
 /var
+.cache
 composer.lock

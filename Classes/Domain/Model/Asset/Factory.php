@@ -5,12 +5,13 @@ namespace Aoe\Asdis\Domain\Model\Asset;
 use Aoe\Asdis\Domain\Model\Asset;
 use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
 use Aoe\Asdis\System\Uri\Filter\Chain;
-use Aoe\Asdis\System\Uri\Normalizer;
 use Aoe\Asdis\System\Uri\Filter\ChainFactory;
+use Aoe\Asdis\System\Uri\Normalizer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Factory which builds asset objects and collections.
+ * @see \Aoe\Asdis\Tests\Domain\Model\Asset\FactoryTest
  */
 class Factory
 {
@@ -42,6 +43,7 @@ class Factory
         foreach ($paths as $key => $path) {
             $assets->append($this->createAssetFromPath($path, $masks[$key]));
         }
+
         return $assets;
     }
 

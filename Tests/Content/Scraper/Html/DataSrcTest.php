@@ -5,12 +5,12 @@ namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
 use Aoe\Asdis\Content\Scraper\Html\DataSrc;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class DataSrcTest extends UnitTestCase
 {
-    public function testScrape()
+    public function testScrape(): void
     {
         $content = '<div data-src="uploads/images/foo.gif" />';
 
@@ -25,12 +25,10 @@ class DataSrcTest extends UnitTestCase
             ->expects($this->once())
             ->method('getAttributeFromTag')
             ->with('[A-z]?', 'data-src', $content)
-            ->will($this->returnValue(
-                [
-                    'paths' => ['uploads/tx_templavoila/example.gif'],
-                    'masks' => ['"'],
-                ],
-            ));
+            ->willReturn([
+                'paths' => ['uploads/tx_templavoila/example.gif'],
+                'masks' => ['"'],
+            ]);
 
         $scraper = GeneralUtility::makeInstance(DataSrc::class, $attributeExtractor, $assetFactory);
         $scraper->scrape($content);

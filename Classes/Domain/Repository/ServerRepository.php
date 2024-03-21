@@ -9,6 +9,7 @@ use Aoe\Asdis\System\Configuration\Provider;
 
 /**
  * Repository for server objects.
+ * @see \Aoe\Asdis\Tests\Domain\Repository\ServerRepositoryTest
  */
 class ServerRepository
 {
@@ -37,6 +38,7 @@ class ServerRepository
                 $serverDefinition['protocol']
             ));
         }
+
         return $servers;
     }
 }

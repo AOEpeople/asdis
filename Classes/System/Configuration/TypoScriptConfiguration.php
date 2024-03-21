@@ -15,6 +15,7 @@ use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * TypoScript configuration provider.
+ * @see \Aoe\Asdis\Tests\System\Configuration\TypoScriptConfigurationTest
  */
 class TypoScriptConfiguration implements SingletonInterface
 {
@@ -25,18 +26,18 @@ class TypoScriptConfiguration implements SingletonInterface
      * @param string $validateType The data type to be validated against (E.g. "string"). Empty string to skip validation.
      * @param boolean $hasSubkeys Tells whether the requested key is assumed to has subkeys.
      * @return mixed
-     * @throws InvalidTypoScriptSetting
-     * @throws TypoScriptSettingNotExists
      */
     public function getSetting($key, $validateType = '', $hasSubkeys = false)
     {
         if (isset($this->configurationCache[$key])) {
             return $this->configurationCache[$key];
         }
+
         $parts = explode('.', $key);
         if (!is_array($parts) || count($parts) < 1) {
             throw new TypoScriptSettingNotExists($key, 1_372_050_700_894);
         }
+
         $conf = $this->getTypoScriptConfigurationArray();
         $lastPartIndex = count($parts) - 1;
         foreach ($parts as $index => $part) {
@@ -44,17 +45,21 @@ class TypoScriptConfiguration implements SingletonInterface
             if ($lastPartIndex !== $index || $hasSubkeys) {
                 $subkey .= '.';
             }
+
             if (!isset($conf[$subkey])) {
                 throw new TypoScriptSettingNotExists($key, 1_372_063_884_313);
             }
+
             $conf = $conf[$subkey];
             if ($lastPartIndex === $index) {
                 break;
             }
         }
+
         if (strlen($validateType) > 0 && strcmp($validateType, gettype($conf)) !== 0) {
             throw new InvalidTypoScriptSetting($key, gettype($conf), 1_372_064_668_444);
         }
+
         $this->configurationCache[$key] = $conf;
         return $conf;
     }
@@ -96,8 +101,10 @@ class TypoScriptConfiguration implements SingletonInterface
                     return $site;
                 }
             }
+
             throw new SiteNotFoundException();
         }
+
         return $GLOBALS['TYPO3_REQUEST']->getAttribute('site');
     }
 }

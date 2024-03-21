@@ -6,11 +6,11 @@ use Aoe\Asdis\Content\Scraper\Chain;
 use Aoe\Asdis\Content\Scraper\Html\Image;
 use Aoe\Asdis\Content\Scraper\Html\Script;
 use Aoe\Asdis\Domain\Model\Asset\Collection;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ChainTest extends UnitTestCase
 {
-    public function testAppend()
+    public function testAppend(): void
     {
         $chain = new Chain();
         $scraper1 = $this->getMockBuilder(Image::class)
@@ -26,7 +26,7 @@ class ChainTest extends UnitTestCase
         $this->assertSame(2, $chain->count());
     }
 
-    public function testScrape()
+    public function testScrape(): void
     {
         $chain = new Chain();
         $scraper1 = $this->getMockBuilder(Image::class)
@@ -38,10 +38,10 @@ class ChainTest extends UnitTestCase
 
         $scraper1->expects($this->once())
             ->method('scrape')
-            ->will($this->returnValue(new Collection()));
+            ->willReturn(new Collection());
         $scraper2->expects($this->once())
             ->method('scrape')
-            ->will($this->returnValue(new Collection()));
+            ->willReturn(new Collection());
 
         $chain->append($scraper1);
         $chain->append($scraper2);

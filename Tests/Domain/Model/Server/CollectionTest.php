@@ -4,11 +4,11 @@ namespace Aoe\Asdis\Tests\Domain\Model\Server;
 
 use Aoe\Asdis\Domain\Model\Server;
 use Aoe\Asdis\Domain\Model\Server\Collection;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class CollectionTest extends UnitTestCase
 {
-    public function testAppend()
+    public function testAppend(): void
     {
         $collection = new Collection();
         $server = new Server();

@@ -3,7 +3,7 @@
 namespace Aoe\Asdis\Tests\System\Uri;
 
 use Aoe\Asdis\System\Uri\Normalizer;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class NormalizerTest extends UnitTestCase
 {
@@ -14,7 +14,7 @@ class NormalizerTest extends UnitTestCase
         $this->normalizer = new Normalizer();
     }
 
-    public function testNormalizePath()
+    public function testNormalizePath(): void
     {
         $this->assertSame('typo3temp/pics/foo.gif', $this->normalizer->normalizePath('/typo3temp/pics/foo.gif'));
         $this->assertSame('typo3temp/pics/bar.gif', $this->normalizer->normalizePath('typo3temp/pics/bar.gif'));

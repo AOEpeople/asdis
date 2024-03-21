@@ -4,6 +4,7 @@ namespace Aoe\Asdis\Content\Replacement;
 
 /**
  * A content replacement map.
+ * @see \Aoe\Asdis\Tests\Content\Replacement\MapTest
  */
 class Map
 {

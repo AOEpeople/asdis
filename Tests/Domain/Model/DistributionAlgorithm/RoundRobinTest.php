@@ -7,7 +7,7 @@ use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
 use Aoe\Asdis\Domain\Model\DistributionAlgorithm\RoundRobin;
 use Aoe\Asdis\Domain\Model\Server;
 use Aoe\Asdis\Domain\Model\Server\Collection as ServerCollection;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class RoundRobinTest extends UnitTestCase
 {
@@ -18,7 +18,7 @@ class RoundRobinTest extends UnitTestCase
         $this->algorithm = new RoundRobin();
     }
 
-    public function testDistribute()
+    public function testDistribute(): void
     {
         $assets = new AssetCollection();
         $asset1 = new Asset();

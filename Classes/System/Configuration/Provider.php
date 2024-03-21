@@ -47,10 +47,8 @@ class Provider
 
     /**
      * Returns the scraper keys for the current page.
-     *
-     * @return array
      */
-    public function getScraperKeys()
+    public function getScraperKeys(): array
     {
         $keyList = $this->typoScriptConfiguration->getSetting('scrapers', 'string');
         $keys = explode(',', $keyList);
@@ -58,22 +56,23 @@ class Provider
         if (!is_array($keys)) {
             return [];
         }
+
         if (count($keys) < 1) {
             return [];
         }
+
         $scraperKeys = [];
         foreach ($keys as $key) {
             $scraperKeys[] = trim($key);
         }
+
         return $scraperKeys;
     }
 
     /**
      * Returns the filter keys for the current page.
-     *
-     * @return array
      */
-    public function getFilterKeys()
+    public function getFilterKeys(): array
     {
         $keyList = $this->typoScriptConfiguration->getSetting('filters', 'string');
         $keys = explode(',', $keyList);
@@ -81,13 +80,16 @@ class Provider
         if (!is_array($keys)) {
             return [];
         }
+
         if (count($keys) < 1) {
             return [];
         }
+
         $filterKeys = [];
         foreach ($keys as $key) {
             $filterKeys[] = trim($key);
         }
+
         return $filterKeys;
     }
 
@@ -105,11 +107,8 @@ class Provider
      *         'protocol'   => 'http'
      *     )
      * )
-     *
-     * @return array
-     * @throws InvalidStructure
      */
-    public function getServerDefinitions()
+    public function getServerDefinitions(): array
     {
         $definitions = [];
         $serverDefinitions = $this->typoScriptConfiguration->getSetting('servers', 'array', true);
@@ -120,15 +119,18 @@ class Provider
                     1_372_159_113_552
                 );
             }
+
             if (!isset($serverDefinition['protocol'])) {
                 $serverDefinition['protocol'] = 'marker';
             }
+
             $definitions[] = [
                 'identifier' => $identifier,
                 'domain' => $serverDefinition['domain'],
                 'protocol' => $serverDefinition['protocol'],
             ];
         }
+
         return $definitions;
     }
 

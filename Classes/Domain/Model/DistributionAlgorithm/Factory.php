@@ -6,6 +6,7 @@ use Aoe\Asdis\System\Factory\AbstractDeclarationBasedFactory;
 
 /**
  * Factory for distribution algorithms.
+ * @see \Aoe\Asdis\Tests\Domain\Model\DistributionAlgorithm\FactoryTest
  */
 class Factory extends AbstractDeclarationBasedFactory
 {

@@ -4,6 +4,7 @@ namespace Aoe\Asdis\System\Uri\Filter;
 
 /**
  * Filters paths that start with "//".
+ * @see \Aoe\Asdis\Tests\System\Uri\Filter\WildcardProtocolTest
  */
 class WildcardProtocol implements FilterInterface
 {
@@ -18,8 +19,10 @@ class WildcardProtocol implements FilterInterface
             if (str_starts_with($path, '//')) {
                 continue;
             }
+
             $filteredPaths[] = $path;
         }
+
         return $filteredPaths;
     }
 }

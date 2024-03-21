@@ -4,6 +4,7 @@ namespace Aoe\Asdis\Content\Replacement;
 
 /**
  * Replaces content.
+ * @see \Aoe\Asdis\Tests\Content\Replacement\ProcessorTest
  */
 class Processor
 {
@@ -17,6 +18,7 @@ class Processor
         if ($result === null) {
             return $content;
         }
+
         return $result;
     }
 }

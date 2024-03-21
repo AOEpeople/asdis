@@ -6,7 +6,6 @@ class NotEnabledException extends \Exception
 {
     /**
      * @param integer $code
-     * @param  \Exception|null $previous
      */
     public function __construct($code = 0, \Exception $previous = null)
     {

@@ -4,11 +4,10 @@ namespace Aoe\Asdis\Tests\Domain\Repository;
 
 use Aoe\Asdis\Domain\Model\Page;
 use Aoe\Asdis\Domain\Model\Server;
-use Aoe\Asdis\Domain\Model\Server\Collection;
 use Aoe\Asdis\Domain\Model\Server\Factory;
 use Aoe\Asdis\Domain\Repository\ServerRepository;
 use Aoe\Asdis\System\Configuration\Provider;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ServerRepositoryTest extends UnitTestCase
 {
@@ -22,7 +21,7 @@ class ServerRepositoryTest extends UnitTestCase
     /**
      * Tests Aoe\Asdis\Domain\Repository\ServerRepository->findAll()
      */
-    public function testFindAllByPage()
+    public function testFindAllByPage(): void
     {
         $server = [
             'identifier' => uniqid(),
@@ -36,7 +35,7 @@ class ServerRepositoryTest extends UnitTestCase
             ->getMock();
         $providerMock
             ->method('getServerDefinitions')
-            ->will($this->returnValue($servers));
+            ->willReturn($servers);
 
         $page = new Page($providerMock);
 
@@ -46,11 +45,11 @@ class ServerRepositoryTest extends UnitTestCase
         $factory
             ->expects($this->once())
             ->method('createServer')
-            ->will($this->returnValue($this->getMockBuilder(Server::class)->getMock()));
+            ->willReturn($this->getMockBuilder(Server::class)->getMock());
 
         $this->serverRepository->injectServerFactory($factory);
         $test = $this->serverRepository->findAllByPage($page);
 
-        $this->assertTrue($test instanceof Collection);
+        $this->assertInstanceOf(\Aoe\Asdis\Domain\Model\Server\Collection::class, $test);
     }
 }

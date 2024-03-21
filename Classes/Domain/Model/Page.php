@@ -13,6 +13,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Represents a page in the TYPO3 page tree.
+ * @see \Aoe\Asdis\Tests\Domain\Model\PageTest
  */
 class Page
 {
@@ -64,6 +65,7 @@ class Page
         if (!$this->configurationProvider->isReplacementEnabled()) {
             return;
         }
+
         $this->setAssets($this->scraperChainFactory->buildChain()->scrape($this->pageObject->content));
     }
 
@@ -76,11 +78,13 @@ class Page
         if (!$this->configurationProvider->isReplacementEnabled()) {
             return;
         }
+
         $distributionAlgorithmKey = '';
         try {
             $distributionAlgorithmKey = $this->configurationProvider->getDistributionAlgorithmKey();
         } catch (Exception $exception) {
         }
+
         $distributionAlgorithm = $this->distributionAlgorithmFactory->buildDistributionAlgorithmFromKey($distributionAlgorithmKey);
         $distributionAlgorithm->distribute($this->assets, $this->serverRepository->findAllByPage($this));
 

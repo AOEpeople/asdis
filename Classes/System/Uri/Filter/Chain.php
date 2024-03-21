@@ -6,6 +6,7 @@ use ArrayIterator;
 
 /**
  * Chain of filters.
+ * @see \Aoe\Asdis\Tests\System\Uri\Filter\ChainTest
  */
 class Chain extends ArrayIterator implements FilterInterface
 {
@@ -35,10 +36,12 @@ class Chain extends ArrayIterator implements FilterInterface
         if ($this->count() < 1) {
             return $paths;
         }
+
         foreach ($this as $filter) {
             /** @var FilterInterface $filter */
             $paths = $filter->filter($paths);
         }
+
         return $paths;
     }
 }

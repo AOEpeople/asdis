@@ -4,11 +4,11 @@ namespace Aoe\Asdis\Tests\Domain\Model\Asset;
 
 use Aoe\Asdis\Domain\Model\Asset;
 use Aoe\Asdis\Domain\Model\Asset\Collection;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class CollectionTest extends UnitTestCase
 {
-    public function testAppend()
+    public function testAppend(): void
     {
         $collection = new Collection();
         $asset = new Asset();
@@ -18,7 +18,7 @@ class CollectionTest extends UnitTestCase
         $this->assertSame(1, $collection->count());
     }
 
-    public function testAppendWithSameOriginalPath()
+    public function testAppendWithSameOriginalPath(): void
     {
         $collection = new Collection();
         $asset1 = new Asset();
@@ -34,7 +34,7 @@ class CollectionTest extends UnitTestCase
         $this->assertSame(1, $collection->count());
     }
 
-    public function testMerge()
+    public function testMerge(): void
     {
         $collection1 = new Collection();
         $collection2 = new Collection();
@@ -59,7 +59,7 @@ class CollectionTest extends UnitTestCase
         $this->assertSame(2, $collection2->count());
     }
 
-    public function testGetReplacementMap()
+    public function testGetReplacementMap(): void
     {
         $collection = new Collection();
         $asset1 = new Asset();
@@ -78,7 +78,7 @@ class CollectionTest extends UnitTestCase
 
         $map = $collection->getReplacementMap();
 
-        $this->assertSame(2, count($map->getSources()));
-        $this->assertSame(2, count($map->getTargets()));
+        $this->assertCount(2, $map->getSources());
+        $this->assertCount(2, $map->getTargets());
     }
 }

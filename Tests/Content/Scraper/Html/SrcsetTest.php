@@ -5,8 +5,8 @@ namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
 use Aoe\Asdis\Content\Scraper\Html\Srcset;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class SrcsetTest extends UnitTestCase
 {
@@ -23,21 +23,21 @@ class SrcsetTest extends UnitTestCase
     /**
      * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
      */
-    public function testScrapePictureSource()
+    public function testScrapePictureSource(): void
     {
         $assetFactory = $this->getMockBuilder(Factory::class)
-            ->setMethods(['createAssetsFromPaths'])
+            ->onlyMethods(['createAssetsFromPaths'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $assetFactory->expects($this->once())
             ->method('createAssetsFromPaths')
             ->with([
-            '//my-domain.local/fileadmin/a.webp',
-            '//my-domain.local/fileadmin/b.webp',
-            '//my-domain.local/fileadmin/c.png',
-            '//my-domain.local/fileadmin/d.png',
-        ]);
+                '//my-domain.local/fileadmin/a.webp',
+                '//my-domain.local/fileadmin/b.webp',
+                '//my-domain.local/fileadmin/c.png',
+                '//my-domain.local/fileadmin/d.png',
+            ]);
 
         // We use line-endings to test, if the scrapper can handle that
         $htmlCode = <<< EOT
@@ -57,22 +57,22 @@ EOT;
     /**
      * Tests Tx_Asdis_Content_Scraper_Css_Url->scrape()
      */
-    public function testScrapeLinkImagesrcset()
+    public function testScrapeLinkImagesrcset(): void
     {
         $assetFactory = $this->getMockBuilder(Factory::class)
-            ->setMethods(['createAssetsFromPaths'])
+            ->onlyMethods(['createAssetsFromPaths'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $assetFactory->expects($this->once())
             ->method('createAssetsFromPaths')
             ->with([
-            '//my-domain.local/fileadmin/a.webp',
-            '//my-domain.local/fileadmin/b.webp',
-            '//my-domain.local/fileadmin/c.webp',
-            '//my-domain.local/fileadmin/d.webp',
-            '//my-domain.local/fileadmin/e.webp',
-        ]);
+                '//my-domain.local/fileadmin/a.webp',
+                '//my-domain.local/fileadmin/b.webp',
+                '//my-domain.local/fileadmin/c.webp',
+                '//my-domain.local/fileadmin/d.webp',
+                '//my-domain.local/fileadmin/e.webp',
+            ]);
 
         // We use line-endings to test, if the scrapper can handle that
         $htmlCode = <<< EOT

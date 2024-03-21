@@ -3,7 +3,7 @@
 namespace Aoe\Asdis\Tests\Domain\Model;
 
 use Aoe\Asdis\Domain\Model\Server;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ServerTest extends UnitTestCase
 {
@@ -16,20 +16,20 @@ class ServerTest extends UnitTestCase
         $this->server = new Server();
     }
 
-    public function testSetAndGetDomain()
+    public function testSetAndGetDomain(): void
     {
         $this->server->setDomain($this->domain);
         $this->assertSame($this->domain, $this->server->getDomain());
     }
 
-    public function testSetAndGetIdentifier()
+    public function testSetAndGetIdentifier(): void
     {
         $identifier = 'media1';
         $this->server->setIdentifier($identifier);
         $this->assertSame($identifier, $this->server->getIdentifier());
     }
 
-    public function testSetAndGetProtocol()
+    public function testSetAndGetProtocol(): void
     {
         $invalidProtocol = 'fancy';
         $this->server->setProtocol($invalidProtocol);
@@ -51,7 +51,7 @@ class ServerTest extends UnitTestCase
         $this->assertSame(Server::PROTOCOL_HTTPS, $this->server->getProtocol());
     }
 
-    public function testGetUriWithMarker()
+    public function testGetUriWithMarker(): void
     {
         $marker = '###HTTP_S###';
         $this->server->setDomain($this->domain);
@@ -60,21 +60,21 @@ class ServerTest extends UnitTestCase
         $this->assertSame($marker . $this->domain . '/', $this->server->getUri());
     }
 
-    public function testGetUriWithWildcard()
+    public function testGetUriWithWildcard(): void
     {
         $this->server->setDomain($this->domain);
         $this->server->setProtocol(Server::PROTOCOL_WILDCARD);
         $this->assertSame('//' . $this->domain . '/', $this->server->getUri());
     }
 
-    public function testGetUriWithHttp()
+    public function testGetUriWithHttp(): void
     {
         $this->server->setDomain($this->domain);
         $this->server->setProtocol(Server::PROTOCOL_HTTP);
         $this->assertSame('http://' . $this->domain . '/', $this->server->getUri());
     }
 
-    public function testGetUriWithHttps()
+    public function testGetUriWithHttps(): void
     {
         $this->server->setDomain($this->domain);
         $this->server->setProtocol(Server::PROTOCOL_HTTPS);

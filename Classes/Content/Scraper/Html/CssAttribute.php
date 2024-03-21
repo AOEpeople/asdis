@@ -8,6 +8,7 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
 
 /**
  * Scrapes assets from inline CSS.
+ * @see \Aoe\Asdis\Tests\Content\Scraper\Html\CssAttributeTest
  */
 class CssAttribute implements ScraperInterface
 {
@@ -36,8 +37,9 @@ class CssAttribute implements ScraperInterface
             $matches
         );
         if (is_array($matches) && count($matches) > 1 && is_array($matches[1])) {
-            $blocks = $matches[1];
+            return $matches[1];
         }
+
         return $blocks;
     }
 }

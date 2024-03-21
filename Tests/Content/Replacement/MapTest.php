@@ -3,7 +3,7 @@
 namespace Aoe\Asdis\Tests\Content\Replacement;
 
 use Aoe\Asdis\Content\Replacement\Map;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class MapTest extends UnitTestCase
 {
@@ -14,7 +14,7 @@ class MapTest extends UnitTestCase
         $this->map = new Map();
     }
 
-    public function testAll()
+    public function testAll(): void
     {
         $source1 = 'AAA';
         $target1 = 'BBB';
@@ -37,8 +37,8 @@ class MapTest extends UnitTestCase
             $this->assertInternalType('array', $targets);
         }
 
-        $this->assertSame(2, count($sources));
-        $this->assertSame(2, count($targets));
+        $this->assertCount(2, $sources);
+        $this->assertCount(2, $targets);
         $this->assertSame($source1, $sources[0]);
         $this->assertSame($source2, $sources[1]);
         $this->assertSame($target1, $targets[0]);

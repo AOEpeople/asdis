@@ -39,6 +39,7 @@ class ContentPostProcAll extends AbstractHook
         if ($GLOBALS['TSFE']->isINTincScript()) {
             return;
         }
+
         $this->process($params, $pObj);
     }
 
@@ -51,6 +52,7 @@ class ContentPostProcAll extends AbstractHook
         if (!$GLOBALS['TSFE']->isINTincScript()) {
             return;
         }
+
         $this->process($params, $pObj);
     }
 }

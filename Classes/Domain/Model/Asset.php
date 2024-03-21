@@ -4,19 +4,20 @@ namespace Aoe\Asdis\Domain\Model;
 
 /**
  * Represents an asset.
+ * @see \Aoe\Asdis\Tests\Domain\Model\AssetTest
  */
 class Asset
 {
-    private ?string $originalPath = null;
+    private string $originalPath = '';
 
-    private ?string $normalizedPath = null;
+    private string $normalizedPath = '';
 
     private ?Server $server = null;
 
     /**
      * The mask character in the content. eg. " or '
      */
-    private ?string $mask = null;
+    private string $mask = '';
 
     public function getHash(): string
     {
@@ -38,7 +39,7 @@ class Asset
         $this->normalizedPath = $normalizedPath;
     }
 
-    public function getNormalizedPath(): ?string
+    public function getNormalizedPath(): string
     {
         return $this->normalizedPath;
     }
@@ -70,6 +71,7 @@ class Asset
         if (isset($this->server)) {
             $domain = $this->server->getUri();
         }
+
         return $domain . $this->normalizedPath;
     }
 

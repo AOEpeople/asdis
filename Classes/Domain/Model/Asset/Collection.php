@@ -9,6 +9,7 @@ use ArrayIterator;
 
 /**
  * Collection which contains asset objects.
+ * @see \Aoe\Asdis\Tests\Domain\Model\Asset\CollectionTest
  */
 class Collection extends ArrayIterator
 {
@@ -29,14 +30,14 @@ class Collection extends ArrayIterator
     public function append($asset): void
     {
         $elementHash = $asset->getHash();
-        $found = array_search($elementHash, $this->elementHashes);
+        $found = array_search($elementHash, $this->elementHashes, true);
 
         // Check if hash exists and if mask is equal
-        if (false !== $found && $asset->getMask() === $this[$found]->getMask()) {
+        if ($found !== false && $asset->getMask() === $this[$found]->getMask()) {
             return;
         }
 
-        if (false !== $found && $asset->getMask() === '' && $this[$found]->getMask() !== '') {
+        if ($found !== false && $asset->getMask() === '' && $this[$found]->getMask() !== '') {
             $this[$found]->setMask('');
             return;
         }
@@ -50,6 +51,7 @@ class Collection extends ArrayIterator
         foreach ($assetCollection as $asset) {
             $this->append($asset);
         }
+
         return $this;
     }
 
@@ -63,6 +65,7 @@ class Collection extends ArrayIterator
                 $asset->getMask() . $asset->getUri() . $asset->getMask()
             );
         }
+
         return $map;
     }
 }

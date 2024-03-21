@@ -3,7 +3,7 @@
 namespace Aoe\Asdis\Tests\System\Uri\Filter;
 
 use Aoe\Asdis\System\Uri\Filter\BubblingPath;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class BubblingPathTest extends UnitTestCase
 {
@@ -14,7 +14,7 @@ class BubblingPathTest extends UnitTestCase
         $this->filter = new BubblingPath();
     }
 
-    public function testFilter()
+    public function testFilter(): void
     {
         $paths = [
             'typo3temp/pics/foo.gif',
@@ -29,7 +29,8 @@ class BubblingPathTest extends UnitTestCase
             // phpunit 8.x or lower
             $this->assertInternalType('array', $filteredPaths);
         }
-        $this->assertSame(1, count($filteredPaths));
+
+        $this->assertCount(1, $filteredPaths);
         $this->assertSame($paths[0], $filteredPaths[0]);
     }
 }
