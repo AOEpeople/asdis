@@ -30,8 +30,6 @@ class TypoScriptConfigurationTest extends UnitTestCase
     public function testGetSetting(): void
     {
         $this->expectException(TypoScriptSettingNotExists::class);
-        $this->numberOfAssertionsPerformed(3);
-
         $this->typoScriptConfiguration->getSetting('xy');
     }
 
@@ -40,8 +38,6 @@ class TypoScriptConfigurationTest extends UnitTestCase
      */
     public function testGetSettingsWithConfig(): void
     {
-        $this->numberOfAssertionsPerformed(3);
-
         $config = [
             'logger.' => [
                 'severity' => 1,
@@ -59,8 +55,6 @@ class TypoScriptConfigurationTest extends UnitTestCase
      */
     public function testGetSettingsWithSubtypeConfig(): void
     {
-        $this->numberOfAssertionsPerformed(3);
-
         $config = [
             'logger.' => [
                 'severity.' => [
