@@ -8,6 +8,7 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
 
 /**
  * Scrapes assets from inline CSS.
+ * @see \Aoe\Asdis\Tests\Content\Scraper\Html\CssInlineTest
  */
 class CssInline implements ScraperInterface
 {
@@ -25,11 +26,8 @@ class CssInline implements ScraperInterface
 
     /**
      * Returns the inner content of all <style></style> blocks of the given markup as an array.
-     *
-     * @param string $content
-     * @return array
      */
-    private function getStyleBlocksFromMarkup($content)
+    private function getStyleBlocksFromMarkup(string $content): array
     {
         $blocks = [];
         $matches = [];

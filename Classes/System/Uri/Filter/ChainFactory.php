@@ -6,6 +6,7 @@ use Aoe\Asdis\System\Factory\AbstractDeclarationBasedFactory;
 
 /**
  * Factory for filter chains.
+ * @see \Aoe\Asdis\Tests\System\Uri\Filter\ChainFactoryTest
  */
 class ChainFactory extends AbstractDeclarationBasedFactory
 {
@@ -16,6 +17,7 @@ class ChainFactory extends AbstractDeclarationBasedFactory
         foreach ($this->configurationProvider->getFilterKeys() as $filterKey) {
             $chain->append($this->buildFilter($filterKey));
         }
+
         return $chain;
     }
 

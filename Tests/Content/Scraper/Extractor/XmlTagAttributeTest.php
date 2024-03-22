@@ -3,7 +3,7 @@
 namespace Aoe\Asdis\Tests\Content\Scraper\Extractor;
 
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class XmlTagAttributeTest extends UnitTestCase
 {
@@ -14,7 +14,7 @@ class XmlTagAttributeTest extends UnitTestCase
         $this->extractor = new XmlTagAttribute();
     }
 
-    public function testGetAttributeFromTag()
+    public function testGetAttributeFromTag(): void
     {
         $path1 = 'uploads/pics/foo.jpg';
         $path2 = 'typo3temp/tx_foo/bar.gif';
@@ -38,15 +38,16 @@ class XmlTagAttributeTest extends UnitTestCase
             $this->assertInternalType('array', $hits['paths']);
             $this->assertInternalType('array', $hits['masks']);
         }
-        $this->assertSame(2, count($hits['paths']));
-        $this->assertSame(2, count($hits['masks']));
+
+        $this->assertCount(2, $hits['paths']);
+        $this->assertCount(2, $hits['masks']);
         $this->assertSame($path1, $hits['paths'][0]);
         $this->assertSame('"', $hits['masks'][0]);
         $this->assertSame($path2, $hits['paths'][1]);
         $this->assertSame('"', $hits['masks'][1]);
     }
 
-    public function testGetAttributeFromTagWithRequiredOtherAttributes()
+    public function testGetAttributeFromTagWithRequiredOtherAttributes(): void
     {
         $path1 = 'uploads/pics/foo.jpg';
         $path2 = 'typo3temp/tx_foo/bar.gif';
@@ -55,7 +56,14 @@ class XmlTagAttributeTest extends UnitTestCase
             <input src="' . $path2 . '" />
         </div>';
 
-        $hits = $this->extractor->getAttributeFromTag('input', 'src', $content, ['type' => 'image']);
+        $hits = $this->extractor->getAttributeFromTag(
+            'input',
+            'src',
+            $content,
+            [
+                'type' => 'image',
+            ]
+        );
 
         if (!method_exists($this, 'assertInternalType')) {
             // phpunit 9.x or higher
@@ -68,13 +76,14 @@ class XmlTagAttributeTest extends UnitTestCase
             $this->assertInternalType('array', $hits['paths']);
             $this->assertInternalType('array', $hits['masks']);
         }
-        $this->assertSame(1, count($hits['paths']));
-        $this->assertSame(1, count($hits['masks']));
+
+        $this->assertCount(1, $hits['paths']);
+        $this->assertCount(1, $hits['masks']);
         $this->assertSame($path1, $hits['paths'][0]);
         $this->assertSame('"', $hits['masks'][0]);
     }
 
-    public function testGetAttributeFromTagWithSeveralSrcAttributes()
+    public function testGetAttributeFromTagWithSeveralSrcAttributes(): void
     {
         $path1 = 'uploads/pics/foo.jpg';
         $path2 = 'typo3temp/tx_foo/bar.gif';
@@ -93,8 +102,9 @@ class XmlTagAttributeTest extends UnitTestCase
             $this->assertInternalType('array', $hits['paths']);
             $this->assertInternalType('array', $hits['masks']);
         }
-        $this->assertSame(1, count($hits['paths']));
-        $this->assertSame(1, count($hits['masks']));
+
+        $this->assertCount(1, $hits['paths']);
+        $this->assertCount(1, $hits['masks']);
         $this->assertSame($path1, $hits['paths'][0]);
         $this->assertSame('"', $hits['masks'][0]);
     }

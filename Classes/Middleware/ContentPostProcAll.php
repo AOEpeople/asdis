@@ -6,16 +6,14 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
 use Aoe\Asdis\Domain\Model\Page;
 use Aoe\Asdis\System\Configuration\Provider;
 use Aoe\Asdis\System\Log\Logger;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Core\Http\Stream;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use Exception;
 
 class ContentPostProcAll implements MiddlewareInterface
 {
@@ -38,6 +36,7 @@ class ContentPostProcAll implements MiddlewareInterface
         if (!$this->provider->isReplacementEnabled()) {
             return $response;
         }
+
         if ($this->provider->isDefaultHookHandlingDisabled()) {
             return $response;
         }

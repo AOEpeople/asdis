@@ -2,6 +2,9 @@
 
 namespace Aoe\Asdis\System\Uri;
 
+/**
+ * @see \Aoe\Asdis\Tests\System\Uri\NormalizerTest
+ */
 class Normalizer
 {
     /**
@@ -25,8 +28,9 @@ class Normalizer
         }
 
         if (str_starts_with($path, '/')) {
-            $path = substr($path, 1);
+            return substr($path, 1);
         }
+
         return $path;
     }
 }

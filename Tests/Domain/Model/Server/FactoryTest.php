@@ -5,11 +5,11 @@ namespace Aoe\Asdis\Tests\Domain\Model\Server;
 use Aoe\Asdis\Domain\Model\Server;
 use Aoe\Asdis\Domain\Model\Server\Factory;
 use Aoe\Asdis\System\Configuration\Provider;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class FactoryTest extends UnitTestCase
 {
-    public function testCreateServer()
+    public function testCreateServer(): void
     {
         $factory = new Factory();
         $protocolMarker = '###HTTP_S###';
@@ -19,13 +19,13 @@ class FactoryTest extends UnitTestCase
 
         $configurationProvider = $this->getMockBuilder(Provider::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getServerProtocolMarker'])
+            ->onlyMethods(['getServerProtocolMarker'])
             ->getMock();
 
         $configurationProvider
             ->expects($this->once())
             ->method('getServerProtocolMarker')
-            ->will($this->returnValue($protocolMarker));
+            ->willReturn($protocolMarker);
 
         $factory->injectConfigurationProvider($configurationProvider);
 

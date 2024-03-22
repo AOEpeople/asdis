@@ -3,7 +3,7 @@
 namespace Aoe\Asdis\Tests\System\Uri\Filter;
 
 use Aoe\Asdis\System\Uri\Filter\TooShort;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class TooShortTest extends UnitTestCase
 {
@@ -14,7 +14,7 @@ class TooShortTest extends UnitTestCase
         $this->filter = new TooShort();
     }
 
-    public function testFilter()
+    public function testFilter(): void
     {
         $paths = [
             '',
@@ -29,7 +29,8 @@ class TooShortTest extends UnitTestCase
             // phpunit 8.x or lower
             $this->assertInternalType('array', $filteredPaths);
         }
-        $this->assertSame(1, count($filteredPaths));
+
+        $this->assertCount(1, $filteredPaths);
         $this->assertSame($paths[2], $filteredPaths[0]);
     }
 }

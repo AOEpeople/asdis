@@ -4,6 +4,7 @@ namespace Aoe\Asdis\System\Uri\Filter;
 
 /**
  * Filters paths that contain "../".
+ * @see \Aoe\Asdis\Tests\System\Uri\Filter\BubblingPathTest
  */
 class BubblingPath implements FilterInterface
 {
@@ -18,8 +19,10 @@ class BubblingPath implements FilterInterface
             if ($this->containsBubblingPath($path)) {
                 continue;
             }
+
             $filteredPaths[] = $path;
         }
+
         return $filteredPaths;
     }
 

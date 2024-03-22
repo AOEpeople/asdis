@@ -4,21 +4,21 @@ namespace Aoe\Asdis\Tests\Domain\Model;
 
 use Aoe\Asdis\Domain\Model\Page;
 use Aoe\Asdis\System\Configuration\Provider;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class PageTest extends UnitTestCase
 {
     /**
      * Tests Page->scrapeAssets()
      */
-    public function testScrapeAssets()
+    public function testScrapeAssets(): void
     {
         $config = $this->getMockBuilder(Provider::class)
             ->disableOriginalConstructor()
             ->getMock();
         $config
             ->method('isReplacementEnabled')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         $page = new Page($config);
 

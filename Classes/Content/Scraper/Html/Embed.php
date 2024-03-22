@@ -7,6 +7,7 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
 
 /**
  * Scrapes assets from "<embed>" tags.
+ * @see \Aoe\Asdis\Tests\Content\Scraper\Html\EmbedTest
  */
 class Embed extends AbstractHtmlScraper implements ScraperInterface
 {

@@ -7,6 +7,7 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
 
 /**
  * Scrapes assets from "<image>" tags.
+ * @see \Aoe\Asdis\Tests\Content\Scraper\Html\ImageTest
  */
 class Image extends AbstractHtmlScraper implements ScraperInterface
 {

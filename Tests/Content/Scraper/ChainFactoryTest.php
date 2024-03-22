@@ -4,27 +4,27 @@ namespace Aoe\Asdis\Tests\Content\Scraper;
 
 use Aoe\Asdis\Content\Scraper\ChainFactory;
 use Aoe\Asdis\System\Configuration\Provider;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ChainFactoryTest extends UnitTestCase
 {
-    public function testBuildChain()
+    public function testBuildChain(): void
     {
         global $asdisBaseDir;
         $configurationProvider = $this->getMockBuilder(Provider::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getScraperKeys'])
+            ->onlyMethods(['getScraperKeys'])
             ->getMock();
         $configurationProvider->expects($this->once())
             ->method('getScraperKeys')
-            ->will($this->returnValue([]));
+            ->willReturn([]);
 
         $chainFactory = $this->getMockBuilder(ChainFactory::class)
-            ->setMethods(['getScraperDeclarations'])
+            ->onlyMethods(['getScraperDeclarations'])
             ->getMock();
         $chainFactory->expects($this->once())
             ->method('getScraperDeclarations')
-            ->will($this->returnValue([]));
+            ->willReturn([]);
         $chainFactory->injectConfigurationProvider($configurationProvider);
 
         $chainFactory->buildChain();

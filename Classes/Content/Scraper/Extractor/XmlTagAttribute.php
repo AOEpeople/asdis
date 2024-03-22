@@ -4,6 +4,7 @@ namespace Aoe\Asdis\Content\Scraper\Extractor;
 
 /**
  * Service which extracts paths from attributes in HTML tags.
+ * @see \Aoe\Asdis\Tests\Content\Scraper\Extractor\XmlTagAttributeTest
  */
 class XmlTagAttribute
 {
@@ -20,9 +21,8 @@ class XmlTagAttribute
      *										name and the element's value is
      *										the attribute's value. This param
      *										is optional.
-     * @return array
      */
-    public function getAttributeFromTag($tagName, $attributeName, $content, array $requiredOtherAttributes = [])
+    public function getAttributeFromTag(string $tagName, string $attributeName, $content, array $requiredOtherAttributes = []): array
     {
         $paths = [];
         $masks = [];
@@ -60,6 +60,7 @@ class XmlTagAttribute
                     $containsAllRequiredAttributes = false;
                 }
             }
+
             if ($containsAllRequiredAttributes) {
                 $paths[] = $match;
                 $masks[] = $matches[1][$mkey];

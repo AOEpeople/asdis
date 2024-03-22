@@ -6,11 +6,11 @@ use Aoe\Asdis\System\Configuration\Provider;
 use Aoe\Asdis\System\Uri\Filter\ChainFactory;
 use Aoe\Asdis\System\Uri\Filter\ContainsProtocol;
 use Aoe\Asdis\System\Uri\Filter\WildcardProtocol;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ChainFactoryTest extends UnitTestCase
 {
-    public function testBuildChain()
+    public function testBuildChain(): void
     {
         global $asdisBaseDir;
 
@@ -29,27 +29,25 @@ class ChainFactoryTest extends UnitTestCase
 
         $conf = $this->getMockBuilder(Provider::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getFilterKeys'])
+            ->onlyMethods(['getFilterKeys'])
             ->getMock();
         $conf->expects($this->once())
             ->method('getFilterKeys')
-            ->will(
-                $this->returnValue(
-                    ['containsProtocol', 'wildcardProtocol']
-                )
+            ->willReturn(
+                ['containsProtocol', 'wildcardProtocol']
             );
 
         $factory = $this->getMockBuilder(ChainFactory::class)
-            ->setMethods(['getDeclarations', 'buildObjectFromKey'])
+            ->onlyMethods(['getDeclarations', 'buildObjectFromKey'])
             ->getMock();
 
         $factory->injectConfigurationProvider($conf);
         $factory->expects($this->once())
             ->method('getDeclarations')
-            ->will($this->returnValue($declarations));
+            ->willReturn($declarations);
         $factory->expects($this->exactly(2))
             ->method('buildObjectFromKey')
-            ->will($this->returnValue(new ContainsProtocol()));
+            ->willReturn(new ContainsProtocol());
         $factory->buildChain();
     }
 }

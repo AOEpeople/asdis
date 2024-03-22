@@ -7,12 +7,17 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
 
 /**
  * Scrapes CSS assets from "<link>" tags.
+ * @see \Aoe\Asdis\Tests\Content\Scraper\Html\CssFileTest
  */
 class CssFile extends AbstractHtmlScraper implements ScraperInterface
 {
     public function scrape(string $content): ?Collection
     {
-        return $this->getAssets('link', 'href', $content, ['rel' => 'stylesheet'])
-            ->merge($this->getAssets('link', 'href', $content, ['type' => 'text/css']));
+        return $this->getAssets('link', 'href', $content, [
+            'rel' => 'stylesheet',
+        ])
+            ->merge($this->getAssets('link', 'href', $content, [
+                'type' => 'text/css',
+            ]));
     }
 }

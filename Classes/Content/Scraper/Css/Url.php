@@ -8,6 +8,7 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
 
 /**
  * Scrapes paths from "url()" in CSS.
+ * @see \Aoe\Asdis\Tests\Content\Scraper\Css\UrlTest
  */
 class Url implements ScraperInterface
 {
@@ -27,11 +28,8 @@ class Url implements ScraperInterface
     /**
      * Extracts paths to resources in CSS code.
      * This means file references which are included in "url(...)".
-     *
-     * @param string $cssContent
-     * @return array
      */
-    private function extractUrlPaths($cssContent)
+    private function extractUrlPaths(string $cssContent): array
     {
         $paths = [];
         $masks = [];
@@ -55,6 +53,7 @@ class Url implements ScraperInterface
             if (str_contains($path, ',')) {
                 continue;
             }
+
             $paths[] = $path;
             $masks[] = $matches[1][$mkey];
         }

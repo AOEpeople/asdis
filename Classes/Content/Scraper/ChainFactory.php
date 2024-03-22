@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Scraper chain factory.
+ * @see \Aoe\Asdis\Tests\Content\Scraper\ChainFactoryTest
  */
 class ChainFactory extends AbstractDeclarationBasedFactory
 {
@@ -20,6 +21,7 @@ class ChainFactory extends AbstractDeclarationBasedFactory
         foreach ($this->configurationProvider->getScraperKeys() as $scraperKey) {
             $chain->append($this->buildScraper($scraperKey));
         }
+
         return $chain;
     }
 
@@ -28,6 +30,7 @@ class ChainFactory extends AbstractDeclarationBasedFactory
         if (!isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'])) {
             return [];
         }
+
         return $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['asdis']['scrapers'];
     }
 

@@ -7,8 +7,8 @@ use Aoe\Asdis\Domain\Model\DistributionAlgorithm\RoundRobin;
 use Aoe\Asdis\System\Uri\Filter\BubblingPath;
 use Aoe\Asdis\System\Uri\Filter\ContainsInlineData;
 use Aoe\Asdis\System\Uri\Filter\ContainsProtocol;
-use Aoe\Asdis\System\Uri\Filter\WildcardProtocol;
 use Aoe\Asdis\System\Uri\Filter\TooShort;
+use Aoe\Asdis\System\Uri\Filter\WildcardProtocol;
 
 /***************************************************************
  *  Copyright notice

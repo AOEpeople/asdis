@@ -5,12 +5,12 @@ namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
 use Aoe\Asdis\Content\Scraper\Html\Script;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ScriptTest extends UnitTestCase
 {
-    public function testScrape()
+    public function testScrape(): void
     {
         $content = '<script type="text/javascript" src="typo3temp/js/main.js" />';
 
@@ -24,14 +24,12 @@ class ScriptTest extends UnitTestCase
             ->expects($this->once())
             ->method('getAttributeFromTag')
             ->with('script', 'src', $content)
-            ->will($this->returnValue(
-                [
-                    'paths' => ['typo3temp/js/main.js'],
-                    'masks' => ['"'],
-                ]
-            ));
+            ->willReturn([
+                'paths' => ['typo3temp/js/main.js'],
+                'masks' => ['"'],
+            ]);
 
-        $this->scraper = GeneralUtility::makeInstance(Script::class, $attributeExtractor, $assetFactory);
-        $this->scraper->scrape($content);
+        $scraper = GeneralUtility::makeInstance(Script::class, $attributeExtractor, $assetFactory);
+        $scraper->scrape($content);
     }
 }

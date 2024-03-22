@@ -8,6 +8,7 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
 
 /**
  * Scrapes assets from all tags by using data-src attributes.
+ * @see \Aoe\Asdis\Tests\Content\Scraper\Html\SrcsetTest
  */
 class Srcset extends AbstractHtmlScraper implements ScraperInterface
 {

@@ -4,6 +4,7 @@ namespace Aoe\Asdis\System\Uri\Filter;
 
 /**
  * Filters paths that start with "data:".
+ * @see \Aoe\Asdis\Tests\System\Uri\Filter\ContainsInlineDataTest
  */
 class ContainsInlineData implements FilterInterface
 {
@@ -18,8 +19,10 @@ class ContainsInlineData implements FilterInterface
             if (str_starts_with($path, 'data:')) {
                 continue;
             }
+
             $filteredPaths[] = $path;
         }
+
         return $filteredPaths;
     }
 }

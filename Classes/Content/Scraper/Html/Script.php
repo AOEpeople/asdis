@@ -7,6 +7,7 @@ use Aoe\Asdis\Domain\Model\Asset\Collection;
 
 /**
  * Scrapes assets from "<script>" tags.
+ * @see \Aoe\Asdis\Tests\Content\Scraper\Html\ScriptTest
  */
 class Script extends AbstractHtmlScraper implements ScraperInterface
 {

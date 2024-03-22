@@ -4,7 +4,7 @@ namespace Aoe\Asdis\Tests\Content\Scraper\Css;
 
 use Aoe\Asdis\Content\Scraper\Css\Url;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class UrlTest extends UnitTestCase
 {
@@ -18,7 +18,7 @@ class UrlTest extends UnitTestCase
     /**
      * Tests Url->scrape()
      */
-    public function testScrape()
+    public function testScrape(): void
     {
         $factory = $this->getMockBuilder(Factory::class)->getMock();
         $factory->expects($this->once())
@@ -28,10 +28,11 @@ class UrlTest extends UnitTestCase
         $this->url->injectAssetFactory($factory);
         $this->url->scrape('');
     }
+
     /**
      * Tests Url->scrape()
      */
-    public function testScrapeWithCss()
+    public function testScrapeWithCss(): void
     {
         $factory = $this->getMockBuilder(Factory::class)->getMock();
         $factory->expects($this->once())
@@ -41,10 +42,11 @@ class UrlTest extends UnitTestCase
         $this->url->injectAssetFactory($factory);
         $this->url->scrape("filter:url(#secondary);background-image: url('uploads/tx_templavoila/example.gif');");
     }
+
     /**
      * Tests _Url->scrape()
      */
-    public function testScrapeWithInlineCss()
+    public function testScrapeWithInlineCss(): void
     {
         $factory = $this->getMockBuilder(Factory::class)->getMock();
         $factory

@@ -4,6 +4,7 @@ namespace Aoe\Asdis\Domain\Model;
 
 /**
  * Represents a server.
+ * @see \Aoe\Asdis\Tests\Domain\Model\ServerTest
  */
 class Server
 {
@@ -73,6 +74,7 @@ class Server
         )) {
             return;
         }
+
         $this->protocol = $protocol;
     }
 
@@ -96,9 +98,11 @@ class Server
         if (strlen($_SERVER['HTTPS']) > 0) {
             return self::PROTOCOL_HTTPS;
         }
+
         if (strtolower($_SERVER['HTTPS']) !== 'off') {
             return self::PROTOCOL_HTTPS;
         }
+
         return self::PROTOCOL_HTTP;
     }
 
@@ -109,6 +113,7 @@ class Server
         if ($protocol === self::PROTOCOL_DYNAMIC) {
             $protocol = $this->getRequestProtocol();
         }
+
         switch ($protocol) {
             case self::PROTOCOL_MARKER:
                 $protocolPrefix = $this->protocolMarker;
@@ -123,6 +128,7 @@ class Server
                 $protocolPrefix = 'https://';
                 break;
         }
+
         return $protocolPrefix;
     }
 }

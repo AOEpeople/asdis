@@ -5,12 +5,12 @@ namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 use Aoe\Asdis\Content\Scraper\Extractor\XmlTagAttribute;
 use Aoe\Asdis\Content\Scraper\Html\OpenGraphImage;
 use Aoe\Asdis\Domain\Model\Asset\Factory;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class OpenGraphImageTest extends UnitTestCase
 {
-    public function testScrape()
+    public function testScrape(): void
     {
         $content = '<meta property="og:image" content="uploads/images/foo.gif" />';
 
@@ -23,13 +23,18 @@ class OpenGraphImageTest extends UnitTestCase
         $attributeExtractor
             ->expects($this->once())
             ->method('getAttributeFromTag')
-            ->with('meta', 'content', $content, ['property' => 'og:image'])
-            ->will($this->returnValue(
+            ->with(
+                'meta',
+                'content',
+                $content,
                 [
-                    'paths' => ['uploads/images/foo.gif'],
-                    'masks' => ['"'],
+                    'property' => 'og:image',
                 ]
-            ));
+            )
+            ->willReturn([
+                'paths' => ['uploads/images/foo.gif'],
+                'masks' => ['"'],
+            ]);
 
         $scraper = GeneralUtility::makeInstance(OpenGraphImage::class, $attributeExtractor, $assetFactory);
         $scraper->scrape($content);

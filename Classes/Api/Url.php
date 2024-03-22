@@ -3,9 +3,9 @@
 namespace Aoe\Asdis\Api;
 
 use Aoe\Asdis\Api\Exception\NotEnabledException;
-use Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory;
 use Aoe\Asdis\Domain\Model\Asset;
 use Aoe\Asdis\Domain\Model\Asset\Collection as AssetCollection;
+use Aoe\Asdis\Domain\Model\DistributionAlgorithm\Factory;
 use Aoe\Asdis\Domain\Model\Page;
 use Aoe\Asdis\Domain\Model\Server;
 use Aoe\Asdis\Domain\Model\Server\Collection as ServerCollection;
@@ -42,7 +42,7 @@ class Url
 
     public function getDistributedUrlForPath(string $path): ?string
     {
-        if (empty($path)) {
+        if ($path === '' || $path === '0') {
             return null;
         }
 
@@ -55,9 +55,6 @@ class Url
         return $asset->getUri();
     }
 
-    /**
-     * @throws NotEnabledException
-     */
     private function distributeAsset(Asset $asset): void
     {
         try {
@@ -91,6 +88,7 @@ class Url
             /** @var Server $server */
             $server->setProtocol(Server::PROTOCOL_HTTPS);
         }
+
         $servers->rewind();
     }
 }

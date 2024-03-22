@@ -9,6 +9,7 @@ use Aoe\Asdis\Domain\Model\Server\Collection as ServerCollection;
 
 /**
  * A distribution algorithm which is based on the assets hashed filenames.
+ * @see \Aoe\Asdis\Tests\Domain\Model\DistributionAlgorithm\HashBasedGroupsTest
  */
 class HashBasedGroups implements DistributionAlgorithmInterface
 {
@@ -31,6 +32,7 @@ class HashBasedGroups implements DistributionAlgorithmInterface
         if ($servers->count() < 1) {
             return;
         }
+
         $this->groups = [];
         $this->servers = $servers;
         $this->buildGroups();
@@ -47,6 +49,7 @@ class HashBasedGroups implements DistributionAlgorithmInterface
         if (!$this->servers->valid()) {
             $this->servers->rewind();
         }
+
         return $server;
     }
 
@@ -56,6 +59,7 @@ class HashBasedGroups implements DistributionAlgorithmInterface
         for ($i = 0; $i < $charCount; $i++) {
             $this->groups[$this->characters[$i]] = $this->getNextServer();
         }
+
         $this->groups[self::UNKNOWN_GROUP_KEY] = $this->getNextServer();
     }
 
@@ -66,6 +70,7 @@ class HashBasedGroups implements DistributionAlgorithmInterface
         if (!str_contains($this->characters, $character)) {
             return self::UNKNOWN_GROUP_KEY;
         }
+
         return $character;
     }
 }

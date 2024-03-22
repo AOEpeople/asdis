@@ -12,6 +12,7 @@ use Aoe\Asdis\Domain\Model\Asset\Factory;
 abstract class AbstractHtmlScraper
 {
     private ?XmlTagAttribute $xmlTagAttributeExtractor = null;
+
     private ?Factory $assetFactory = null;
 
     public function __construct(XmlTagAttribute $xmlTagAttributeExtractor, Factory $assetFactory)

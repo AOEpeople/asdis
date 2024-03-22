@@ -4,7 +4,7 @@ namespace Aoe\Asdis\Tests\Content\Scraper\Html;
 
 use Aoe\Asdis\Content\Scraper\Css\Url;
 use Aoe\Asdis\Content\Scraper\Html\CssInline;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class CssInlineTest extends UnitTestCase
 {
@@ -15,7 +15,7 @@ class CssInlineTest extends UnitTestCase
         $this->scraper = new CssInline();
     }
 
-    public function testScrape()
+    public function testScrape(): void
     {
         $style1 = 'h1 { color: #fff; }';
         $style2 = 'h2 { font-size: 12px; }';

@@ -3,7 +3,7 @@
 namespace Aoe\Asdis\Tests\System\Uri\Filter;
 
 use Aoe\Asdis\System\Uri\Filter\ContainsProtocol;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ContainsProtocolTest extends UnitTestCase
 {
@@ -14,7 +14,7 @@ class ContainsProtocolTest extends UnitTestCase
         $this->filter = new ContainsProtocol();
     }
 
-    public function testFilter()
+    public function testFilter(): void
     {
         $paths = [
             'http://typo3temp/pics/foo.gif',
@@ -30,7 +30,8 @@ class ContainsProtocolTest extends UnitTestCase
             // phpunit 8.x or lower
             $this->assertInternalType('array', $filteredPaths);
         }
-        $this->assertSame(1, count($filteredPaths));
+
+        $this->assertCount(1, $filteredPaths);
         $this->assertSame($paths[3], $filteredPaths[0]);
     }
 }

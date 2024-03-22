@@ -7,6 +7,7 @@ use ArrayIterator;
 
 /**
  * Scraper which chains other scrapers.
+ * @see \Aoe\Asdis\Tests\Content\Scraper\ChainTest
  */
 class Chain extends ArrayIterator implements ScraperInterface
 {
@@ -34,6 +35,7 @@ class Chain extends ArrayIterator implements ScraperInterface
             /** @var ScraperInterface $scraper */
             $assetColection->merge($scraper->scrape($content));
         }
+
         return $assetColection;
     }
 }

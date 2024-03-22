@@ -4,6 +4,7 @@ namespace Aoe\Asdis\System\Uri\Filter;
 
 /**
  * Filters paths that contain "http:" or "https:".
+ * @see \Aoe\Asdis\Tests\System\Uri\Filter\ContainsProtocolTest
  */
 class ContainsProtocol implements FilterInterface
 {
@@ -18,11 +19,14 @@ class ContainsProtocol implements FilterInterface
             if ($this->containsProtocol($path)) {
                 continue;
             }
+
             if ($this->containsProtocolMarker($path)) {
                 continue;
             }
+
             $filteredPaths[] = $path;
         }
+
         return $filteredPaths;
     }
 

@@ -5,7 +5,7 @@ namespace Aoe\Asdis\Tests\System\Uri\Filter;
 use Aoe\Asdis\System\Uri\Filter\Chain;
 use Aoe\Asdis\System\Uri\Filter\ContainsProtocol;
 use Aoe\Asdis\System\Uri\Filter\WildcardProtocol;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ChainTest extends UnitTestCase
 {
@@ -16,14 +16,14 @@ class ChainTest extends UnitTestCase
         $this->chain = new Chain();
     }
 
-    public function testFilter()
+    public function testFilter(): void
     {
         $filter1 = $this->getMockBuilder(ContainsProtocol::class)->getMock();
         $filter2 = $this->getMockBuilder(WildcardProtocol::class)->getMock();
 
         $filter1->expects($this->once())
             ->method('filter')
-            ->will($this->returnValue(['/foo']));
+            ->willReturn(['/foo']);
         $filter2->expects($this->once())
             ->method('filter');
 
