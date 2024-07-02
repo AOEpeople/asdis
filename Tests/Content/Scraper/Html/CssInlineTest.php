@@ -12,6 +12,8 @@ class CssInlineTest extends UnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->scraper = new CssInline();
     }
 

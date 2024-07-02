@@ -19,18 +19,12 @@ class Factory
     {
         try {
             $this->protocolMarker = $configurationProvider->getServerProtocolMarker();
-        } catch (Exception $exception) {
+        } catch (Exception) {
             $this->protocolMarker = '';
         }
     }
 
-    /**
-     * @param string $identifier
-     * @param string $domain
-     * @param string $protocol
-     * @return \Aoe\Asdis\Domain\Model\Server
-     */
-    public function createServer($identifier, $domain, $protocol)
+    public function createServer(string $identifier, string $domain, string $protocol): Server
     {
         $server = GeneralUtility::makeInstance(Server::class);
         $server->setIdentifier($identifier);

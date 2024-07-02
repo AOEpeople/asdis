@@ -13,6 +13,8 @@ class ChainTest extends UnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->chain = new Chain();
     }
 

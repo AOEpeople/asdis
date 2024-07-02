@@ -11,6 +11,8 @@ class MapTest extends UnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->map = new Map();
     }
 

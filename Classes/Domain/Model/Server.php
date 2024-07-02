@@ -114,21 +114,12 @@ class Server
             $protocol = $this->getRequestProtocol();
         }
 
-        switch ($protocol) {
-            case self::PROTOCOL_MARKER:
-                $protocolPrefix = $this->protocolMarker;
-                break;
-            case self::PROTOCOL_WILDCARD:
-                $protocolPrefix = '//';
-                break;
-            case self::PROTOCOL_HTTP:
-                $protocolPrefix = 'http://';
-                break;
-            case self::PROTOCOL_HTTPS:
-                $protocolPrefix = 'https://';
-                break;
-        }
-
-        return $protocolPrefix;
+        return match ($protocol) {
+            self::PROTOCOL_MARKER => $this->protocolMarker,
+            self::PROTOCOL_WILDCARD => '//',
+            self::PROTOCOL_HTTP => 'http://',
+            self::PROTOCOL_HTTPS => 'https://',
+            default => $protocolPrefix,
+        };
     }
 }

@@ -16,9 +16,6 @@ class Image extends AbstractHtmlScraper implements ScraperInterface
         return $this->getAssets('img', 'src', $content)
             ->merge($this->getAssets('image', 'href', $content))
             ->merge($this->getAssets('link', 'href', $content, [
-                'type' => 'image/webp',
-                'type' => 'image/png',
-                'type' => 'image/jpeg',
                 'type' => 'image/gif',
             ]));
     }

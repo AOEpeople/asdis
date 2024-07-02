@@ -12,6 +12,8 @@ class CssAttributeTest extends UnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->cssAttribute = new CssAttribute();
     }
 

@@ -11,6 +11,8 @@ class XmlTagAttributeTest extends UnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->extractor = new XmlTagAttribute();
     }
 

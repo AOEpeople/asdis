@@ -11,6 +11,8 @@ class NormalizerTest extends UnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->normalizer = new Normalizer();
     }
 

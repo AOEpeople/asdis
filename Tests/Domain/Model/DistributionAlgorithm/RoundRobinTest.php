@@ -15,6 +15,8 @@ class RoundRobinTest extends UnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->algorithm = new RoundRobin();
     }
 

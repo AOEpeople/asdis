@@ -14,15 +14,15 @@
     "source": "https://github.com/AOEpeople/asdis"
   },
   "require": {
-    "php": "^8.0 || ^8.2 || ^8.3",
-    "typo3/cms-core": "^11.5",
-    "typo3/cms-extbase": "^11.5",
-    "typo3/cms-backend": "^11.5",
-    "typo3/cms-reports": "^11.5",
-    "typo3/cms-frontend": "^11.5"
+    "php": "^8.0",
+    "typo3/cms-core": "^11.5 || ^12.4",
+    "typo3/cms-extbase": "^11.5 || ^12.4",
+    "typo3/cms-backend": "^11.5 || ^12.4",
+    "typo3/cms-reports": "^11.5 || ^12.4",
+    "typo3/cms-frontend": "^11.5 || ^12.4"
   },
   "require-dev": {
-    "typo3/testing-framework": "^7.0",
+    "typo3/testing-framework": "^7.0 || ^8.0",
     "phpmd/phpmd": "*",
     "phpcompatibility/php-compatibility": "^9.3",
     "phpstan/phpstan": "^1.10",

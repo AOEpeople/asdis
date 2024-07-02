@@ -14,7 +14,7 @@ class Normalizer
     {
         // Fix for wildcard protocol URLs, as parse_url (until PHP 5.4.7) requires the protocol to be set
         // @see http://www.php.net/manual/en/function.parse-url.php
-        if (substr($path, 0, 2) === '//') {
+        if (str_starts_with($path, '//')) {
             $path = 'http:' . $path;
         }
 

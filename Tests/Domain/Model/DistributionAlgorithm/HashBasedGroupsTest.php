@@ -15,6 +15,8 @@ class HashBasedGroupsTest extends UnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->algorithm = new HashBasedGroups();
     }
 
@@ -42,8 +44,8 @@ class HashBasedGroupsTest extends UnitTestCase
 
         $this->algorithm->distribute($assets, $servers);
 
-        $this->assertSame(Server::class, $asset1->getServer() !== null ? get_class($asset1->getServer()) : self::class);
-        $this->assertSame(Server::class, $asset2->getServer() !== null ? get_class($asset2->getServer()) : self::class);
-        $this->assertSame(Server::class, $asset3->getServer() !== null ? get_class($asset3->getServer()) : self::class);
+        $this->assertSame(Server::class, $asset1->getServer() !== null ? $asset1->getServer()::class : self::class);
+        $this->assertSame(Server::class, $asset2->getServer() !== null ? $asset2->getServer()::class : self::class);
+        $this->assertSame(Server::class, $asset3->getServer() !== null ? $asset3->getServer()::class : self::class);
     }
 }

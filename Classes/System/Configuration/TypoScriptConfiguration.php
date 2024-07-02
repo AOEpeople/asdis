@@ -34,7 +34,7 @@ class TypoScriptConfiguration implements SingletonInterface
         }
 
         $parts = explode('.', $key);
-        if (!is_array($parts) || count($parts) < 1) {
+        if (count($parts) < 1) {
             throw new TypoScriptSettingNotExists($key, 1_372_050_700_894);
         }
 
