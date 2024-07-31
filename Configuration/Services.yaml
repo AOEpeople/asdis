@@ -57,3 +57,11 @@ services:
 
   Aoe\Asdis\Content\Scraper\Html\Srcset:
     public: true
+
+  # EventListeners
+  Aoe\Asdis\Bootstrap\Typo3Configurator:
+    tags:
+      - name: event.listener
+        identifier: 'asdis/typo3-configurator'
+        method: 'forceTemplateParsingInFrontend'
+        event: TYPO3\CMS\Core\Core\Event\BootCompletedEvent

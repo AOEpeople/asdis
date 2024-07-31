@@ -5,9 +5,11 @@ namespace Aoe\Asdis\System\Configuration;
 use Aoe\Asdis\System\Configuration\Exception\InvalidTypoScriptSetting;
 use Aoe\Asdis\System\Configuration\Exception\SiteNotFoundException;
 use Aoe\Asdis\System\Configuration\Exception\TypoScriptSettingNotExists;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\TypoScript\FrontendTypoScript;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
@@ -69,10 +71,25 @@ class TypoScriptConfiguration implements SingletonInterface
      */
     protected function getTypoScriptConfigurationArray()
     {
-        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '9.5.0', '<')) {
-            return $GLOBALS['TSFE']->tmpl->setup['config.']['tx_asdis.'];
+        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '12.4.0', '>')) {
+            if (isset($GLOBALS['TYPO3_REQUEST']) &&
+                $GLOBALS['TYPO3_REQUEST'] instanceof ServerRequestInterface &&
+                $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.typoscript') instanceof FrontendTypoScript) {
+                /**
+                 * We can get the TypoScript in the frontend, because we force templateParsing (without
+                 * forcing of templateParsing, we can't get the complete TypoScript in frontend) here:
+                 * @see \Aoe\Asdis\Bootstrap\Typo3Configurator::forceTemplateParsingInFrontend
+                 */
+                $fullTypoScript = $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.typoscript')->getSetupArray();
+                return $fullTypoScript['config.']['tx_asdis.'];
+            }
+
+            return [];
         }
 
+        /**
+         * This code is for TYPO3v11 - we can remove it, when we don't support TYPO3v11 anymore!
+         */
         $site = $this->getCurrentSite();
 
         /** @var RootlineUtility $rootlineUtility */
