@@ -17,14 +17,14 @@ class ImageTest extends UnitTestCase
 
         $assetFactory = $this->getMockBuilder(Factory::class)->getMock();
         $assetFactory
-            ->expects($this->exactly(3))
+            ->expects($this->exactly(6))
             ->method('createAssetsFromPaths')
             ->with(['uploads/tx_templavoila/example.gif'])
             ->willReturn(new Collection());
 
         $attributeExtractor = $this->getMockBuilder(XmlTagAttribute::class)->getMock();
         $attributeExtractor
-            ->expects($this->exactly(3))
+            ->expects($this->exactly(6))
             ->method('getAttributeFromTag')
             ->willReturn([
                 'paths' => ['uploads/tx_templavoila/example.gif'],

@@ -33,7 +33,7 @@ class ChainFactory extends AbstractDeclarationBasedFactory
     }
 
     /**
-     * @return \Aoe\Asdis\System\Uri\Filter\FilterInterface
+     * @return FilterInterface
      */
     private function buildFilter(string $filterKey)
     {

@@ -45,7 +45,7 @@ class ContentPostProcAll implements MiddlewareInterface
         $status = $response->getStatusCode();
 
         try {
-            $this->setPageObject($GLOBALS['TSFE']);
+            $this->setPageObject($this->getTsfe());
             $this->scrapeAndReplace();
 
             $header['Content-Length'] = strlen($this->page->getPageObject()->content);
@@ -56,6 +56,13 @@ class ContentPostProcAll implements MiddlewareInterface
         }
 
         return $response;
+    }
+
+    protected function getTsfe(): TypoScriptFrontendController
+    {
+        /** @var ServerRequestInterface $typo3Request */
+        $typo3Request = $GLOBALS['TYPO3_REQUEST'];
+        return $typo3Request->getAttribute('frontend.controller');
     }
 
     protected function scrapeAssets(): void

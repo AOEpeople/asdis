@@ -5,20 +5,23 @@ namespace Aoe\Asdis\Tests\System\Configuration;
 use Aoe\Asdis\System\Configuration\Exception\InvalidTypoScriptSetting;
 use Aoe\Asdis\System\Configuration\Exception\TypoScriptSettingNotExists;
 use Aoe\Asdis\System\Configuration\TypoScriptConfiguration;
+use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class TypoScriptConfigurationTest extends UnitTestCase
 {
     /**
-     * @var (\PHPUnit\Framework\MockObject\MockObject & \TypoScriptConfiguration)
+     * @var @var MockObject&\TypoScriptConfiguration
      */
-    private \PHPUnit\Framework\MockObject\MockObject $typoScriptConfiguration;
+    private MockObject $typoScriptConfiguration;
 
     /**
      * (non-PHPdoc)
      */
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->typoScriptConfiguration = $this->getMockBuilder(TypoScriptConfiguration::class)
             ->onlyMethods(['getTypoScriptConfigurationArray'])
             ->getMock();

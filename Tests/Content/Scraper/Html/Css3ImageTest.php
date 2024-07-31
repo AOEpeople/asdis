@@ -14,6 +14,8 @@ class Css3ImageTest extends UnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $xmlTagAttributeExtractor = new XmlTagAttribute();
         $factory = new Factory();
 

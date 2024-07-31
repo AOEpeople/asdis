@@ -82,7 +82,7 @@ class Page
         $distributionAlgorithmKey = '';
         try {
             $distributionAlgorithmKey = $this->configurationProvider->getDistributionAlgorithmKey();
-        } catch (Exception $exception) {
+        } catch (Exception) {
         }
 
         $distributionAlgorithm = $this->distributionAlgorithmFactory->buildDistributionAlgorithmFromKey($distributionAlgorithmKey);
