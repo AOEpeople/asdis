@@ -21,7 +21,11 @@ class Provider
      */
     public function isReplacementEnabled(): bool
     {
-        return (bool) ((int) $this->typoScriptConfiguration->getSetting('enabled'));
+        try {
+            return (bool) ((int) $this->typoScriptConfiguration->getSetting('enabled'));
+        } catch (\RuntimeException) {
+            return false;
+        }
     }
 
     /**
