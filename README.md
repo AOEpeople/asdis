@@ -1,4 +1,5 @@
 # Asdis
+this project will no longer be developed
 
 ## Build information
 [![Build Status](https://github.com/AOEpeople/asdis/workflows/CI/badge.svg?branch=master)](https://github.com/AOEpeople/asdis/actions)
